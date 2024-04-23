@@ -51,8 +51,14 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'unique'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password_confirmation' => ['required', 'string'],
+        ], [
+            'name.required' => 'Nama tidak boleh kosong.',
+            'email.required' => 'Email tidak boleh kosong.',
+            'password.required' => 'Password tidak boleh kosong.',
+            'password_confirmation.required' => 'Konfirmasi password tidak boleh kosong.',
         ]);
     }
 
@@ -71,4 +77,15 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput($request->except('password'));
+        }
+
+        $this->create($request->all());
+        return redirect($this->redirectPath());
+    }
 }
