@@ -7,6 +7,9 @@ use App\Http\Controllers\KursiController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\TanggalController;
 use App\Http\Controllers\TiketController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\HistoryController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,6 +28,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin'], function () {
 // halaman dasboard //
@@ -56,3 +62,17 @@ Route::get('/Keuangan', [KeuanganController::class, 'keuangan'])->name('keuangan
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::post('/logout', [App\Http\Controllers\LogoutController::class, 'logout'])->name('logout');
+
+/* Tiket */
+Route::get('/order', function () {
+    return view('user.tiket.order');
+});
+
+Route::get('/history', function () {
+    return view('user.tiket.history');
+});
+
+Route::get('/order', [OrderController::class, 'index']);
+Route::get('/history', [HistoryController::class, 'index']);

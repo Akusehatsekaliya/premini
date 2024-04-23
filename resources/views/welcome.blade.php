@@ -210,11 +210,12 @@
             }
 
             function hideSearchForm() {
-            const searchForm = $('#searchForm');
-            const notFoundText = $('#noResultMessage');
-            const headerHeight = $('.navbar').outerHeight();
-
-            <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" data-interval="2000">
+                const searchForm = $('#searchForm');
+                const notFoundText = $('#noResultMessage');
+                const headerHeight = $('.navbar').outerHeight();
+            }
+        </script>
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" data-interval="2000">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="assets/images/bg-film.jpg" class="d-block w-100" alt="Gambar 1">
