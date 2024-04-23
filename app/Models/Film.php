@@ -10,5 +10,18 @@ class Film extends Model
     protected $fillable = [
         "judul",
         "film",
+        "kursi_id",
+        "tiket_id",
+        "tanggal_id",
     ];
+
+    public function Kursi(){
+        return $this->belongsTo(Kursi::class);
+    }
+    public function Tiket(){
+        return $this->belongsTo(Tiket::class);
+    }
+    public function Tanggal(){
+        return $this->belongsTo(Tanggal::class);
+    }
 }

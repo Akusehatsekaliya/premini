@@ -33,6 +33,30 @@
                     {{ $message }}
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label for="kursi_id" class="form-label"> Kursi </label><br>
+                    <select class="form-control" name="kursi_id" id="kursi_id">
+                        @foreach ($kursi as $k)
+                            <option value="{{ $k->id }}">{{ $k->kursi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tiket_id" class="form-label"> Tiket </label><br>
+                    <select class="form-control" name="tiket_id" id="tiket_id">
+                        @foreach ($tiket as $t)
+                            <option value="{{ $t->id }}">{{ $t->tiket }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tanggal_id" class="form-label"> Tanggal Tayang </label><br>
+                    <select class="form-control" name="tanggal_id" id="tanggal_id">
+                        @foreach ($tanggal as $t)
+                            <option value="{{ $t->id }}">{{ $t->tanggal }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -76,7 +100,18 @@
                         <div class="numbers">
                           <p class="card-category">{{ $f->judul }}</p>
                         </div>
-                        <iframe src="{{ asset('storage/vidio/'. $f->film) }}" frameborder="0" width="255"></iframe>
+                        <div class="container">
+                            <table>
+                                <tr>
+                                    <td style="text-align: center">
+                                        <img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" width="150" height="200">
+                                        <p> Total Kursi : {{ $f->Kursi->kursi }}</p>
+                                        <p> Jumlah Tiket : {{ $f->Tiket->tiket }}</p>
+                                        <p> Tayang pada {{ $f->Tanggal->tanggal }}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -95,7 +130,7 @@
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Edit Film</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -114,6 +149,22 @@
                                         @error('film')
                                         {{ $message }}
                                         @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kursi_id" class="form-label"> Kursi </label><br>
+                                        <select class="form-control" name="kursi_id" id="kursi_id">
+                                            @foreach ($kursi as $k)
+                                                <option value="{{ $k->id }}">{{ $k->kursi }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kursi_id" class="form-label"> Tiket </label><br>
+                                        <select class="form-control" name="kursi_id" id="kursi_id">
+                                            @foreach ($tiket as $t)
+                                                <option value="{{ $t->id }}">{{ $t->tiket }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer">

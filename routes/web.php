@@ -61,7 +61,7 @@ Route::get('/Keuangan', [KeuanganController::class, 'keuangan'])->name('keuangan
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::post('/logout', [App\Http\Controllers\LogoutController::class, 'logout'])->name('logout');
 
