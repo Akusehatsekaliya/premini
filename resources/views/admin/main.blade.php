@@ -75,7 +75,7 @@ Coded by www.creative-tim.com
           </li>
           <li>
             <a href="{{ route('admintiket') }}">
-                <i class="nc-tag-content"></i>
+                <i class="nc-icon nc-tag-content"></i>
               <p>Tiket</p>
             </a>
           </li>
@@ -87,7 +87,7 @@ Coded by www.creative-tim.com
           </li>
           <li>
             <a href="{{ route('adminkeuangan') }}">
-              <i class="fas fa-calculator"></i>
+              <i class="nc-icon nc-credit-card"></i>
               <p>Laporan Keuangan</p>
             </a>
           </li>

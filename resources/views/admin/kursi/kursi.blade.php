@@ -11,7 +11,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Kursi</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Jumlah Kursi</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -19,7 +19,7 @@
                 @csrf
                 <div class="form-froup">
                     <label for="judul"> Kursi</label>
-                    <input type="number" class="form-control" id="kursi" name="kursi" placeholder="nomor kursi" value="{{ old('kursi') }}">
+                    <input type="number" class="form-control" id="kursi" name="kursi" placeholder="jumlah kursi" value="{{ old('kursi') }}">
                     @error('kursi')
                          <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -46,7 +46,7 @@
                         </div>
                             <div class="col-7 col-md-8">
                                 <div class="numbers">
-                                    <p class="card-category">Tambah Kursi</p>
+                                    <p class="card-category">Tambah Jumlah Kursi</p>
                                     <a style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         <p class="card-title" style="color: success">Klik</p>
                                     </a>
@@ -64,7 +64,7 @@
                 <div class="row">
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">No Kursi</p>
+                      <p class="card-category">Jumlah Kursi</p>
                       <p class="card-title">{{ $k->kursi }}</p>
                     </div>
                   </div>
@@ -73,7 +73,7 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                pembeli :
+                Stok :
                 </div>
               </div>
             </div>
