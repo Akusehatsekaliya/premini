@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\Request;
 use App\Models\Film;
+use App\Models\Kursi;
+use App\Models\Tanggal;
+use App\Models\Tiket;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FilmController extends Controller
 {
     public function film(){
         $film = Film::get();
-        return view('admin.film.film', compact('film'));
+        $kursi = Kursi::get();
+        $tiket = Tiket::get();
+        $tanggal = Tanggal::get();
+        return view('admin.film.film', compact('film', 'kursi', 'tiket', 'tanggal'));
     }
 
     public function dashboard(){
@@ -19,15 +25,21 @@ class FilmController extends Controller
 
     public function proses_film(Request $request){
 
+        // dd($request);
         $request->validate([
             'judul' => 'required',
-            'film' => 'required'
+            'film' => 'required',
+            'kursi_id' => 'required',
+            'tiket_id' => 'required',
+            'tanggal_id' => 'required',
         ],[
             'judul.required' => 'Tidak boleh kosong',
             'film.required'  => 'Tidak boleh kosong',
-            'film.mimes'     => 'Format file harus berupa MP4',
-            'film.max'       => 'Ukuran file melebihi batas maksimum (2GB)'
+            'kursi_id.required'  => 'Tidak boleh kosong',
+            'tiket_id.required'  => 'Tidak boleh kosong',
+            'tanggal_id.required'  => 'Tidak boleh kosong',
         ]);
+
 
         $film = $request->file('film');
         $extension = $film->getClientOriginalExtension();
@@ -38,9 +50,12 @@ class FilmController extends Controller
         $akses = Film::create([
             'judul' => $request->judul,
             'film' => $filename,
+            'kursi_id' => $request->kursi_id,
+            'tiket_id' => $request->tiket_id,
+            'tanggal_id' => $request->tanggal_id,
         ]);
 
-        return redirect()->route('adminfilm');
+        return back();
     }
 
     public function delete_film(Request $request, $id)
@@ -65,10 +80,16 @@ class FilmController extends Controller
     {
         $request->validate([
             'judul' => 'required',
-            'film' => 'required'
-        ], [
+            'film' => 'required',
+            'kursi_id' => 'required',
+            'tiket_id' => 'required',
+            'tanggal_id' => 'required',
+        ],[
             'judul.required' => 'Tidak boleh kosong',
-            'film.required' => 'Tidak boleh kosong',
+            'film.required'  => 'Tidak boleh kosong',
+            'kursi_id.required'  => 'Tidak boleh kosong',
+            'tiket_id.required'  => 'Tidak boleh kosong',
+            'tanggal_id.required'  => 'Tidak boleh kosong',
         ]);
 
 

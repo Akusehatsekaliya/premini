@@ -33,6 +33,30 @@
                     {{ $message }}
                     @enderror
                 </div>
+                <div class="form-group">
+                    <label for="kursi_id" class="form-label"> Kursi </label><br>
+                    <select class="form-control" name="kursi_id" id="kursi_id">
+                        @foreach ($kursi as $k)
+                            <option value="{{ $k->id }}">{{ $k->kursi }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tiket_id" class="form-label">Jumlah Tiket </label><br>
+                    <select class="form-control" name="tiket_id" id="tiket_id">
+                        @foreach ($tiket as $t)
+                            <option value="{{ $t->id }}">{{ $t->stok }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tanggal_id" class="form-label"> Tanggal Tayang </label><br>
+                    <select class="form-control" name="tanggal_id" id="tanggal_id">
+                        @foreach ($tanggal as $t)
+                            <option value="{{ $t->id }}">{{ $t->tanggal }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -76,26 +100,46 @@
                         <div class="numbers">
                           <p class="card-category">{{ $f->judul }}</p>
                         </div>
-                        <iframe src="{{ asset('storage/vidio/'. $f->film) }}" frameborder="0" width="255"></iframe>
+
                       </div>
+                      <img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="200px" width="50px">
                     </div>
                   </div>
                   <div class="card-footer ">
                     <hr>
                     <div class="stats">
                      x ditonton
-                     <a class="delete-link" data-toggle="modal" data-target="#modal-hapus{{ $f->id}}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16l-1.58 14.22A2 2 0 0 1 16.432 22H7.568a2 2 0 0 1-1.988-1.78zm3.345-2.853A2 2 0 0 1 9.154 2h5.692a2 2 0 0 1 1.81 1.147L18 6H6zM2 6h20m-12 5v5m4-5v5"/></svg>
-                      </a>
-                      <div id="btn-edit{{ $f->id }}" class="btn-edit">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621"/><path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/></g></svg>
-                       </div>
                     </div>
+                    {{-- icones --}}
+                    <div style="text-align: right ;">
+
+                        <span style="display: flex;">
+
+                                <div id="btn-edit{{ $f->id }}" class="btn-edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621"/><path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/></g></svg>
+                                </div>
+
+                                <div id="btn-detail" class="btn-detail">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 24 24"><path fill="currentColor" d="M12 9a3 3 0 0 1 3 3a3 3 0 0 1-3 3a3 3 0 0 1-3-3a3 3 0 0 1 3-3m0-4.5c5 0 9.27 3.11 11 7.5c-1.73 4.39-6 7.5-11 7.5S2.73 16.39 1 12c1.73-4.39 6-7.5 11-7.5M3.18 12a9.821 9.821 0 0 0 17.64 0a9.821 9.821 0 0 0-17.64 0"/></svg>
+                                </div>
+
+                                <div>
+                                    <a data-toggle="modal" data-target="#modal-hapus{{ $f->id}}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16l-1.58 14.22A2 2 0 0 1 16.432 22H7.568a2 2 0 0 1-1.988-1.78zm3.345-2.853A2 2 0 0 1 9.154 2h5.692a2 2 0 0 1 1.81 1.147L18 6H6zM2 6h20m-12 5v5m4-5v5"/></svg>
+                                    </a>
+                                </div>
+
+                        </span>
+
+                    </div>
+                    {{-- end icones --}}
+
+                       {{-- modal edit --}}
                     <div class="modal fade" id="ModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                              <h5 class="modal-title" id="exampleModalLabel">Edit Film</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -115,6 +159,22 @@
                                         {{ $message }}
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <label for="kursi_id" class="form-label"> Kursi </label><br>
+                                        <select class="form-control" name="kursi_id" id="kursi_id">
+                                            @foreach ($kursi as $k)
+                                                <option value="{{ $k->id }}">{{ $k->kursi }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kursi_id" class="form-label"> Tiket </label><br>
+                                        <select class="form-control" name="kursi_id" id="kursi_id">
+                                            @foreach ($tiket as $t)
+                                                <option value="{{ $t->id }}">{{ $t->stok }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -125,8 +185,62 @@
                           </div>
                         </div>
                       </div>
+                      {{-- end modal edit--}}
 
-                    <div class="modal fade" id="modal-hapus{{ $f->id}}">
+                      {{-- modal detail --}}
+                      <div class="modal fade" id="Modaldetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Detail Film</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <table>
+                                    <tr>
+                                        <td>Judul Film</td>
+                                        <td></td>
+                                        <td>:</td>
+                                        <td></td>
+                                        <td>{{ $f->judul }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tayang Film</td>
+                                        <td></td>
+                                        <td>:</td>
+                                        <td></td>
+                                        <td>{{ $f->Tanggal->tanggal }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jumlah Tiket Yang Tersedia</td>
+                                        <td></td>
+                                        <td>:</td>
+                                        <td></td>
+                                        <td>{{ $f->Tiket->stok }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jumlah Kursi Yang Tersedia</td>
+                                        <td></td>
+                                        <td>:</td>
+                                        <td></td>
+                                        <td>{{ $f->Kursi->kursi }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Deskripsi</td>
+                                        <td></td>
+                                        <td>:</td>
+                                        <td></td>
+                                        <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe fugiat sunt quaerat nesciunt! Unde totam assumenda fuga earum culpa! Itaque?</td>
+                                    </tr>
+                                </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {{-- end modal detail--}}
+
+                      {{-- modal hapus --}}
+                      <div class="modal fade" id="modal-hapus{{ $f->id}}">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -147,9 +261,8 @@
                               </form>
                           </div>
                           </div>
-                          <!-- /.modal-content -->
+                          <!-- end modal hapus-->
                         </div>
-                        <!-- /.modal-dialog -->
                       </div>
                   </div>
                 </div>
@@ -158,11 +271,16 @@
         </div>
     </div>
 @endsection
-
+{{-- end --}}
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script>
+    $('.btn-detail').click(function() {
+        $('#Modaldetail').modal('show');
+    })
+</script>
 <script>
     $('.btn-edit').click(function() {
         $('#ModalEdit').modal('show');
