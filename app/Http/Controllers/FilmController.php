@@ -60,4 +60,40 @@ class FilmController extends Controller
 
         return back();
     }
+
+    public function update_film(Request $request, $id)
+    {
+        $request->validate([
+            'judul' => 'required',
+            'film' => 'required'
+        ], [
+            'judul.required' => 'Tidak boleh kosong',
+            'film.required' => 'Tidak boleh kosong',
+        ]);
+
+
+        $film = Film::find($id);
+
+        if ($film) {
+            if ($request->hasFile('film')) {
+                // Hapus file video lama jika ada
+                Storage::disk('public')->delete('vidio/' . $film->film);
+
+                // Upload video baru
+                $video = $request->file('film');
+                $extension = $video->getClientOriginalExtension();
+                $filename = uniqid() . '.' . $extension;
+                $path = 'vidio/' . $filename;
+                Storage::disk('public')->put($path, file_get_contents($video));
+
+                $film->film = $filename;
+            }
+
+            // Perbarui data film
+            $film->update($request->except('img'));
+        }
+
+        return redirect()->route('adminfilm');
+    }
 }
+

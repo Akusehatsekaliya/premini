@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 
 class TanggalController extends Controller
 {
-    public function tanggal(){
+    public function tanggal()
+    {
         $tanggal = Tanggal::get();
         return view('admin.tanggal.tanggal', compact('tanggal'));
     }
 
-    public function proses_tanggal(Request $request) {
+    public function proses_tanggal(Request $request)
+    {
         $request->validate([
             'hari' => 'required',
             'tanggal' => 'required|date_format:Y-m-d',
@@ -34,9 +36,42 @@ class TanggalController extends Controller
         return back();
     }
 
-    public function delete_tanggal(Request $request, $id){
-        $tiket = Tanggal::find($id);
-        $tiket->delete();
+    public function delete_tanggal(Request $request, $id)
+    {
+        $tanggal = Tanggal::find($id);
+        $tanggal->delete();
+
+        return back();
+    }
+
+    public function update_tanggal(Request $request, $id)
+    {
+        $tanggal = Tanggal::find($id);
+
+        $request->validate([
+            'hari' => 'required',
+            'tanggal' => 'required',
+            'jam' => 'required'
+        ], [
+            'hari.required' => 'Hari tidak boleh kosong',
+            'tanggal.required' => 'Tanggal tidak boleh kosong',
+
+            'jam.required' => 'Jam tidak boleh kosong',
+
+        ]);
+        
+        $data = [
+            'hari' => $request->hari,
+            'tanggal' => $request->tanggal,
+            'jam' => $request->jam,
+        ];
+        $tanggal->update($data);
+
+        // $tanggal = Tanggal::find($id);
+        // $tanggal['hari'] = $request->hari;
+        // $tanggal['tanggal'] = $request->tanggal;
+        // $tanggal['jam'] = $request->jam;
+        // $tanggal->save();
 
         return back();
     }

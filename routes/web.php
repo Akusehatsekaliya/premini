@@ -32,8 +32,8 @@ Route::get('/dashboard', [FilmController::class, 'dashboard'])->name('dashboard'
 // halaman film //
 Route::get('/film', [FilmController::class, 'film'])->name('film');
 Route::post('/tambahfilm', [FilmController::class, 'proses_film'])->name('proses_film');
-
-Route::DELETE('/hapus film/{id}', [FilmController::class, 'delete_film'])->name('delete_film');
+Route::post('/update-film/{id}', [FilmController::class, 'update_film'])->name('update_film');
+Route::DELETE('/hapus-film/{id}', [FilmController::class, 'delete_film'])->name('delete_film');
 // halaman tiket //
 Route::get('/tiket', [TiketController::class, 'tiket'])->name('tiket');
 Route::post('/tambahtiket', [TiketController::class, 'proses_tiket'])->name('proses_tiket');
@@ -45,7 +45,7 @@ Route::post('/tambahkursi', [KursiController::class, 'proses_kursi'])->name('pro
 // halaman tanggal //
 Route::get('/tanggal', [TanggalController::class, 'tanggal'])->name('tanggal');
 Route::post('/tambahjadwal', [TanggalController::class, 'proses_tanggal'])->name('proses_tanggal');
-
+Route::post('/update-jadwal/{id}', [TanggalController::class, 'update_tanggal'])->name('update_tanggal');
 Route::DELETE('/hapus tanggal/{id}', [TanggalController::class, 'delete_tanggal'])->name('delete_tanggal');
 // halaman map
 Route::get('/map', [MapController::class, 'map'])->name('map');

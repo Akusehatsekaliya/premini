@@ -18,8 +18,8 @@
             <form action="{{ route('adminproses_kursi') }}" method="post">
                 @csrf
                 <div class="form-froup">
-                    <label for="judul"> Kursi </label>
-                    <input type="number" class="form-control" id="kursi" name="kursi" placeholder="Enter kursi" value="{{ old('kursi') }}">
+                    <label for="judul"> Kursi</label>
+                    <input type="number" class="form-control" id="kursi" name="kursi" placeholder="nomor kursi" value="{{ old('kursi') }}">
                     @error('kursi')
                          <small class="text-danger">{{ $message }}</small>
                     @enderror
