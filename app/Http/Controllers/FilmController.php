@@ -56,7 +56,7 @@ class FilmController extends Controller
 
             // Hapus objek alat dari basis data
             $deletefilm->delete();
-        }
+        }       
 
         return back();
     }

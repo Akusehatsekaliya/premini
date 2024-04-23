@@ -35,15 +35,6 @@
             transition: transform 0.3s;
         }
 
-        .carousel-caption {
-            text-align: center;
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            transform: translateY(-50%);
-        }
-
         .carousel-caption h5,
         .carousel-caption p {
             color: white;
@@ -211,14 +202,25 @@
 
             function hideSearchForm() {
                 const searchForm = $('#searchForm');
-                const notFoundText = $('#noResultMessage');
+                const notFoundText = $('#noResultMessage'); // Seleksi elemen teks "Film tidak ditemukan"
                 const headerHeight = $('.navbar').outerHeight();
+
+                searchForm.slideUp('slow', function() {
+                    const scrollToPosition = searchForm.offset().top - headerHeight - 10;
+                    $('html, body').animate({ scrollTop: scrollToPosition }, 500); // Menggunakan animasi untuk menggulung ke atas
+                    
+                    // Memeriksa apakah hasil pencarian tidak kosong
+                    const searchInput = $('.form-control').val(); // Mengambil nilai input pencarian
+                    if (!searchInput.trim()) {
+                        notFoundText.hide(); // Jika pencarian kosong, teks "Film tidak ditemukan" disembunyikan
+                    }
+                });
             }
         </script>
         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" data-interval="2000">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="assets/images/bg-film.jpg" class="d-block w-100" alt="Gambar 1">
+                <img src="assets/img/bg5.jpg" class="d-block w-100" alt="">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>Selamat Datang Di Bioskop Online</h5>
                     <p>Aplikasi Pemesanan Tiket Bioskop Online Berbasis Website</p>

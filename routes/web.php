@@ -67,12 +67,12 @@ Route::post('/logout', [App\Http\Controllers\LogoutController::class, 'logout'])
 
 /* Tiket */
 Route::get('/order', function () {
-    return view('user.tiket.order');
+    return view('user.order');
 });
 
 Route::get('/history', function () {
-    return view('user.tiket.history');
+    return view('user.history');
 });
 
-Route::get('/order', [OrderController::class, 'index']);
-Route::get('/history', [HistoryController::class, 'index']);
+Route::get('/order', [OrderController::class, 'index'])->name('order');
+Route::get('/history', [HistoryController::class, 'index'])->name('history');

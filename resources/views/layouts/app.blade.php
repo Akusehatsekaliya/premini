@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- BOOTSTRAP ICON -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" type="text/css" href="assets/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="assets/slick/slick-theme.css"/>
     <style>
         body {
             background-color: #011228; /* Ubah kode warna sesuai keinginan */
@@ -115,8 +113,8 @@
                             <a class="nav-link" href="/"><i class="bi bi-house-door"></i>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
-                        </li>
+                            <a class="nav-link @if( Request::is('login') || Request::is('register') || Request::is('order') || Request::is('history')) disabled @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
+                        </li>                        
                         <li class="nav-item">
                             <a class="nav-link" href="/order"><i class="bi bi-card-text"></i> Beli Tiket</a>
                         </li>
@@ -157,14 +155,12 @@
                     </ul>
                 </div>
             </div>
+        </nav>
 
+        <!-- Konten utama -->
         <main class="py-4">
             @yield('content')
         </main>
-
-        <footer>
-            <!-- Your footer content here -->
-        </footer>
     </div>
     <script>
         var prevScrollPos = window.pageYOffset;

@@ -47,6 +47,10 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
+        if(auth()->user()) {
+            return redirect()->route('/');
+        }
+
         // Periksa kredensial pengguna
         if (Auth::attempt($request->only('email', 'password'), $request->remember)) {
             // Login berhasil

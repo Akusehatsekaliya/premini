@@ -11,6 +11,11 @@
                 <div class="card-header" style="color: black">{{ __('Login') }}</div>
 
                 <div class="card-body">
+                    @if(session('warning'))
+                        <div class="alert alert-warning" role="alert">
+                            {{ session('warning') }}
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
