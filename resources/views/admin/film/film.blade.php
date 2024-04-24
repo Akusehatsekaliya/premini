@@ -9,66 +9,66 @@
    <!-- Button trigger modal -->
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Film</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Film</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('adminproses_film') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-froup">
+                        <label for="judul"> Judul </label>
+                        <input type="text" class="form-control" id="judul" name="judul" placeholder="Enter judul" value="{{ old('judul') }}">
+                        @error('name')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-froup">
+                        <label for="judul"> Film </label>
+                        <input type="file" class="form-control" id="film" name="film">
+                        @error('film')
+                        {{ $message }}
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="kursi_id" class="form-label"> Kursi </label><br>
+                        <select class="form-control" name="kursi_id" id="kursi_id">
+                            @foreach ($kursi as $k)
+                                <option value="{{ $k->id }}">{{ $k->kursi }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tiket_id" class="form-label">Jumlah Tiket </label><br>
+                        <select class="form-control" name="tiket_id" id="tiket_id">
+                            @foreach ($tiket as $t)
+                                <option value="{{ $t->id }}">{{ $t->stok }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggal" class="form-label"> Tanggal Tayang </label><br>
+                    <input type="date" class="form-control" name="tanggal" id="tanggal">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="deskripsi">Deskripsi</label>
+                        <textarea class="form-control" name="deskripsi" id="deskripsi"  ></textarea>
+                        @error('deskripsi')
+                        {{ $message }}
+                        @enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-body">
-            <form action="{{ route('adminproses_film') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="form-froup">
-                    <label for="judul"> Judul </label>
-                    <input type="text" class="form-control" id="judul" name="judul" placeholder="Enter judul" value="{{ old('judul') }}">
-                    @error('name')
-                         <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
-                <div class="form-froup">
-                    <label for="judul"> Film </label>
-                    <input type="file" class="form-control" id="film" name="film">
-                    @error('film')
-                    {{ $message }}
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="kursi_id" class="form-label"> Kursi </label><br>
-                    <select class="form-control" name="kursi_id" id="kursi_id">
-                        @foreach ($kursi as $k)
-                            <option value="{{ $k->id }}">{{ $k->kursi }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="tiket_id" class="form-label">Jumlah Tiket </label><br>
-                    <select class="form-control" name="tiket_id" id="tiket_id">
-                        @foreach ($tiket as $t)
-                            <option value="{{ $t->id }}">{{ $t->stok }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="tanggal" class="form-label"> Tanggal Tayang </label><br>
-                   <input type="date" class="form-control" name="tanggal" id="tanggal">
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="deskripsi">Deskripsi</label>
-                    <textarea class="form-control" name="deskripsi" id="deskripsi"  ></textarea>
-                    @error('deskripsi')
-                    {{ $message }}
-                    @enderror
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-              <button type="submit" class="btn btn-primary">Simpan</button>
-            </div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
     {{-- end  --}}
     <div class="content">
         <div class="row">
