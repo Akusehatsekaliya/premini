@@ -32,6 +32,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('admin.dashboard', FilmController::class);
+
 Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin'], function () {
 // halaman dasboard //
 Route::get('/dashboard', [FilmController::class, 'dashboard'])->name('dashboard');
@@ -61,7 +63,7 @@ Route::get('/Keuangan', [KeuanganController::class, 'keuangan'])->name('keuangan
 
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Route::post('/logout', [App\Http\Controllers\LogoutController::class, 'logout'])->name('logout');
 

@@ -82,6 +82,10 @@
             justify-content: center;
             align-items: center;
         }
+
+        .active-menu {
+            color: white !important; /* Warna teks putih */
+        }
     </style>
     <script>
         function toggleSearchForm() {
@@ -110,16 +114,16 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/"><i class="bi bi-house-door"></i>Home</a>
+                            <a class="nav-link @if(Request::is('/')) active-menu @endif" href="/"><i class="bi bi-house-door"></i>Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @if( Request::is('login') || Request::is('register') || Request::is('order') || Request::is('history')) disabled @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
+                            <a class="nav-link @if( Request::is('login') || Request::is('register') || Request::is('order') || Request::is('history')) disabled @endif  @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
                         </li>                        
                         <li class="nav-item">
-                            <a class="nav-link" href="/order"><i class="bi bi-card-text"></i> Beli Tiket</a>
+                            <a class="nav-link @if(Request::is('order')) active-menu @endif" href="/order"><i class="bi bi-card-text"></i> Beli Tiket</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/history"><i class="bi bi-clock-history"></i> History</a>
+                            <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
                         </li>
                         <!-- Bagian navbar -->
                         <li class="nav-item">
@@ -175,6 +179,19 @@
             }
             prevScrollPos = currentScrollPos;
         };
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var links = document.querySelectorAll('.nav-link');
+
+            links.forEach(function(link) {
+                link.addEventListener('click', function() {
+                    links.forEach(function(link) {
+                        link.classList.remove('active-menu');
+                    });
+                    this.classList.add('active-menu');
+                });
+            });
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
