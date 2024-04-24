@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kursi_id')->constrained('kursis');
             $table->foreignId('tiket_id')->constrained('tikets');
-            $table->foreignId('tanggal_id')->constrained('tanggals');
             $table->String('judul');
             $table->String('film');
+            $table->string('deskripsi');
+            $table->string('tanggal');
             $table->timestamps();
         });
     }

@@ -12,7 +12,9 @@ class Film extends Model
         "film",
         "kursi_id",
         "tiket_id",
-        "tanggal_id",
+        "tanggal",
+        "deskripsi",
+        "tanggal_id"
     ];
 
     public function Kursi(){

@@ -50,12 +50,15 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="tanggal_id" class="form-label"> Tanggal Tayang </label><br>
-                    <select class="form-control" name="tanggal_id" id="tanggal_id">
-                        @foreach ($tanggal as $t)
-                            <option value="{{ $t->id }}">{{ $t->tanggal }}</option>
-                        @endforeach
-                    </select>
+                    <label for="tanggal" class="form-label"> Tanggal Tayang </label><br>
+                   <input type="date" class="form-control" name="tanggal" id="tanggal">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="deskripsi">Deskripsi</label>
+                    <textarea class="form-control" name="deskripsi" id="deskripsi"  ></textarea>
+                    @error('deskripsi')
+                    {{ $message }}
+                    @enderror
                 </div>
             </div>
             <div class="modal-footer">
@@ -102,7 +105,7 @@
                         </div>
 
                       </div>
-                      <img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="200px" width="50px">
+                      <img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="200px" width="100px">
                     </div>
                   </div>
                   <div class="card-footer ">
@@ -111,9 +114,7 @@
                      x ditonton
                     </div>
                     {{-- icones --}}
-                    <div style="text-align: right ;">
-
-                        <span style="display: flex;">
+                    <div style="text-align: right ;display: flex;">
 
                                 <div id="btn-edit{{ $f->id }}" class="btn-edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621"/><path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/></g></svg>
@@ -129,8 +130,6 @@
                                     </a>
                                 </div>
 
-                        </span>
-
                     </div>
                     {{-- end icones --}}
 
@@ -143,12 +142,12 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('adminupdate_film', $f->id) }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('adminupdate_film',['id'=>$t->id]) }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-froup">
                                         <label for="judul"> Judul </label>
                                         <input type="text" class="form-control" id="judul" name="judul" value="{{ $f->judul }}">
-                                        @error('judul')
+                                        @error('name')
                                              <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
@@ -168,12 +167,23 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="kursi_id" class="form-label"> Tiket </label><br>
-                                        <select class="form-control" name="kursi_id" id="kursi_id">
+                                        <label for="tiket_id" class="form-label">Jumlah Tiket </label><br>
+                                        <select class="form-control" name="tiket_id" id="tiket_id">
                                             @foreach ($tiket as $t)
                                                 <option value="{{ $t->id }}">{{ $t->stok }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tanggal_id" class="form-label"> Tanggal Tayang </label><br>
+                                        <input type="date" class="form-control" name="tanggal" id="tanggal" value="{{ $f->tanggal }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="deskripsi">Deskripsi</label>
+                                        <textarea class="form-control" name="deskripsi" id="deskripsi">{{ $f ? $f->deskripsi : '' }}</textarea>
+                                        @error('deskripsi')
+                                        {{ $message }}
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -209,17 +219,17 @@
                                         <td></td>
                                         <td>:</td>
                                         <td></td>
-                                        <td>{{ $f->Tanggal->tanggal }}</td>
+                                        <td>{{ $f->tanggal }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Jumlah Tiket Yang Tersedia</td>
+                                        <td>Total Tiket</td>
                                         <td></td>
                                         <td>:</td>
                                         <td></td>
                                         <td>{{ $f->Tiket->stok }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Jumlah Kursi Yang Tersedia</td>
+                                        <td>Total Kursi</td>
                                         <td></td>
                                         <td>:</td>
                                         <td></td>
@@ -230,7 +240,7 @@
                                         <td></td>
                                         <td>:</td>
                                         <td></td>
-                                        <td>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe fugiat sunt quaerat nesciunt! Unde totam assumenda fuga earum culpa! Itaque?</td>
+                                        <td>{{ $f->deskripsi }}</td>
                                     </tr>
                                 </table>
                             </div>

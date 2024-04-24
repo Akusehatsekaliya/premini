@@ -16,6 +16,7 @@ class FilmController extends Controller
         $kursi = Kursi::get();
         $tiket = Tiket::get();
         $tanggal = Tanggal::get();
+
         return view('admin.film.film', compact('film', 'kursi', 'tiket', 'tanggal'));
     }
 
@@ -25,19 +26,20 @@ class FilmController extends Controller
 
     public function proses_film(Request $request){
 
-        // dd($request);
         $request->validate([
-            'judul' => 'required',
-            'film' => 'required',
-            'kursi_id' => 'required',
-            'tiket_id' => 'required',
-            'tanggal_id' => 'required',
+            'judul'        => 'required',
+            'film'         => 'required',
+            'kursi_id'     => 'required',
+            'tiket_id'     => 'required',
+            'tanggal'      => 'required',
+            'deskripsi'    => 'required',
         ],[
-            'judul.required' => 'Tidak boleh kosong',
-            'film.required'  => 'Tidak boleh kosong',
-            'kursi_id.required'  => 'Tidak boleh kosong',
-            'tiket_id.required'  => 'Tidak boleh kosong',
-            'tanggal_id.required'  => 'Tidak boleh kosong',
+            'judul.required'       => 'Tidak boleh kosong',
+            'film.required'        => 'Tidak boleh kosong',
+            'kursi_id.required'    => 'Tidak boleh kosong',
+            'tiket_id.required'    => 'Tidak boleh kosong',
+            'tanggal.required'     => 'Tidak boleh kosong',
+            'deskripsi.required'   => 'Tidak boleh kosong',
         ]);
 
 
@@ -48,11 +50,12 @@ class FilmController extends Controller
         Storage::disk('public')->put($path,file_get_contents($film));
 
         $akses = Film::create([
-            'judul' => $request->judul,
-            'film' => $filename,
-            'kursi_id' => $request->kursi_id,
-            'tiket_id' => $request->tiket_id,
-            'tanggal_id' => $request->tanggal_id,
+            'judul'      => $request->judul,
+            'film'       => $filename,
+            'deskripsi'  => $request->deskripsi,
+            'kursi_id'   => $request->kursi_id,
+            'tiket_id'   => $request->tiket_id,
+            'tanggal'    => $request->tanggal,
         ]);
 
         return back();
@@ -71,7 +74,7 @@ class FilmController extends Controller
 
             // Hapus objek alat dari basis data
             $deletefilm->delete();
-        }       
+        }
 
         return back();
     }
@@ -79,17 +82,19 @@ class FilmController extends Controller
     public function update_film(Request $request, $id)
     {
         $request->validate([
-            'judul' => 'required',
-            'film' => 'required',
-            'kursi_id' => 'required',
-            'tiket_id' => 'required',
-            'tanggal_id' => 'required',
+            'judul'      => 'required',
+            'film'       => 'required',
+            'deskripsi'  => 'required',
+            'kursi_id'   => 'required',
+            'tiket_id'   => 'required',
+            'tanggal'    => 'required',
         ],[
-            'judul.required' => 'Tidak boleh kosong',
-            'film.required'  => 'Tidak boleh kosong',
-            'kursi_id.required'  => 'Tidak boleh kosong',
-            'tiket_id.required'  => 'Tidak boleh kosong',
-            'tanggal_id.required'  => 'Tidak boleh kosong',
+            'judul.required'         => 'Tidak boleh kosong',
+            'film.required'          => 'Tidak boleh kosong',
+            'deskripsi.required'     => 'Tidak boleh kosong',
+            'kursi_id.required'      => 'Tidak boleh kosong',
+            'tiket_id.required'      => 'Tidak boleh kosong',
+            'tanggal.required'       => 'Tidak boleh kosong',
         ]);
 
 
@@ -111,7 +116,7 @@ class FilmController extends Controller
             }
 
             // Perbarui data film
-            $film->update($request->except('img'));
+            $film->update($request->except('film'));
         }
 
         return redirect()->route('adminfilm');

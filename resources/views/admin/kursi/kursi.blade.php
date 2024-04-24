@@ -73,7 +73,7 @@
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                Stok :
+
                 </div>
               </div>
             </div>
