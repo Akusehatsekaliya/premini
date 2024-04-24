@@ -28,7 +28,7 @@
         <h1>Form Pembelian Tiket</h1>
 
         <br>
-        <form action="/beli-tiket" method="POST">
+        <form action="/belitiket" method="POST">
             @csrf
             <div class="row justify-content-between">
                 <div class="form-group col-md-6">
@@ -64,11 +64,7 @@
                     <label for="studio" class="form-label">Jenis Studio</label>
                     <select class="form-control" id="studio" name="jenis_studio">
                         <option value="" selected>--Pilih Jenis Studio--</option>
-                        <option value="Reguler">Reguler</option>
-                        <option value="IMAX">IMAX</option>
-                        <option value="Premier">Premier</option>
-                        <option value="3D">3D</option>
-                        <option value="Dolby Atmos">Dolby Atmos</option>
+                        
                     </select>
                 </div>
             </div>
