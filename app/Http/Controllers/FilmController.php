@@ -8,11 +8,12 @@ use App\Models\Tanggal;
 use App\Models\Tiket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use illuminate\support\Facades\DB;
 
 class FilmController extends Controller
 {
     public function film(){
-        $film = Film::get();
+        $film = DB::table('films')->paginate(10);
         $kursi = Kursi::get();
         $tiket = Tiket::get();
         $tanggal = Tanggal::get();

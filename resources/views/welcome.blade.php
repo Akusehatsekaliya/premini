@@ -180,22 +180,15 @@
 
         <script>
             function searchFilm() {
-                // Dapatkan nilai input pencarian
                 const searchText = document.getElementById('searchText').value.toLowerCase();
                 
-                // Dapatkan daftar semua judul film
                 const filmTitles = Array.from(document.querySelectorAll('.film-title')).map(title => title.textContent.toLowerCase());
         
-                // Periksa apakah judul film yang dicari ada dalam daftar film
                 if (filmTitles.includes(searchText)) {
-                    // Jika ada, tampilkan pesan bahwa film ditemukan
                     alert(`Film "${searchText}" ditemukan!`);
-                    // Sembunyikan pesan "Film tidak ditemukan"
                     document.getElementById('noResultMessage').style.display = 'none';
                 } else {
-                    // Jika tidak, tampilkan pesan bahwa film tidak ditemukan
                     alert(`Film "${searchText}" tidak ditemukan.`);
-                    // Tampilkan pesan "Film tidak ditemukan"
                     document.getElementById('noResultMessage').style.display = 'block';
                 }
             }
@@ -249,21 +242,31 @@
             <p id="noResultMessage" style="display: none; color: red;">Film tidak ditemukan.</p>
     
             <div class="row mt-5">
-                <div class="col-md-4 mb-4">
-                    <div class="card bg-dark h-100">
-                        <img src="https://awsimages.detik.net.id/community/media/visual/2024/01/30/poster-badarawuhi.jpeg?w=1200" class="card-img-top rounded" alt="Film 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Badarawuhi Di Desa Penari</h5>
-                            <div class="rating">
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                            </div>
-                            <div class="rating">
-                                <?php
-                                    $ratingCount = 0; // Replace this with the actual count of ratings
+                <?php
+                $films = [
+                    
+                ];
+            
+                if (!empty($films))
+                foreach ($films as $film) {
+                    $filmTitle = $film['judul'];
+                    $filmImage = $film['film'];
+                    $ratingCount = $film['rating'];
+                    ?>
+                    <div class="col-md-4 mb-4">
+                        <div class="card bg-dark h-100">
+                            <img src="<?php echo $filmImage; ?>" class="card-img-top rounded" alt="<?php echo $filmTitle; ?>">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $filmTitle; ?></h5>
+                                <div class="rating">
+                                    <span class="star">&#9733;</span>
+                                    <span class="star">&#9733;</span>
+                                    <span class="star">&#9733;</span>
+                                    <span class="star">&#9733;</span>
+                                    <span class="star">&#9733;</span>
+                                </div>
+                                <div class="rating">
+                                    <?php
                                     if ($ratingCount > 0) {
                                         for ($i = 0; $i < $ratingCount; $i++) {
                                             echo '<span class="star">&#9733;</span>';
@@ -271,78 +274,21 @@
                                     } else {
                                         echo 'Belum ada rating';
                                     }
-                                ?>
+                                    ?>
+                                </div>
+                                <br>
+                                <a href="" class="btn btn-primary">Tonton</a>
+                                <a href="" class="btn btn-secondary">Beri Rating</a>
                             </div>
-                            <br>
-                            <a href="" class="btn btn-primary">Tonton</a>
-                            <a href="" class="btn btn-secondary">Beri Rating</a>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card bg-dark h-100">
-                        <img src="https://cdn.rri.co.id/berita/73/images/1709000459823-I/uc1yfk59rrhs0s7.jpeg" class="card-img-top rounded" alt="Film 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Agak Laen</h5>
-                            <div class="rating">
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                            </div>
-                            <div class="rating">
-                                <?php
-                                    $ratingCount = 0;
-                                    if ($ratingCount > 0) {
-                                        for ($i = 0; $i < $ratingCount; $i++) {
-                                            echo '<span class="star">&#9733;</span>';
-                                        }
-                                    } else {
-                                        echo 'Belum ada rating';
-                                    }
-                                ?>
-                            </div>
-                            <br>
-                            <a href="" class="btn btn-primary">Tonton</a>
-                            <a href="" class="btn btn-secondary">Beri Rating</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card bg-dark h-100">
-                        <img src="https://pbs.twimg.com/media/Fm1857KaAAEyl23.jpg" class="card-img-top rounded" alt="Film 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Rekaman Sebelum Ajal</h5>
-                            <div class="rating">
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                                <span class="star">&#9733;</span>
-                            </div>
-                            <div class="rating">
-                                <?php
-                                    $ratingCount = 0; // Replace this with the actual count of ratings
-                                    if ($ratingCount > 0) {
-                                        for ($i = 0; $i < $ratingCount; $i++) {
-                                            echo '<span class="star">&#9733;</span>';
-                                        }
-                                    } else {
-                                        echo 'Belum ada rating';
-                                    }
-                                ?>
-                            </div>
-                            <br>
-                            <a href="" class="btn btn-primary">Tonton</a>
-                            <a href="" class="btn btn-secondary">Beri Rating</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- Add more film cards here -->
-                <div class="d-flex justify-content-center mt-5">
-                    <a href="/daftarFilm" class="btn btn-primary">Lihat Lebih banyak FILM <i class="bi bi-arrow-right-short"></i></a>
-                </div>
+                <?php
+                } else {
+                    echo '<div class="col text-center">Tidak ada data film.</div>';
+                }
+                ?>
+                <!-- Pagination -->
+                
             </div>
         </div>
 
