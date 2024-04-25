@@ -9,24 +9,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="">
-            <div class="form-group">
-                <label for="" class="fprm-label">Studio</label>
-                <input type="text" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="" class="form-label">Jumlah tiket</label>
-                <input type="text" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="" class="form-label">Tempat duduk</label>
-                <input type="text" class="form-control">
-            </div>
-            <div class="form-group">
-                <label for="" class="form-label">Pembayaran</label>
-                <input type="text" class="form-control">
-            </div>
-          </form>
+            <p>hay</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
