@@ -122,10 +122,18 @@ Coded by www.creative-tim.com
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                <form id="logout-form" style="margin-top: 7px" action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" onclick="return confirm('Apakah yakin untuk logout?')">Logout</button>
+                    <button type="submit" class="dropdown-item">Logout</button>
                 </form>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn-rotate" href="javascript:;">
+                  <i class="nc-icon nc-settings-gear-65"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Account</span>
+                  </p>
+                </a>
               </li>
             </ul>
           </div>
