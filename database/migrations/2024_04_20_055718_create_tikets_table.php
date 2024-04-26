@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('tikets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('film_id')->constrained('films');
             $table->string('tiket');
             $table->string('stok');
+            $table->String('harga');
             $table->timestamps();
         });
     }

@@ -46,6 +46,8 @@ Route::DELETE('/hapus Tiket/{id}', [TiketController::class, 'delete_tiket'])->na
 // halaman kursi //
 Route::get('/kursi', [KursiController::class, 'kursi'])->name('kursi');
 Route::post('/tambahkursi', [KursiController::class, 'proses_kursi'])->name('proses_kursi');
+Route::post('/update/{id}', [KursiController::class, 'update_kursi'])->name('update_kursi');
+Route::DELETE('/hapus/{id}', [KursiController::class, 'delete_kursi'])->name('delete_kursi');
 // halaman tanggal //
 Route::get('/tanggal', [TanggalController::class, 'tanggal'])->name('tanggal');
 Route::post('/tambahjadwal', [TanggalController::class, 'proses_tanggal'])->name('proses_tanggal');

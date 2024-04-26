@@ -27,18 +27,17 @@ class FilmController extends Controller
 
     public function proses_film(Request $request){
 
+
         $request->validate([
             'judul'        => 'required',
             'film'         => 'required',
             'kursi_id'     => 'required',
-            'tiket_id'     => 'required',
             'tanggal'      => 'required',
             'deskripsi'    => 'required',
         ],[
             'judul.required'       => 'Tidak boleh kosong',
             'film.required'        => 'Tidak boleh kosong',
             'kursi_id.required'    => 'Tidak boleh kosong',
-            'tiket_id.required'    => 'Tidak boleh kosong',
             'tanggal.required'     => 'Tidak boleh kosong',
             'deskripsi.required'   => 'Tidak boleh kosong',
         ]);
@@ -55,7 +54,6 @@ class FilmController extends Controller
             'film'       => $filename,
             'deskripsi'  => $request->deskripsi,
             'kursi_id'   => $request->kursi_id,
-            'tiket_id'   => $request->tiket_id,
             'tanggal'    => $request->tanggal,
         ]);
 
@@ -87,14 +85,12 @@ class FilmController extends Controller
             'film'       => 'required',
             'deskripsi'  => 'required',
             'kursi_id'   => 'required',
-            'tiket_id'   => 'required',
             'tanggal'    => 'required',
         ],[
             'judul.required'         => 'Tidak boleh kosong',
             'film.required'          => 'Tidak boleh kosong',
             'deskripsi.required'     => 'Tidak boleh kosong',
             'kursi_id.required'      => 'Tidak boleh kosong',
-            'tiket_id.required'      => 'Tidak boleh kosong',
             'tanggal.required'       => 'Tidak boleh kosong',
         ]);
 

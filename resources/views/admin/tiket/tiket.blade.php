@@ -12,6 +12,14 @@
         <div class="modal-body">
             <form action="{{ route('adminproses_tiket') }}" method="post">
                 @csrf
+                <div class="form-group">
+                    <label for="film_id" class="form-label"> Nama Film </label><br>
+                    <select class="form-control" name="film_id" id="film_id">
+                        @foreach ($film as $f)
+                            <option value="{{ $f->id }}">{{ $f->judul }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="form-froup">
                     <label for="tiket"> Nama Tiket </label>
                     <input type="text" class="form-control" id="tiket" name="tiket" placeholder="Enter nama tiket" value="{{ old('tiket') }}">
@@ -23,6 +31,13 @@
                     <label for="stok"> Stok </label>
                     <input type="number" class="form-control" id="stok" name="stok" placeholder="isi jumlah stok">
                     @error('stok')
+                    <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+                <div class="form-froup">
+                    <label for="harga"> Harga </label>
+                    <input type="text" class="form-control" id="harga" name="harga" placeholder="isi jumlah harga">
+                    @error('harga')
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
@@ -130,25 +145,39 @@
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table">
+                <tr>
                     <thead class=" text-primary">
+                        <th>
+                            Nama Film
+                        </th>
                       <th>
                          Nama Tiket
                       </th>
                       <th>
                         Stok
                       </th>
+                      <th>
+                        Harga
+                      </th>
                       <th class="text-center">
                         Aksi
                       </th>
                     </thead>
+                </tr>
                     @foreach ($tiket as $t)
                     <tbody>
                       <tr>
+                        <td>
+                            {{ $t->Film->judul }}
+                        </td>
                         <td>
                            {{ $t->tiket }}
                         </td>
                         <td>
                           {{ $t->stok }}
+                        </td>
+                        <td>
+                            {{ $t->harga }}
                         </td>
                         <td class="text-center">
                            <div id="btn-edit{{ $t->id }}" class="btn-edit">
@@ -194,6 +223,14 @@
                             <div class="modal-body">
                                 <form action="{{ route('adminupdate_tiket',['id'=>$t->id]) }}" method="post">
                                     @csrf
+                                    <div class="form-group">
+                                        <label for="film_id" class="form-label"> Nama Film </label><br>
+                                        <select class="form-control" name="film_id" id="film_id">
+                                            @foreach ($film as $f)
+                                                <option value="{{ $f->id }}">{{ $f->judul }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="form-froup">
                                         <label for="tiket"> Nama Tiket </label>
                                         <input type="text" class="form-control" id="tiket" name="tiket" value="{{ $t->tiket }}" value="{{ old('tiket') }}">
@@ -205,6 +242,13 @@
                                         <label for="stok"> Stok </label>
                                         <input type="number" class="form-control" id="stok" name="stok" value="{{ $t->stok }}">
                                         @error('stok')
+                                        <small class="text-danger">{{ $message }}</small>
+                                        @enderror
+                                    </div>
+                                    <div class="form-froup">
+                                        <label for="harga"> Harga </label>
+                                        <input type="number" class="form-control" id="harga" name="harga" placeholder="isi jumlah harga">
+                                        @error('harga')
                                         <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>

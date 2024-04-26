@@ -42,14 +42,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="tiket_id" class="form-label">Jumlah Tiket </label><br>
-                        <select class="form-control" name="tiket_id" id="tiket_id">
-                            @foreach ($tiket as $t)
-                                <option value="{{ $t->id }}">{{ $t->stok }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="tanggal" class="form-label"> Tanggal Tayang </label><br>
                     <input type="date" class="form-control" name="tanggal" id="tanggal">
                     </div>
@@ -142,7 +134,7 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{ route('adminupdate_film',['id'=>$t->id]) }}" method="post" enctype="multipart/form-data">
+                                <form action="{{ route('adminupdate_film',['id'=>$f->id]) }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-froup">
                                         <label for="judul"> Judul </label>
@@ -163,14 +155,6 @@
                                         <select class="form-control" name="kursi_id" id="kursi_id">
                                             @foreach ($kursi as $k)
                                                 <option value="{{ $k->id }}">{{ $k->kursi }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tiket_id" class="form-label">Jumlah Tiket </label><br>
-                                        <select class="form-control" name="tiket_id" id="tiket_id">
-                                            @foreach ($tiket as $t)
-                                                <option value="{{ $t->id }}">{{ $t->stok }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -215,18 +199,18 @@
                                         <td>{{ $f->judul }}</td>
                                     </tr>
                                     <tr>
+                                        <td>p</td>
+                                        <td></td>
+                                        <td>:</td>
+                                        <td></td>
+                                        <td><img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="70px" width="100px"></td>
+                                    </tr>
+                                    <tr>
                                         <td>Tayang Film</td>
                                         <td></td>
                                         <td>:</td>
                                         <td></td>
                                         <td>{{ $f->tanggal }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Tiket</td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td>{{ $f->Tiket->stok }}</td>
                                     </tr>
                                     <tr>
                                         <td>Total Kursi</td>
@@ -282,18 +266,18 @@
     </div>
 @endsection
 {{-- end --}}
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-<script>
-    $('.btn-detail').click(function() {
-        $('#Modaldetail').modal('show');
-    })
-</script>
-<script>
-    $('.btn-edit').click(function() {
-        $('#ModalEdit').modal('show');
-    })
-  </script>
-@endsection
+    @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script>
+        $('.btn-detail').click(function() {
+            $('#Modaldetail').modal('show');
+        })
+    </script>
+    <script>
+        $('.btn-edit').click(function() {
+            $('#ModalEdit').modal('show');
+        })
+    </script>
+    @endsection
