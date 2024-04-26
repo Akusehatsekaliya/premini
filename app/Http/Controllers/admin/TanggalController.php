@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Models\Tanggal;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class TanggalController extends Controller
 {
@@ -59,7 +60,7 @@ class TanggalController extends Controller
             'jam.required' => 'Jam tidak boleh kosong',
 
         ]);
-        
+
         $data = [
             'hari' => $request->hari,
             'tanggal' => $request->tanggal,

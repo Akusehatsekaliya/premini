@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\FilmController;
+use App\Http\Controllers\admin\MapController;
+use App\Http\Controllers\admin\FilmController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\KeuanganController;
-use App\Http\Controllers\KursiController;
-use App\Http\Controllers\MapController;
-use App\Http\Controllers\TanggalController;
-use App\Http\Controllers\TiketController;
-use App\Http\Controllers\OrderController;
-use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\admin\KeuanganController;
+use App\Http\Controllers\admin\KursiController;
+use App\Http\Controllers\admin\TanggalController;
+use App\Http\Controllers\admin\TiketController;
+use App\Http\Controllers\user\OrderController;
+use App\Http\Controllers\user\HistoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

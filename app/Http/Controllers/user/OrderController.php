@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\user;
 
 use App\Models\Film;
 use App\Models\Kursi;
 use App\Models\Tiket;
+use Illuminate\Routing\Controller;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 

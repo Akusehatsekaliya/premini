@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use App\Models\Tiket;
 
 class TiketController extends Controller

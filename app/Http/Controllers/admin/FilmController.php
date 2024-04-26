@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
 use App\Models\Film;
 use App\Models\Kursi;
@@ -8,12 +8,12 @@ use App\Models\Tanggal;
 use App\Models\Tiket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use illuminate\support\Facades\DB;
+use Illuminate\Routing\Controller;
 
 class FilmController extends Controller
 {
     public function film(){
-        $film = DB::table('films')->paginate(10);
+        $film = Film::get();
         $kursi = Kursi::get();
         $tiket = Tiket::get();
         $tanggal = Tanggal::get();
