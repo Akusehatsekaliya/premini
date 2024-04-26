@@ -122,31 +122,10 @@ Coded by www.creative-tim.com
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="navbar-nav">
               <li class="nav-item">
-<<<<<<< HEAD
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" onclick="return confirm('Apakah yakin untuk logout?')">Logout</button>
+                    <svg onclick="return confirm('Apakah yakin untuk logout?')" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 12h9m0 0l-3.333-4M22 12l-3.333 4M14 7V5.174a2 2 0 0 0-2.166-1.993l-8 .666A2 2 0 0 0 2 5.84v12.32a2 2 0 0 0 1.834 1.993l8 .667A2 2 0 0 0 14 18.826V17"/></svg>
                 </form>
-=======
-                <a class="nav-link btn-magnify" href="javascript:;">
-                  <i class="nc-icon nc-layout-11"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </a>
-              </li>
-              <form id="logout-form" style="margin-top: 7px" action="{{ route('logout') }}" method="POST">
-                @csrf
-                <button type="submit" class="dropdown-item">Logout</button>
-            </form>
-              <li class="nav-item">
-                <a class="nav-link btn-rotate" href="javascript:;">
-                  <i class="nc-icon nc-settings-gear-65"></i>
-                  <p>
-                    <span class="d-lg-none d-md-block">Account</span>
-                  </p>
-                </a>
->>>>>>> b3dcb8b3c8fe96ffbf9ff063a667453be058083a
               </li>
             </ul>
           </div>
