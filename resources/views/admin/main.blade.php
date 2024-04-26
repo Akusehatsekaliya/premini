@@ -122,11 +122,23 @@ Coded by www.creative-tim.com
           <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <form id="logout-form" style="margin-top: 7px" action="{{ route('logout') }}" method="POST">
+<<<<<<< HEAD
+                <form id="logout-form" action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <button type="submit" class="dropdown-item">Logout</button>
+                    <button type="submit" onclick="return confirm('Apakah yakin untuk logout?')">Logout</button>
                 </form>
+=======
+                <a class="nav-link btn-magnify" href="javascript:;">
+                  <i class="nc-icon nc-layout-11"></i>
+                  <p>
+                    <span class="d-lg-none d-md-block">Stats</span>
+                  </p>
+                </a>
               </li>
+              <form id="logout-form" style="margin-top: 7px" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="dropdown-item">Logout</button>
+            </form>
               <li class="nav-item">
                 <a class="nav-link btn-rotate" href="javascript:;">
                   <i class="nc-icon nc-settings-gear-65"></i>
@@ -134,6 +146,7 @@ Coded by www.creative-tim.com
                     <span class="d-lg-none d-md-block">Account</span>
                   </p>
                 </a>
+>>>>>>> b3dcb8b3c8fe96ffbf9ff063a667453be058083a
               </li>
             </ul>
           </div>
