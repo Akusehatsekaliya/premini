@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -28,6 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
+
     protected $redirectTo = '/';
 
     /**
@@ -43,23 +44,26 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+        ]);        
 
-        if(auth()->user()) {
-            return redirect()->route('/');
+        // Periksa apakah email terdaftar
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            // Jika email belum terdaftar, tambahkan pesan kesalahan
+            return redirect()->back()->withErrors([
+                'email' => 'Email belum terdaftar',
+            ]);
         }
 
-        // Periksa kredensial pengguna
+        // Lakukan login pengguna jika email dan password valid
         if (Auth::attempt($request->only('email', 'password'), $request->remember)) {
-            // Login berhasil
             return redirect()->intended('/');
         } else {
-            // Login gagal, tambahkan pesan kesalahan
             if (User::where('email', $request->email)->exists()) {
                 return redirect()->back()->withErrors([
-                    'password' => 'Password Anda salah',
+                    'password' => 'Kata sandi salah',
                 ])->withInput($request->except('password'));
             } else {
                 return redirect()->back()->withErrors([

@@ -165,6 +165,10 @@
         <main class="py-4">
             @yield('content')
         </main>
+
+        <footer>
+            <!-- Your footer content here -->
+        </footer>
     </div>
     <script>
         var prevScrollPos = window.pageYOffset;
@@ -179,19 +183,6 @@
             }
             prevScrollPos = currentScrollPos;
         };
-
-        document.addEventListener("DOMContentLoaded", function() {
-            var links = document.querySelectorAll('.nav-link');
-
-            links.forEach(function(link) {
-                link.addEventListener('click', function() {
-                    links.forEach(function(link) {
-                        link.classList.remove('active-menu');
-                    });
-                    this.classList.add('active-menu');
-                });
-            });
-        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"

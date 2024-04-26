@@ -3,3 +3,11 @@
 body {
     font-family: "Poppins", sans-serif;
 }
+
+.hero {
+    background-image: url('../../assets/images/bg-film.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Tinggi layar penuh */
+}

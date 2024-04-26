@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Film;
 use App\Models\Kursi;
 use App\Models\Tiket;
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller

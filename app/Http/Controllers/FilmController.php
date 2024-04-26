@@ -123,4 +123,3 @@ class FilmController extends Controller
         return redirect()->route('adminfilm');
     }
 }
-

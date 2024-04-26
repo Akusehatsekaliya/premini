@@ -12,11 +12,6 @@ use App\Http\Controllers\HistoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
-
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,8 +29,9 @@ Route::get('/', function () {
 
 Route::resource('admin.dashboard', FilmController::class);
 
+
 Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin'], function () {
-// halaman dasboard //
+    // halaman dasboard //
 Route::get('/dashboard', [FilmController::class, 'dashboard'])->name('dashboard');
 // halaman film //
 Route::get('/film', [FilmController::class, 'film'])->name('film');
@@ -63,7 +59,9 @@ Route::get('/Keuangan', [KeuanganController::class, 'keuangan'])->name('keuangan
 
 Auth::routes();
 
+
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
+
 
 Route::post('/logout', [App\Http\Controllers\LogoutController::class, 'logout'])->name('logout');
 

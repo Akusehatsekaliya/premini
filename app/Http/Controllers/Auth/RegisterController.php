@@ -51,7 +51,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users', 'unique'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'password_confirmation' => ['required', 'string'],
         ], [
@@ -61,6 +61,7 @@ class RegisterController extends Controller
             'password_confirmation.required' => 'Konfirmasi password tidak boleh kosong.',
         ]);
     }
+
 
     /**
      * Create a new user instance after a valid registration.
