@@ -1,17 +1,3 @@
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +33,7 @@ Coded by www.creative-tim.com
           <!-- <p>CT</p> -->
         </a>
         <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+          Admin Bioskop
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->
@@ -55,46 +41,40 @@ Coded by www.creative-tim.com
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="active ">
+          <li class="active">
             <a href="{{ route('adminfilm') }}">
               <i class="nc-icon nc-tv-2"></i>
               <p>Film</p>
             </a>
           </li>
-          <li>
+          <li class="active">
             <a href="{{ route('adminkursi') }}">
                 <i class="nc-icon nc-box-2"></i>
               <p>Kursi</p>
             </a>
           </li>
-          <li>
+          <li class="active">
             <a href="{{ route('adminmap') }}">
               <i class="nc-icon nc-pin-3"></i>
               <p>Maps</p>
             </a>
           </li>
-          <li>
+          <li class="active">
             <a href="{{ route('admintiket') }}">
                 <i class="nc-icon nc-tag-content"></i>
               <p>Tiket</p>
             </a>
           </li>
-          <li>
+          <li class="active">
             <a href="{{ route('admintanggal') }}">
               <i class="nc-icon nc-caps-small"></i>
               <p>Tanggal Tayang</p>
             </a>
           </li>
-          <li>
+          <li class="active">
             <a href="{{ route('adminkeuangan') }}">
               <i class="nc-icon nc-credit-card"></i>
               <p>Laporan Keuangan</p>
-            </a>
-          </li>
-          <li class="active-pro">
-            <a href="./upgrade.html">
-              <i class="nc-icon nc-spaceship"></i>
-              <p>Upgrade to PRO</p>
             </a>
           </li>
         </ul>
@@ -137,26 +117,7 @@ Coded by www.creative-tim.com
       @yield('content')
       <!-- End content -->
 
-      <footer class="footer footer-black  footer-white ">
-        <div class="container-fluid">
-          <div class="row">
-            <nav class="footer-nav">
-              <ul>
-                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
-              </ul>
-            </nav>
-            <div class="credits ml-auto">
-              <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      
     </div>
   </div>
   <!--   Core JS Files   -->
@@ -178,6 +139,17 @@ Coded by www.creative-tim.com
     $(document).ready(function() {
       // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
       demo.initChartsPages();
+    });
+
+    var currentLocation = window.location.href;
+  
+    $('.sidebar-wrapper ul.nav li').each(function() {
+      var link = $(this).find('a').attr('href');
+      if (currentLocation.indexOf(link) !== -1) {
+        $(this).addClass('active');
+      } else {
+        $(this).removeClass('active');
+      }
     });
   </script>
 </body>

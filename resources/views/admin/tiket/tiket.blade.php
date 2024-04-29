@@ -137,7 +137,7 @@
           <div class="col-md-12">
             <div class="card card-plain">
               <div class="card-header">
-                <h4 class="card-title"> Table on Plain Background</h4>
+                <h4 class="card-title"> Tabel Tiket</h4>
                 <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <p class="card-category"> Tambah</p>
                 </a>
@@ -164,8 +164,13 @@
                       </th>
                     </thead>
                 </tr>
+                <tbody>
+                  @if($tiket->isEmpty())
+                  <tr>
+                      <td colspan="4" style="text-align:center;">Data masih kosong</td>
+                  </tr>
+                  @else
                     @foreach ($tiket as $t)
-                    <tbody>
                       <tr>
                         <td>
                             {{ $t->Film->judul }}
@@ -263,9 +268,10 @@
                         </div>
                       </div>
                     </tbody>
-              @endforeach
+                  @endforeach
                   </table>
                 </div>
+                @endif
               </div>
             </div>
           </div>

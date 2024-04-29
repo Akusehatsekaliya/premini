@@ -115,8 +115,13 @@
                     Aksi
                   </th>
                 </thead>
-                @foreach ($tanggal as $t)
                 <tbody>
+                @if($tanggal->isEmpty())
+                <tr>
+                    <td colspan="4" style="text-align:center;">Data masih kosong</td>
+                </tr>
+                @else
+                @foreach ($tanggal as $t)
                   <tr>
                     <td>
                        {{ $t->hari }}
@@ -189,7 +194,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>Apakah kamu yakin ingin menghapus data admin <b>{{ $t->hari}}</b></p>
+                          <p>Apakah kamu yakin ingin menghapus data <b>{{ $t->hari}}</b></p>
                         </div>
                         <div class="modal-footer justify-content-between">
                           <form action="{{ route('admindelete_tanggal',['id' => $t->id]) }}" method="POST">
@@ -208,6 +213,7 @@
                 @endforeach
               </table>
             </div>
+            @endif
           </div>
         </div>
       </div>
