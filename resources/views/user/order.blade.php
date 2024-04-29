@@ -9,11 +9,44 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <p>hay</p>
+            <form action="">
+                <div class="form-group">
+                    <label for="" class="form-label">Nama</label>
+                    <input type="text" class="form-control" name="nama" placeholder="masukkan nama">
+                </div>
+                <div class="form-group">
+                    <label for="" class="form-label">Email</label>
+                    <input type="text" class="form-control" name="nama" placeholder="masukkan nama">
+                </div>
+            </form>
+            <br>
+            <p style="font-weight: bold; text-decoration : underline; padding-bottom: 10px;">Pilih Metode Pembayaran</p>
+        <div class="form-group">
+            <p style="font-weight:bold ">BRIVA</p>
+            <table>
+                <tr>
+                    <td style="padding: 10px">
+                        <a href="">
+                             <img src="{{ asset('assets/img/bri.jpg') }}" alt="" height="70px" height="70px">
+                        </a>
+                    </td>
+                    <td style="padding: 10px"><img src="{{ asset('assets/img/R.png') }}" alt="" height="70px" height="70px"></td>
+                    <td><img src="{{ asset('assets/img/man.png') }}" alt="" height="100px" height="100px"></td>
+                </tr>
+            </table>
+            <p style="font-weight:bold ">E WALET</p>
+            <table>
+                <tr>
+                    <td style="padding: 25px"><img src="{{ asset('assets/img/q.png') }}" alt="" height="30px" height="30px"></td>
+                    <td style="padding: 20px"><img src="{{ asset('assets/img/ovo.jpeg') }}" alt="" height="70px" height="70px"></td>
+                    <td style="padding: 20px"><img src="{{ asset('assets/img/s.png') }}" alt="" height="50px" height="50px    "></td>
+                </tr>
+            </table>
+        </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-          <button type="button" class="btn btn-primary">Bayar</button>
+          <button type="button" class="btn btn-primary">Lanjut</button>
         </div>
       </div>
     </div>
