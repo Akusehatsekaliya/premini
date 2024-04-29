@@ -85,13 +85,9 @@
                     <label for="studio" class="form-label">Jenis Studio</label>
                     <select class="form-control" id="studio" name="jenis_studio">
                         <option value="" selected>--Pilih Jenis Studio--</option>
-<<<<<<< HEAD
                        @foreach ($tiket as $s)
                         <option value="{{ $f->id }}">{{ $s->tiket }}</option>
                        @endforeach
-=======
-
->>>>>>> 4a76b36c192b2584d975ca1b4230a0c87831bf49
                     </select>
                 </div>
                 <div class="form-group col-md-6">
