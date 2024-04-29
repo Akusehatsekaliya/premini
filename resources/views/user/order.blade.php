@@ -105,13 +105,12 @@
                     </select>
                 </div>
                 <div class="form-group col-md-6">
+                    <label for="tiket" class="form-label"> Jumlah Tiket</label>
                         @foreach ($tiket as $t)
-                            <label for="" class="form-label"> Jumlah Tiket</label>
                             <input type="text" class="form-control" value="{{ $t->stok }}" disabled>
                         @endforeach
                 </div>
             </div>
-
             <br>
             <div class="row justify-content-between">
                 <div class="form-group col-md-6">
@@ -129,6 +128,7 @@
                     <div id="ticketQuantityWarning" style="display: none; color: red;">Pesan peringatan</div>
                 </div>
             </div>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-steps/1.1.0/jquery.steps.min.js" integrity="sha512-bE0ncA3DKWmKaF3w5hQjCq7ErHFiPdH2IGjXRyXXZSOokbimtUuufhgeDPeQPs51AI4XsqDZUK7qvrPZ5xboZg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
                 <script>
                     function checkTicketQuantity() {
