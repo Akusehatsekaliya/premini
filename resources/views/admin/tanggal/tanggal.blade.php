@@ -20,20 +20,14 @@
                          <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group">
-                  <label for="tanggal">Tanggal</label>
-                  <input type="date" class="form-control" id="tanggal" name="tanggal">
-                  <small id="formatted-date" class="text-muted"></small>
-                </div>
-                
-                <script>
-                    document.getElementById('tanggal').addEventListener('input', function() {
-                        var inputDate = new Date(this.value);
-                        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                        var formattedDate = inputDate.toLocaleDateString('id-ID', options);
-                        document.getElementById('formatted-date').textContent = formattedDate;
-                    });
-                </script>              
+                <div class="form-froup">
+                    <label for="tanggal">Tanggal</label>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal" value="{{ date('Y-m-d') }}">
+                    <small class="text-muted">{{ date('d F, Y') }}</small>
+                    @error('tanggal')
+                    <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                </div>              
                 <div class="form-froup">
                     <label for="judul"> Jam Tayang </label>
                     <input type="time" class="form-control" id="jam" name="jam" placeholder="Enter jam" value="{{ old('jam') }}">
