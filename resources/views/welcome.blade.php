@@ -252,37 +252,35 @@
     
             <p id="noResultMessage" style="display: none; color: red;">Film tidak ditemukan.</p>
     
-            <div class="row mt-5">
-                <?php
-                $films = [
-                    
-                ];
-            
-                if (!empty($films))
-                foreach ($films as $f) {
-                    
-                    {{ $f->judul }}
-                    $film = $f['film'];
-                    $kursi = $f['kursi_id'];
-                    $deskripsi = $f['deskripsi'];
+            <?php 
+            $conn = new mysqli('localhost','root','','premini');
+
+            $sql = "SELECT kursi_id, judul, film, deskripsi FROM films";
+            $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
+                // Output data of each row
+                while($row = $result->fetch_assoc()) {
+                    $judul = $row['judul'];
+                    $deskripsi = $row['deskripsi'];
                     ?>
                     <div class="col-md-4 mb-4">
                         <div class="card bg-dark h-100">
-                            <img src="<?php echo $f; ?>" class="card-img-top rounded" alt="<?php echo $film; ?>">
+                            <!-- Assuming you don't have images in the database, you can skip the image part or provide a default image -->
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $judul; ?></h5>
-                                <br>
-                                <a href="" class="btn btn-primary">Tonton</a>
-                                <a href="" class="btn btn-secondary">Beri Rating</a>
+                                <p class="card-text"><?php echo $deskripsi; ?></p>
+                                <a href="#" class="btn btn-primary">Tonton</a>
+                                <!-- Remove the rating button -->
                             </div>
                         </div>
                     </div>
                 <?php
-                } else {
-                    echo '<div class="col text-center">Tidak ada data film.</div>';
                 }
-                ?>
-                <!-- Pagination -->
+            } else {
+                echo '<div class="col text-center">Tidak ada data film.</div>';
+            }
+            $conn->close();
+            ?>
                 
             </div>
         </div>
