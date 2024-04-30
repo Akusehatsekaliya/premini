@@ -57,6 +57,15 @@
             </div>
         </div>
         {{-- end col --}}
+        @if ($kursi->isEmpty())
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Data masih kosong</h5>
+                    </div>
+                </div>
+            </div>
+        @else
         @foreach ($kursi as $k)
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
@@ -147,6 +156,7 @@
               </div>
           {{-- end --}}
         @endforeach
+        @endif
     </div>
 </div>
 @endsection

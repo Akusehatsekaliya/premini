@@ -121,16 +121,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="bi bi-house-door"></i>Home</a>
+                        <a class="nav-link @if(Request::is('/')) active-menu @endif" href="/"><i class="bi bi-house-door"></i>Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
+                        <a class="nav-link @if( Request::is('login') || Request::is('register') || Request::is('order') || Request::is('history')) disabled @endif  @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
+                    </li>                        
+                    <li class="nav-item">
+                        <a class="nav-link @if(Request::is('order')) active-menu @endif" href="/order"><i class="bi bi-card-text"></i> Beli Tiket</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/order"><i class="bi bi-card-text"></i> Beli Tiket</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/history"><i class="bi bi-clock-history"></i> History</a>
+                        <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
                     </li>
                     <!-- Bagian navbar -->
                     <li class="nav-item">
@@ -147,12 +147,22 @@
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="userDropdown" style="transform: translateY(-10px); left: 0;">
                                         <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                                        <li>
+                                        <li class="border-t border-white-light dark:border-white-light/10">
                                             <form action="{{ route('logout') }}" method="POST">
                                                 @csrf
-                                                <button type="submit" class="dropdown-item">Logout</button>
+                                                <button type="submit" class="dropdown-item text-danger">
+                                                    <svg class="h-4.5 w-4.5 rotate-90 ltr:mr-5 rtl:ml-2" width="18" height="18"
+                                                        viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.5"
+                                                            d="M17 9.00195C19.175 9.01406 20.3529 9.11051 21.1213 9.8789C22 10.7576 22 12.1718 22 15.0002V16.0002C22 18.8286 22 20.2429 21.1213 21.1215C20.2426 22.0002 18.8284 22.0002 16 22.0002H8C5.17157 22.0002 3.75736 22.0002 2.87868 21.1215C2 20.2429 2 18.8286 2 16.0002L2 15.0002C2 12.1718 2 10.7576 2.87868 9.87889C3.64706 9.11051 4.82497 9.01406 7 9.00195"
+                                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                        <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="currentColor"
+                                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    </svg>
+                                                    Log out
+                                                </button>
                                             </form>
-                                        </li>
+                                        </li>                                        
                                     </ul>
                                 </div>
                             @else
@@ -249,16 +259,17 @@
                 ];
             
                 if (!empty($films))
-                foreach ($films as $film) {
-                    $filmTitle = $film['judul'];
-                    $filmImage = $film['film'];
-                    $ratingCount = $film['rating'];
+                foreach ($films as $f) {
+                    $judul = $f['judul'];
+                    $film = $f['film'];
+                    $stok = $f['stok'];
+                    $deskripsi = $f['deskripsi']
                     ?>
                     <div class="col-md-4 mb-4">
                         <div class="card bg-dark h-100">
-                            <img src="<?php echo $filmImage; ?>" class="card-img-top rounded" alt="<?php echo $filmTitle; ?>">
+                            <img src="<?php echo $f; ?>" class="card-img-top rounded" alt="<?php echo $judul; ?>">
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo $filmTitle; ?></h5>
+                                <h5 class="card-title"><?php echo $judul; ?></h5>
                                 <div class="rating">
                                     <span class="star">&#9733;</span>
                                     <span class="star">&#9733;</span>
@@ -295,53 +306,11 @@
 
     </section>
  
- <!-- SINOPSIS -->
- <section id="sinopsis">
-     <div class="container py-5">
-         <h1 class="title-section text-center">FILM TERLARIS</h1>
-         
-         <div class="row d-flex justify-content-center">
-             <div class="col-md-6">
-                 <div class="sinopsis-text">
-                     <h1>Gundala</h1>
-                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto, quisquam, deleniti fugit
-                         perferendis assumenda, libero earum eum enim tempore ducimus numquam kebutuhan...</p>
-                     <div class="mt-5">
-                         <a href="/tonton" class="btn btn-outline-primary">NONTON</a>
-                         <a href="/detail" class="btn btn-outline-secondary">DETAIL FILM</a>
-                     </div>
-                 </div>
-             </div>
-             <div class="col-md-6">
-                 <div class="card-sinopsis text-center">
-                     <img src="https://m.media-amazon.com/images/M/MV5BYWRlMTQzMzktMzdkMC00ZjU4LWI1ODEtOTA1ZGE0NGU1MmM0XkEyXkFqcGdeQXVyNDA1NDA2NTk@._V1_.jpg" alt="Gundala" style="width: 100%; height: auto; max-width: 300px;">
-                 </div>
-             </div>
-         </div>
- 
-         <div class="row d-flex justify-content-center mt-5">
-             <div class="col-md-6">
-                 <div class="sinopsis-text">
-                     <h1>Gatot Kaca</h1>
-                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto, quisquam, deleniti fugit
-                         perferendis assumenda, libero earum eum enim tempore ducimus numquam kebutuhan...</p>
-                     <div class="mt-5">
-                         <a href="/tonton" class="btn btn-outline-primary">NONTON</a>
-                         <a href="/detail" class="btn btn-outline-secondary">DETAIL FILM</a>
-                     </div>
-                 </div>
-             </div>
-             <div class="col-md-6">
-                 <div class="card-sinopsis text-center">
-                     <img src="https://m.media-amazon.com/images/M/MV5BOWEzN2IxOTktMzBjMS00ZWU1LWI0OTgtZjViNWYxOWY1MjUxXkEyXkFqcGdeQXVyNzY4NDQzNTg@._V1_.jpg" alt="Gatot Kaca" style="width: 100%; height: auto; max-width: 300px;">
-                 </div>
-             </div>
-         </div>
-     </div>
- </section>
+ <!-- Maps -->
  
  
- <!-- END SINOPSIS -->
+ 
+ <!-- END maps -->
 
  <!-- Nav Active -->
  <script>
