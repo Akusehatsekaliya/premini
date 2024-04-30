@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\TanggalController;
 use App\Http\Controllers\admin\TiketController;
 use App\Http\Controllers\user\OrderController;
 use App\Http\Controllers\user\HistoryController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +66,7 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
+Route::get('/profile', [UserController::class, 'profile'])->name('profile');
 
 Route::post('/logout', [App\Http\Controllers\LogoutController::class, 'logout'])->name('logout');
 
