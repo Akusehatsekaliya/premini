@@ -260,16 +260,14 @@
             
                 if (!empty($films))
                 foreach ($films as $f) {
-                    $kursi = $f['kursi_id'];
                     $judul = $f['judul'];
                     $film = $f['film'];
-                    $stok = $f['stok'];
+                    $kursi = $f['kursi_id'];
                     $deskripsi = $f['deskripsi'];
-                    $tanggal = $f['tanggal'];
                     ?>
                     <div class="col-md-4 mb-4">
                         <div class="card bg-dark h-100">
-                            <img src="<?php echo $f; ?>" class="card-img-top rounded" alt="<?php echo $judul; ?>">
+                            <img src="<?php echo $f; ?>" class="card-img-top rounded" alt="<?php echo $film; ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $judul; ?></h5>
                                 <!-- off 
