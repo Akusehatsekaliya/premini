@@ -32,13 +32,11 @@ class FilmController extends Controller
             'judul'        => 'required',
             'film'         => 'required',
             'kursi_id'     => 'required',
-            'tanggal'      => 'required',
             'deskripsi'    => 'required',
         ],[
             'judul.required'       => 'Tidak boleh kosong',
             'film.required'        => 'Tidak boleh kosong',
             'kursi_id.required'    => 'Tidak boleh kosong',
-            'tanggal.required'     => 'Tidak boleh kosong',
             'deskripsi.required'   => 'Tidak boleh kosong',
         ]);
 
@@ -54,7 +52,6 @@ class FilmController extends Controller
             'film'       => $filename,
             'deskripsi'  => $request->deskripsi,
             'kursi_id'   => $request->kursi_id,
-            'tanggal'    => $request->tanggal,
         ]);
 
         return back();
@@ -85,13 +82,11 @@ class FilmController extends Controller
             'film'       => 'required',
             'deskripsi'  => 'required',
             'kursi_id'   => 'required',
-            'tanggal'    => 'required',
         ],[
             'judul.required'         => 'Tidak boleh kosong',
             'film.required'          => 'Tidak boleh kosong',
             'deskripsi.required'     => 'Tidak boleh kosong',
             'kursi_id.required'      => 'Tidak boleh kosong',
-            'tanggal.required'       => 'Tidak boleh kosong',
         ]);
 
 

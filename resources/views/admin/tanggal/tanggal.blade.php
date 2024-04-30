@@ -58,9 +58,13 @@
             <form action="{{ route('adminproses_tanggal') }}" method="post">
                 @csrf
                 <div class="form-froup">
-                    <label for="judul"> Hari </label>
-                    <input type="text" class="form-control" id="hari" name="hari" placeholder="Enter hari" value="{{ old('hari') }}">
-                    @error('hari')
+                    <label for="judul"> Film </label>
+                    <select class="form-control" name="film_id" id="film_id">
+                        @foreach ($film as $f)
+                            <option value="{{ $f->id }}">{{ $f->judul }}</option>
+                        @endforeach
+                    </select>
+                    @error('film_id')
                          <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
@@ -124,7 +128,7 @@
                 @foreach ($tanggal as $t)
                   <tr>
                     <td>
-                       {{ $t->hari }}
+                       {{ $t->Film->judul }}
                     </td>
                     <td>
                       {{ $t->tanggal }}
@@ -153,9 +157,13 @@
                             <form action="{{ route('adminupdate_tanggal', $t->id) }}" method="post">
                                 @csrf
                                 <div class="form-froup">
-                                    <label for="hari"> Hari </label>
-                                    <input type="text" class="form-control" id="hari" name="hari" value="{{ $t->hari }}">
-                                    @error('hari')
+                                    <label for="hari"> Film </label>
+                                    <select class="form-control" name="film_id" id="film_id">
+                                        @foreach ($film as $f)
+                                            <option value="{{ $f->id }}">{{ $f->judul }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('film_id')
                                          <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>

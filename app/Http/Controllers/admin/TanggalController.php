@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Models\Film;
 use App\Models\Tanggal;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -10,18 +11,19 @@ class TanggalController extends Controller
 {
     public function tanggal()
     {
+        $film = Film::get();
         $tanggal = Tanggal::get();
-        return view('admin.tanggal.tanggal', compact('tanggal'));
+        return view('admin.tanggal.tanggal', compact('tanggal', 'film'));
     }
 
     public function proses_tanggal(Request $request)
     {
         $request->validate([
-            'hari' => 'required',
+            'film_id' => 'required',
             'tanggal' => 'required|date_format:Y-m-d',
             'jam' => 'required|date_format:H:i'
         ], [
-            'hari.required' => 'Hari tidak boleh kosong',
+            'film_id.required' => 'film tidak boleh kosong',
             'tanggal.required' => 'Tanggal tidak boleh kosong',
             'tanggal.date_format' => 'Format tanggal harus Y-m-d',
             'jam.required' => 'Jam tidak boleh kosong',
@@ -29,7 +31,7 @@ class TanggalController extends Controller
         ]);
 
         $kirim = Tanggal::create([
-            'hari' => $request->hari,
+            'film_id' => $request->film_id,
             'tanggal' => $request->tanggal,
             'jam' => $request->jam
         ]);
@@ -50,19 +52,18 @@ class TanggalController extends Controller
         $tanggal = Tanggal::find($id);
 
         $request->validate([
-            'hari' => 'required',
+            'film_id' => 'required',
             'tanggal' => 'required',
             'jam' => 'required'
         ], [
-            'hari.required' => 'Hari tidak boleh kosong',
+            'film_id.required' => 'Hari tidak boleh kosong',
             'tanggal.required' => 'Tanggal tidak boleh kosong',
-
             'jam.required' => 'Jam tidak boleh kosong',
 
         ]);
 
         $data = [
-            'hari' => $request->hari,
+            'film_id' => $request->film_id,
             'tanggal' => $request->tanggal,
             'jam' => $request->jam,
         ];

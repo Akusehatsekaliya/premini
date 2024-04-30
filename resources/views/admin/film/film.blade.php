@@ -42,10 +42,6 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="tanggal" class="form-label"> Tanggal Tayang </label><br>
-                    <input type="date" class="form-control" name="tanggal" id="tanggal">
-                    </div>
-                    <div class="form-group">
                         <label class="form-label" for="deskripsi">Deskripsi</label>
                         <textarea class="form-control" name="deskripsi" id="deskripsi"  ></textarea>
                         @error('deskripsi')
@@ -159,10 +155,6 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tanggal_id" class="form-label"> Tanggal Tayang </label><br>
-                                        <input type="date" class="form-control" name="tanggal" id="tanggal" value="{{ $f->tanggal }}">
-                                    </div>
-                                    <div class="form-group">
                                         <label class="form-label" for="deskripsi">Deskripsi</label>
                                         <textarea class="form-control" name="deskripsi" id="deskripsi">{{ $f ? $f->deskripsi : '' }}</textarea>
                                         @error('deskripsi')
@@ -204,13 +196,6 @@
                                         <td>:</td>
                                         <td></td>
                                         <td><img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="70px" width="100px"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tayang Film</td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td>{{ $f->tanggal }}</td>
                                     </tr>
                                     <tr>
                                         <td>Total Kursi</td>

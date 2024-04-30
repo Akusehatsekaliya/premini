@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-froup">
                     <label for="harga"> Harga </label>
-                    <input type="text" class="form-control" id="harga" name="harga" placeholder="isi jumlah harga">
+                    <input type="number" class="form-control" id="harga" name="harga" placeholder="isi jumlah harga">
                     @error('harga')
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -53,87 +53,6 @@
 
     <div class="content">
         <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4 class="card-title">Keterangan Tiket & Harga Tiket</h4>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead class=" text-primary">
-                      <th>
-                        Plihan Tiket
-                      </th>
-                      <th>
-                        Keterangan
-                      </th>
-                      <th class="text-right">
-                        Harga
-                      </th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          Reguler
-                        </td>
-                        <td>
-                            Studio Reguler merupakan jenis ruangan menonyon yang paling umum di dalam bioskop. Dstudio ini dilengkapi dengan kursi tegak berbentuk auditorium, layar menonton terletak di bagian depan tengah dan dapat dinikmati secara beramai-ramai.
-                        </td>
-                        <td class="text-right">
-                          Rp 36,000 - 50.000
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          IMAX
-                        </td>
-                        <td>
-                            Jenis studio IMAX ini punya layar yang lebih besar untuk dapat memuat gambar rekaman demgan kamera khusus. Studio ini memberikan pengalaman menonton yang lebih megah serta cocok untuk menonton jenis film trailer seperti bencana dan film-film zombie
-                        </td>
-                        <td class="text-right">
-                            Rp 75.000 - 100.000
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            Premiere / Velvet Class
-                        </td>
-                        <td>
-                            Menjadi salah satu jenis studio bioskop yang paling mewah dengan kelas Premiere di jaringan XXI ataupun Velvet di jaringan CGV. Jenis studio bioskop Premiere  ini biasanya menggunakan sebuah ruangan yang lebih kecil dan eksklusif.
-                        </td>
-                        <td class="text-right">
-                         Rp 75.000 - 100.000
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          3D
-                        </td>
-                        <td>
-                            Meski terkadang dipandang tak penting, menonton film 3D menyimpan keseruan tersendiri. Di beberapa bioskop, menyediakan studio yang khusus untuk memutar film 3D dengan menggunakan proyeksi stereoskopik dan juga kacamata circular polarized.
-                        </td>
-                        <td class="text-right">
-                          Rp 80.000
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                            Dolby Atmos
-                        </td>
-                        <td>
-                            Tak jauh beda dengan studio jenis Reguler, studio dengan nama Dolby Atmos memiliki susunan kursi dan layar yang standar, akan tetapi sudah dilengkapi dengan sistem suara Dolby Digital Surround 7.1.
-                        </td>
-                        <td class="text-right">
-                          Rp 120.000
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="col-md-12">
             <div class="card card-plain">
               <div class="card-header">
@@ -238,21 +157,21 @@
                                     </div>
                                     <div class="form-froup">
                                         <label for="tiket"> Nama Tiket </label>
-                                        <input type="text" class="form-control" id="tiket" name="tiket" value="{{ $t->tiket }}" value="{{ old('tiket') }}">
+                                        <input type="text" class="form-control" id="tiket" name="tiket" value="{{ $t->tiket }}">
                                         @error('tiket')
                                              <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="form-froup">
                                         <label for="stok"> Stok </label>
-                                        <input type="number" class="form-control" id="stok" name="stok" value="{{ $t->stok }}">
+                                        <input type="number" class="form-control" id="stok" name="stok"  value="{{ $t->stok }}">
                                         @error('stok')
                                         <small class="text-danger">{{ $message }}</small>
                                         @enderror
                                     </div>
                                     <div class="form-froup">
                                         <label for="harga"> Harga </label>
-                                        <input type="number" class="form-control" id="harga" name="harga" placeholder="isi jumlah harga">
+                                        <input type="number" class="form-control" id="harga" name="harga" value="{{ $t->harga }}" >
                                         @error('harga')
                                         <small class="text-danger">{{ $message }}</small>
                                         @enderror

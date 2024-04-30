@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Tanggal extends Model
 {
    protected $fillable = [
-    'hari',
+    'film_id',
     'tanggal',
     'jam',
    ];
+
+   public function Film(){
+    return $this->belongsTo(Film::class);
+}
 }

@@ -19,7 +19,6 @@ return new class extends Migration
             $table->String('judul');
             $table->String('film');
             $table->string('deskripsi');
-            $table->string('tanggal');
             $table->timestamps();
         });
     }
