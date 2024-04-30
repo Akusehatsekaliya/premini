@@ -260,7 +260,8 @@
             
                 if (!empty($films))
                 foreach ($films as $f) {
-                    $judul = $f['judul'];
+                    
+                    {{ $f->judul }}
                     $film = $f['film'];
                     $kursi = $f['kursi_id'];
                     $deskripsi = $f['deskripsi'];
@@ -270,14 +271,6 @@
                             <img src="<?php echo $f; ?>" class="card-img-top rounded" alt="<?php echo $film; ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $judul; ?></h5>
-                                <!-- off 
-                                <div class="rating">
-                                    <span class="star">&#9733;</span>
-                                    <span class="star">&#9733;</span>
-                                    <span class="star">&#9733;</span>
-                                    <span class="star">&#9733;</span>
-                                    <span class="star">&#9733;</span>
-                                </div> -->
                                 <br>
                                 <a href="" class="btn btn-primary">Tonton</a>
                                 <a href="" class="btn btn-secondary">Beri Rating</a>
