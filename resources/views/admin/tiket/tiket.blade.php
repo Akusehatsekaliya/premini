@@ -87,6 +87,7 @@
                   @if($tiket->isEmpty())
                   <tr>
                       <td colspan="4" style="text-align:center;">Data masih kosong</td>
+                      <td></td>
                   </tr>
                   @else
                     @foreach ($tiket as $t)
