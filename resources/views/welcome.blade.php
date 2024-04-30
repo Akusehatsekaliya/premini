@@ -260,34 +260,26 @@
             
                 if (!empty($films))
                 foreach ($films as $f) {
+                    $kursi = $f['kursi_id'];
                     $judul = $f['judul'];
                     $film = $f['film'];
                     $stok = $f['stok'];
-                    $deskripsi = $f['deskripsi']
+                    $deskripsi = $f['deskripsi'];
+                    $tanggal = $f['tanggal'];
                     ?>
                     <div class="col-md-4 mb-4">
                         <div class="card bg-dark h-100">
                             <img src="<?php echo $f; ?>" class="card-img-top rounded" alt="<?php echo $judul; ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $judul; ?></h5>
+                                <!-- off 
                                 <div class="rating">
                                     <span class="star">&#9733;</span>
                                     <span class="star">&#9733;</span>
                                     <span class="star">&#9733;</span>
                                     <span class="star">&#9733;</span>
                                     <span class="star">&#9733;</span>
-                                </div>
-                                <div class="rating">
-                                    <?php
-                                    if ($ratingCount > 0) {
-                                        for ($i = 0; $i < $ratingCount; $i++) {
-                                            echo '<span class="star">&#9733;</span>';
-                                        }
-                                    } else {
-                                        echo 'Belum ada rating';
-                                    }
-                                    ?>
-                                </div>
+                                </div> -->
                                 <br>
                                 <a href="" class="btn btn-primary">Tonton</a>
                                 <a href="" class="btn btn-secondary">Beri Rating</a>

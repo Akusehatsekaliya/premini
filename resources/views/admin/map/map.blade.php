@@ -37,8 +37,16 @@
             <a style="cursor: pointer" id="" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <p class="card-title" style="color: rgb(55, 172, 86)">Tambah Maps</p>
             </a>
-            Google Maps
           <div class="card-body ">
+            @if ($map->isEmpty())
+            <div class="col-lg-12">
+              <div class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">Data masih kosong</h5>
+                  </div>
+              </div>
+            </div>
+            @else
             @foreach ($map as $m)
             <iframe src="{{ $m->map }}" width="970" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             {{-- icon --}}
@@ -108,6 +116,7 @@
                   </div>
             {{-- end --}}
             @endforeach
+            @endif
           </div>
         </div>
       </div>
