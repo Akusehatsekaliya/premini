@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <html lang="en">
- 
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +20,7 @@
             background-color: #011228; /* Ubah kode warna sesuai keinginan */
             color: white; /* Warna teks */
         }
-        
+
         .carousel-inner .carousel-item img {
             height: 600px; /* Tinggi yang diinginkan */
             object-fit: cover; /* Gunakan object-fit untuk menjaga rasio aspek gambar */
@@ -108,7 +108,7 @@
         }
     </script>
 </head>
- 
+
 <body>
     <!-- NAVBAR -->
     <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark border-bottom" style="background-color: #0E46A3;">
@@ -125,7 +125,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link @if( Request::is('login') || Request::is('register') || Request::is('order') || Request::is('history')) disabled @endif  @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
-                    </li>                        
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link @if(Request::is('order')) active-menu @endif" href="/order"><i class="bi bi-card-text"></i> Beli Tiket</a>
                     </li>
@@ -162,7 +162,7 @@
                                                     Log out
                                                 </button>
                                             </form>
-                                        </li>                                        
+                                        </li>
                                     </ul>
                                 </div>
                             @else
@@ -192,9 +192,9 @@
         <script>
             function searchFilm() {
                 const searchText = document.getElementById('searchText').value.toLowerCase();
-                
+
                 const filmTitles = Array.from(document.querySelectorAll('.film-title')).map(title => title.textContent.toLowerCase());
-        
+
                 if (filmTitles.includes(searchText)) {
                     alert(`Film "${searchText}" ditemukan!`);
                     document.getElementById('noResultMessage').style.display = 'none';
@@ -212,7 +212,7 @@
                 searchForm.slideUp('slow', function() {
                     const scrollToPosition = searchForm.offset().top - headerHeight - 10;
                     $('html, body').animate({ scrollTop: scrollToPosition }, 500); // Menggunakan animasi untuk menggulung ke atas
-                    
+
                     // Memeriksa apakah hasil pencarian tidak kosong
                     const searchInput = $('.form-control').val(); // Mengambil nilai input pencarian
                     if (!searchInput.trim()) {
@@ -245,14 +245,14 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
- 
+
     <section id="listFilm">
         <div class="container py-5 text-center">
             <h1 class="title-section">LIST FILM</h1>
-    
+
             <p id="noResultMessage" style="display: none; color: red;">Film tidak ditemukan.</p>
-    
-            <?php 
+
+            <?php
             $conn = new mysqli('localhost','root','','premini');
 
             $sql = "SELECT kursi_id, judul, film, deskripsi FROM films";
@@ -266,14 +266,18 @@
                     <div class="col-md-4 mb-4">
                         <div class="card bg-dark h-100">
                             <!-- Assuming you don't have images in the database, you can skip the image part or provide a default image -->
+                            @foreach ($film as $f)
                             <div class="card-body">
-                                <h5 class="card-title"><?php echo $judul; ?></h5>
-                                <p class="card-text"><?php echo $deskripsi; ?></p>
+                                <h5 class="card-title">{{ $f->judul }}</h5>
+                                <img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="70px" width="100px">
+                                <p class="card-text">{{ $f->deskripsi}}</p>
                                 <a href="#" class="btn btn-primary">Tonton</a>
                                 <!-- Remove the rating button -->
                             </div>
+                            @endforeach
                         </div>
                     </div>
+            
                 <?php
                 }
             } else {
@@ -281,16 +285,16 @@
             }
             $conn->close();
             ?>
-                
+
             </div>
         </div>
 
     </section>
- 
+
  <!-- Maps -->
- 
- 
- 
+
+
+
  <!-- END maps -->
 
  <!-- Nav Active -->

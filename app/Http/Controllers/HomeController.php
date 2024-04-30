@@ -23,7 +23,7 @@ class HomeController extends Controller
                 return view('welcome');
             }
         } else {
-            return view('welcome');
+            return view('welcome', compact('film'));
         }
     }
 }
