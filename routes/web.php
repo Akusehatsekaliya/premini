@@ -57,6 +57,8 @@ Route::DELETE('/hapus tanggal/{id}', [TanggalController::class, 'delete_tanggal'
 // halaman map
 Route::get('/map', [MapController::class, 'map'])->name('map');
 Route::post('/tambah-map', [MapController::class, 'tambah_map'])->name('tambah_map');
+Route::post('/update-map/{id}', [MapController::class, 'update_map'])->name('update_map');
+Route::DELETE('delete-map/{id}', [MapController::class, 'delete_map'])->name('delete_map');
 // halaman keuangan
 Route::get('/Keuangan', [KeuanganController::class, 'keuangan'])->name('keuangan');
 });

@@ -25,4 +25,26 @@ class MapController extends Controller
         return back();
     }
 
+    public function update_map(Request $request, $id){
+        $request->validate([
+            'map' => 'required|url', // Validasi bahwa input harus berupa URL
+        ]);
+
+        $map = Map::find($id);
+
+        $data = [
+            'map' => $request->map,
+            ];
+             $map->update($data);
+             return back();
+    }
+
+    public function delete_map(Request $request, $id){
+        $tiket = Map::find($id);
+        $tiket->delete();
+
+        return back();
+    }
+
 }
+
