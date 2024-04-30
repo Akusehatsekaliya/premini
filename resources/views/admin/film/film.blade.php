@@ -82,6 +82,15 @@
                 </div>
             </div>
             {{-- end col --}}
+            @if ($film->isEmpty())
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Data masih kosong</h5>
+                    </div>
+                </div>
+            </div>
+            @else
             @foreach ($film as $f)
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -91,7 +100,6 @@
                         <div class="numbers">
                           <p class="card-category">{{ $f->judul }}</p>
                         </div>
-
                       </div>
                       <img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="200px" width="100px">
                     </div>
@@ -101,6 +109,9 @@
                     <div class="stats">
                      x ditonton
                     </div>
+                    {{-- data kosong --}}
+                    
+                    {{-- end --}}
                     {{-- icones --}}
                     <div style="text-align: right ;display: flex;">
 
@@ -247,6 +258,7 @@
                 </div>
               </div>
             @endforeach
+            @endif
         </div>
     </div>
 @endsection
