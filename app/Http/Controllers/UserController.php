@@ -9,6 +9,8 @@ class UserController extends Controller
 {
     public function profile()
     {
-        return view('profile');
+        $user = User::first();
+
+        return view('user.profile')->with('user', $user);
     }
 }
