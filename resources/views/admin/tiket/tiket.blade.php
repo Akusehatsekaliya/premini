@@ -53,7 +53,7 @@
               </script>
               <div class="form-froup">
                   <label for="harga"> Harga </label>
-                  <input type="number" class="form-control" id="harga" name="harga" placeholder="isi jumlah harga" min="1000" onchange="checkQuantity()">
+                  <input type="number" class="form-control" id="harga" name="harga" placeholder="isi jumlah harga" min="1000" onchange="checkHargaQuantity()">
                   <div id="hargaQuantityWarning" style="display: none; color: red;">Pesan peringatan</div>
                   @error('harga')
                   <small class="text-danger">{{ $message }}</small>
@@ -111,7 +111,7 @@
                       <th>
                         Harga
                       </th>
-                      <th class="text-center">
+                      <th class="text-center" style="display: flex; flex-direction: row;">
                         Aksi
                       </th>
                     </thead>
@@ -140,7 +140,7 @@
                           ?>
                           {{ $formatted_price }}
                         </td>                      
-                        <td class="text-center">
+                        <td class="text-center" style="display: flex; flex-direction: row;">
                            <div id="btn-edit{{ $t->id }}" class="btn-edit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621"/><path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/></g></svg>
                            </div>
@@ -159,7 +159,7 @@
                               </button>
                             </div>
                             <div class="modal-body">
-                              <p>Apakah kamu yakin ingin menghapus data admin <b>{{ $t->tiket}}</b></p>
+                              <p>Apakah kamu yakin ingin menghapus data <b>{{ $t->tiket}}</b></p>
                             </div>
                             <div class="modal-footer justify-content-between">
                               <form action="{{ route('admindelete_tiket',['id' => $t->id]) }}" method="POST">

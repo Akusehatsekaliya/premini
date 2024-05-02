@@ -12,11 +12,12 @@
             <form action="">
                 <div class="form-group">
                     <label for="" class="form-label">Nama</label>
-                    <input type="text" class="form-control" name="nama" placeholder="masukkan nama">
+                    <input type="text" class="form-control" name="nama" placeholder="Masukkan Nama">
                 </div>
+                <br>
                 <div class="form-group">
                     <label for="" class="form-label">Email</label>
-                    <input type="text" class="form-control" name="nama" placeholder="masukkan nama">
+                    <input type="email" class="form-control" name="nama" placeholder="Masukkan Email">
                 </div>
             </form>
             <br>
@@ -26,22 +27,35 @@
             <table>
                 <tr>
                     <td style="padding: 10px">
+                        <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
                         <a href="">
                              <img src="{{ asset('assets/img/bri.jpg') }}" alt="" height="70px" height="70px">
                         </a>
                     </td>
-                    <td style="padding: 10px"><img src="{{ asset('assets/img/R.png') }}" alt="" height="70px" height="70px"></td>
-                    <td><img src="{{ asset('assets/img/man.png') }}" alt="" height="100px" height="100px"></td>
+                    <td style="padding: 10px">
+                        <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        <img src="{{ asset('assets/img/R.png') }}" alt="" height="70px" height="70px">
+                    </td>
+                    <td style="padding: 10px">
+                        <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                        <img src="{{ asset('assets/img/man.png') }}" alt="" height="70px" height="70px">
+                    </td>
                 </tr>
             </table>
             <p style="font-weight:bold ">E WALET</p>
             <table>
                 <tr>
-                    <td style="padding: 25px"><img src="{{ asset('assets/img/q.png') }}" alt="" height="30px" height="30px"></td>
+                    <td style="padding: 25px">
+                        <img src="{{ asset('assets/img/q.png') }}" alt="" height="30px" height="30px">
+                    </td>
                     <td style="padding: 20px"><img src="{{ asset('assets/img/ovo.jpeg') }}" alt="" height="70px" height="70px"></td>
                     <td style="padding: 20px"><img src="{{ asset('assets/img/s.png') }}" alt="" height="50px" height="50px    "></td>
                 </tr>
             </table>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">Bayar Nanti Saja</label>
+            </div>
         </div>
         </div>
         <div class="modal-footer">
@@ -181,7 +195,7 @@
                             width: 40px;
                             height: 40px;
                             border-radius: 5px;
-                            background-color: red;
+                            background-color: gray;
                             text-align: center;
                             line-height: 40px;
                             cursor: pointer;
@@ -189,7 +203,7 @@
                         }
 
                         .seat.booked {
-                            background-color: green;
+                            background-color: yellow;
                         }
 
                         .status-box {
@@ -204,8 +218,16 @@
                             background-color: green; /* Warna untuk status terisi */
                         }
 
-                        .kosong {
+                        .booking {
                             background-color: red; /* Warna untuk status kosong */
+                        }
+
+                        .kosong {
+                            background-color: grey;
+                        }
+
+                        .dipilih {
+                            background-color: yellow;
                         }
                     </style>
                         <div class="section" id="left-section">
@@ -255,7 +277,7 @@
 
 
             <br>
-            <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box kosong"></span> Kosong</p>
+            <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
 
             <br>
         </form>

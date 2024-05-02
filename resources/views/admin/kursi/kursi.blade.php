@@ -19,11 +19,32 @@
                 @csrf
                 <div class="form-froup">
                     <label for="judul"> Kursi</label>
-                    <input type="number" class="form-control" id="kursi" name="kursi" placeholder="jumlah kursi" value="{{ old('kursi') }}" min="1" max="30">
+                    <input type="number" class="form-control" id="kursi" name="kursi" placeholder="jumlah kursi" value="{{ old('kursi') }}" min="1" max="30" onchange="checkKursiQuantity()">
+                    <div id="kursiQuantityWarning" style="display: none; color: red;">Pesan peringatan</div>
                     @error('kursi')
                          <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
+                <script>
+                  function checkKursiQuantity() {
+                      const jumlahInput = document.getElementById('kursi');
+                      const ticketQuantityWarning = document.getElementById('kursiQuantityWarning');
+                      const minValue = parseInt(jumlahInput.min);
+                      const maxValue = parseInt(jumlahInput.max);
+  
+                      if (parseInt(jumlahInput.value) < minValue) {
+                          ticketQuantityWarning.innerText = "Minimal kursi adalah " + minValue;
+                          ticketQuantityWarning.style.display = 'block';
+                          jumlahInput.value = minValue;
+                      } else if (parseInt(jumlahInput.value) > maxValue) {
+                          ticketQuantityWarning.innerText = "Maksimal kursi adalah " + maxValue;
+                          ticketQuantityWarning.style.display = 'block';
+                          jumlahInput.value = maxValue;
+                      } else {
+                          ticketQuantityWarning.style.display = 'none';
+                      }
+                  }
+                </script>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

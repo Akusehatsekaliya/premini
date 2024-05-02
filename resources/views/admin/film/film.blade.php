@@ -193,33 +193,27 @@
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <table>
+                                <div class="col-6">
+                                    @if($f->film)
+                                        <img src="{{ asset('storage/video' . $f->film) }}" class="img-fluid" alt="Gambar Film">
+                                    @else
+                                        <p>No Image</p>
+                                    @endif
+                                </div>
+                                <table class="table">
                                     <tr>
                                         <td>Judul Film</td>
-                                        <td></td>
                                         <td>:</td>
-                                        <td></td>
                                         <td>{{ $f->judul }}</td>
                                     </tr>
                                     <tr>
-                                        <td>p</td>
-                                        <td></td>
-                                        <td>:</td>
-                                        <td></td>
-                                        <td><img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="70px" width="100px"></td>
-                                    </tr>
-                                    <tr>
                                         <td>Total Kursi</td>
-                                        <td></td>
                                         <td>:</td>
-                                        <td></td>
                                         <td>{{ $f->Kursi->kursi }}</td>
                                     </tr>
                                     <tr>
                                         <td>Deskripsi</td>
-                                        <td></td>
                                         <td>:</td>
-                                        <td></td>
                                         <td>{{ $f->deskripsi }}</td>
                                     </tr>
                                 </table>

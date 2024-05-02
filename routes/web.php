@@ -80,6 +80,8 @@ Route::get('/order', function () {
 Route::get('/history', function () {
     return view('user.history');
 });
-
+/* Order */
 Route::get('/order', [OrderController::class, 'index'])->name('order');
+Route::post('/payment', [OrderController::class, 'payment'])->name('payment');
+/* History */
 Route::get('/history', [HistoryController::class, 'index'])->name('history');

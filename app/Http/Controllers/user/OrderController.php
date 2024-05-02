@@ -4,6 +4,7 @@ namespace App\Http\Controllers\user;
 
 use App\Models\Film;
 use App\Models\Kursi;
+use App\Models\Order;
 use App\Models\Tiket;
 use App\Models\Tanggal;
 use Illuminate\Routing\Controller;
@@ -24,5 +25,32 @@ class OrderController extends Controller
         }
 
         return view('user.order', compact('film','tiket','tanggal','kursi'));
+    }
+
+    public function payment(Request $request)
+    {
+        $order = Order::create($request->all());
+
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
+        
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => $order->id,
+                'gross_amount' => $order->total_price,
+            ),
+            'customer_details' => array(
+                'first_name' => $request->name,
+                'phone' => $request->phone,
+            ),
+        );
+        
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        return view('payment', compact('snapToken','payment'));
     }
 }

@@ -14,9 +14,9 @@
             <form action="{{ route('adminproses_tanggal') }}" method="post">
                 @csrf
                 <div class="form-froup">
-                    <label for="judul"> Hari </label>
-                    <input type="text" class="form-control" id="hari" name="hari" placeholder="Enter hari" value="{{ old('hari') }}">
-                    @error('hari')
+                    <label for="judul"> Film </label>
+                    <input type="text" class="form-control" id="film" name="film" placeholder="Enter film" value="{{ old('film') }}">
+                    @error('film')
                          <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
