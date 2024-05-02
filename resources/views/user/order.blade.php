@@ -218,9 +218,18 @@
 
                         // Tambahkan event listener untuk mengubah warna kursi saat kursi dipesan
                         seat.addEventListener('click', function() {
-                            if (!seat.classList.contains('booked')) {
+                            if (seat.classList.contains('booked')) {
+                                // Jika kursi sudah dipesan, kembalikan ke warna merah
+                                seat.classList.remove('booked');
+                            } else {
+                                // Jika kursi belum dipesan, tandai sebagai dipesan (berwarna hijau)
                                 seat.classList.add('booked');
                             }
+                        });
+
+                        // Tambahkan event listener untuk double click
+                        seat.addEventListener('dblclick', function() {
+                            seat.classList.toggle('booked'); // Toggle status booked saat double click
                         });
 
                         section.appendChild(seat);

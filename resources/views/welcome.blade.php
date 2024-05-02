@@ -273,7 +273,7 @@
                                 <h5 class="card-title">{{ $f->judul }}</h5>
                                 <img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="70px" width="100px">
                                 <p class="card-text">{{ $f->deskripsi}}</p>
-                                <a href="#" class="btn btn-primary">Tonton</a>
+                                <a href="/order" class="btn btn-primary">Tonton</a>
                             </div>
                             @endforeach
                         </div>
@@ -290,9 +290,9 @@
             </div>
         </div>
         
- <!-- Pagination -->
-    {{ $film->links() }}
-    <!-- End Pagination -->
+        <!-- Pagination -->
+        {{ $film->links() }}
+        <!-- End Pagination -->
     </section>
 
  <!-- Maps -->

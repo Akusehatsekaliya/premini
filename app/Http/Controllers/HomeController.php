@@ -15,14 +15,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $film = Film::paginate(2);
         if(auth()->check()) {
             if(auth()->user()->email == 'admin@gmail.com') {
                 return view('admin.dashboard');
             } else {
-                return view('welcome');
+                $film = Film::paginate(2); // Ambil data film jika pengguna terautentikasi dan bukan admin
+                return view('welcome', compact('film'));
             }
         } else {
+            $film = Film::paginate(2); // Ambil data film jika pengguna tidak terautentikasi
             return view('welcome', compact('film'));
         }
     }
