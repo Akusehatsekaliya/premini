@@ -83,7 +83,7 @@
                 <div class="form-group col-md-6">
                     <label for="kursi_id" class="form-label"> Film </label>
                     <select class="form-control" name="kursi_id" id="kursi_id">
-                             <option value="">Pilih Film</option>
+                             <option value="" selected>--Pilih Film--</option>
                             @foreach ($film as $f)
                                  <option value="{{ $f->id }}">{{ $f->judul }}</option>
                              @endforeach
@@ -91,8 +91,12 @@
                 </div>
                 <div class="form-group col-md-6 mt-6">
                     <label for="nama" class="form-label">Atur Tanggal</label>
-                    <input type="date" class="form-control" id="tanggal" name="tanggal" min="<?php echo date('Y-m-d'); ?>">
-                </div>
+                    <?php
+                    $today = date('Y-m-d'); 
+                    $formatted_date = date('l, j F Y', strtotime($today));
+                    ?>
+                    <input type="text" class="form-control" id="tanggal" value="<?php echo $formatted_date; ?>" disabled>
+                </div>                            
             </div>
             <br>
             <div class="row justify-content-between">
@@ -100,12 +104,13 @@
                     <label for="jam" class="form-label">Jam Tayang</label>
                     <select class="form-control" id="jam" name="jam_tayang">
                         <option value="" selected>--Pilih Jam Tayang--</option>
-                        <option value="">20:00</option>
-                        <option value="">12:00</option>
+                        @foreach ($tanggal as $t)
+                            <option value="{{ $t->id }}">{{ $t->jam }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="tiket" class="form-label"> Jumlah Tiket</label>
+                    <label for="tiket" class="form-label"> Tiket Tersedia</label>
                         @foreach ($tiket as $t)
                             <input type="text" class="form-control" value="{{ $t->stok }}" disabled>
                         @endforeach
@@ -123,7 +128,7 @@
                     </select>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="jumlah" class="form-label">Tiket</label>
+                    <label for="jumlah" class="form-label">Jumlah Tiket</label>
                     <input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Jumlah Tiket" min="1" max="5" onchange="checkTicketQuantity()">
                     <div id="ticketQuantityWarning" style="display: none; color: red;">Pesan peringatan</div>
                 </div>
@@ -132,21 +137,24 @@
 
                 <script>
                     function checkTicketQuantity() {
-                        const jumlahInput = document.getElementById('jumlah');
-                        const ticketQuantityWarning = document.getElementById('ticketQuantityWarning');
-                        const minValue = parseInt(jumlahInput.min);
-                        const maxValue = parseInt(jumlahInput.max);
+                        var jumlahInput = document.getElementById('jumlah');
+                        var ticketQuantityWarning = document.getElementById('ticketQuantityWarning');
+                        
+                        // Mendapatkan stok tiket dari suatu sumber data, misalnya dari variabel PHP
+                        var stokTiket = <?php echo $t->stok; ?>; 
 
-                        if (parseInt(jumlahInput.value) < minValue) {
-                            ticketQuantityWarning.innerText = "Minimal pembelian tiket adalah " + minValue;
-                            ticketQuantityWarning.style.display = 'block';
-                            jumlahInput.value = minValue; // Set nilai input kembali ke nilai minimal
-                        } else if (parseInt(jumlahInput.value) > maxValue) {
-                            ticketQuantityWarning.innerText = "Maksimal pembelian tiket adalah " + maxValue;
-                            ticketQuantityWarning.style.display = 'block';
-                            jumlahInput.value = maxValue; // Set nilai input kembali ke nilai maksimal
+                        var minPembelian = 1;
+
+                        if (jumlahInput.value < minPembelian) {
+                            jumlahInput.value = minPembelian; // Jika jumlah input kurang dari minimal pembelian, atur nilai input menjadi minimal pembelian
+                            ticketQuantityWarning.innerText = 'Minimal pembelian tiket adalah ' + minPembelian; // Set pesan peringatan
+                            ticketQuantityWarning.style.display = 'block'; // Tampilkan pesan peringatan
+                        } else if (jumlahInput.value > stokTiket) {
+                            jumlahInput.value = stokTiket; // Jika jumlah input melebihi stok tiket, atur nilai input menjadi stok tiket
+                            ticketQuantityWarning.innerText = 'Maksimal pembelian tiket adalah ' + stokTiket; // Set pesan peringatan
+                            ticketQuantityWarning.style.display = 'block'; // Tampilkan pesan peringatan
                         } else {
-                            ticketQuantityWarning.style.display = 'none';
+                            ticketQuantityWarning.style.display = 'none'; // Sembunyikan pesan peringatan jika jumlah input valid
                         }
                     }
                 </script>
@@ -252,7 +260,7 @@
             <br>
         </form>
         <div data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <button type="button" class="btn btn-primary">continue</button>
+            <button type="button" class="btn btn-primary">Continue</button>
         </div>
 
     </div>

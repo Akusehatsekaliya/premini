@@ -16,31 +16,64 @@
                     <label for="film_id" class="form-label"> Nama Film </label><br>
                     <select class="form-control" name="film_id" id="film_id">
                         @foreach ($film as $f)
+                            <option value="" selected>Pilih Film</option>
                             <option value="{{ $f->id }}">{{ $f->judul }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-froup">
                     <label for="tiket"> Nama Tiket </label>
-                    <input type="text" class="form-control" id="tiket" name="tiket" placeholder="Enter nama tiket" value="{{ old('tiket') }}">
+                    <input type="text" class="form-control" id="tiket" name="tiket" placeholder="Masukkan nama tiket" value="{{ old('tiket') }}">
                     @error('tiket')
                          <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="form-froup">
                     <label for="stok"> Stok </label>
-                    <input type="number" class="form-control" id="stok" name="stok" placeholder="isi jumlah stok">
+                    <input type="number" class="form-control" id="stok" name="stok" placeholder="isi jumlah stok" min="1" onchange="checkTicketQuantity()">
+                    <div id="ticketQuantityWarning" style="display: none; color: red;">Pesan peringatan</div>
                     @error('stok')
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-froup">
-                    <label for="harga"> Harga </label>
-                    <input type="number" class="form-control" id="harga" name="harga" placeholder="isi jumlah harga">
-                    @error('harga')
-                    <small class="text-danger">{{ $message }}</small>
-                    @enderror
-                </div>
+                <script>
+                  function checkTicketQuantity() {
+                      const jumlahInput = document.getElementById('stok');
+                      const ticketQuantityWarning = document.getElementById('ticketQuantityWarning');
+                      const minValue = parseInt(jumlahInput.min);
+
+                      if (parseInt(jumlahInput.value) < minValue) {
+                          ticketQuantityWarning.innerText = "Minimal input stok adalah " + minValue;
+                          ticketQuantityWarning.style.display = 'block';
+                          jumlahInput.value = minValue;
+                      } else {
+                          ticketQuantityWarning.style.display = 'none';
+                      }
+                  }
+              </script>
+              <div class="form-froup">
+                  <label for="harga"> Harga </label>
+                  <input type="number" class="form-control" id="harga" name="harga" placeholder="isi jumlah harga" min="1000" onchange="checkQuantity()">
+                  <div id="hargaQuantityWarning" style="display: none; color: red;">Pesan peringatan</div>
+                  @error('harga')
+                  <small class="text-danger">{{ $message }}</small>
+                  @enderror
+              </div>
+              <script>
+                function checkHargaQuantity() {
+                    const jumlahInput = document.getElementById('harga');
+                    const ticketQuantityWarning = document.getElementById('hargaQuantityWarning');
+                    const minValue = parseInt(jumlahInput.min);
+
+                    if (parseInt(jumlahInput.value) < minValue) {
+                        ticketQuantityWarning.innerText = "Minimal input harga adalah " + minValue;
+                        ticketQuantityWarning.style.display = 'block';
+                        jumlahInput.value = minValue;
+                    } else {
+                        ticketQuantityWarning.style.display = 'none';
+                    }
+                }
+            </script>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -102,8 +135,11 @@
                           {{ $t->stok }}
                         </td>
                         <td>
-                            {{ $t->harga }}
-                        </td>
+                          <?php
+                          $formatted_price = 'Rp ' . number_format($t->harga, 0, ',', '.');
+                          ?>
+                          {{ $formatted_price }}
+                        </td>                      
                         <td class="text-center">
                            <div id="btn-edit{{ $t->id }}" class="btn-edit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621"/><path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/></g></svg>

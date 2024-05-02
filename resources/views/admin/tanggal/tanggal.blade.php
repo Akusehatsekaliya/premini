@@ -7,7 +7,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Tanggal Tayang</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Jadwal</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -52,7 +52,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Tanggal Tayang</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Jadwal</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -62,6 +62,7 @@
                     <label for="judul"> Film </label>
                     <select class="form-control" name="film_id" id="film_id">
                         @foreach ($film as $f)
+                            <option value="" selected>Pilih Film</option>
                             <option value="{{ $f->id }}">{{ $f->judul }}</option>
                         @endforeach
                     </select>
@@ -108,15 +109,15 @@
               <table class="table">
                 <thead class=" text-primary">
                   <th style="color :#4ac29a">
-                    Hari
+                    Judul Film
                   </th>
                   <th style="color :#4ac29a">
-                    Tanggal
+                    Tanggal Tayang
                   </th>
                   <th style="color :#4ac29a">
                     Jam Tayang
                   </th>
-                  <th class="text-center" style="color :#4ac29a">
+                  <th class="text-center" style="display: flex; flex-direction: row; color :#4ac29a">
                     Aksi
                   </th>
                 </thead>
@@ -127,17 +128,30 @@
                 </tr>
                 @else
                 @foreach ($tanggal as $t)
-                  <tr>
+                    <tr>
                     <td>
-                       {{ $t->Film->judul }}
-                    </td>
+                        {{ $t->Film->judul }}
+                    </td>                  
                     <td>
-                      {{ $t->tanggal }}
-                    </td>
+                      <?php
+                      // Konversi tanggal ke dalam format yang diinginkan
+                      $tanggal = date('Y-m-d', strtotime($t->tanggal));
+                      $parts = explode('-', $tanggal); // Pisahkan tanggal, bulan, dan tahun
+                      $bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                      $bulan_index = (int)$parts[1] - 1; // Index bulan dimulai dari 0
+                      $hari = date('d', strtotime($t->tanggal));
+                      $tahun = date('Y', strtotime($t->tanggal));
+                      $bulan_str = $bulan[$bulan_index];
+                      ?>
+                      {{ $hari }} {{ $bulan_str }} {{ $tahun }}
+                    </td>                
                     <td>
-                      {{ $t->jam }}
-                    </td>
-                    <td class="text-center">
+                      <?php
+                      $formatted_time = date('H:i', strtotime($t->jam));
+                      ?>
+                      {{ $formatted_time }}
+                    </td>                  
+                    <td class="text-center" style="display: flex; flex-direction: row;">
                         <div id="btn-edit{{ $t->id }}" class="btn-edit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621"/><path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/></g></svg>
                            </div>
@@ -151,7 +165,7 @@
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                          <h5 class="modal-title" id="exampleModalLabel">Edit Jadwal</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -203,7 +217,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>Apakah kamu yakin ingin menghapus data <b>{{ $t->hari}}</b></p>
+                          <p>Apakah kamu yakin ingin menghapus data <b>{{ $t->Film->judul }}</b></p>
                         </div>
                         <div class="modal-footer justify-content-between">
                           <form action="{{ route('admindelete_tanggal',['id' => $t->id]) }}" method="POST">

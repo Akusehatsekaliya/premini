@@ -180,48 +180,7 @@
     </nav>
     <!-- END NAVBAR -->
     <!-- Tambahkan elemen <p> untuk menampilkan pesan "Film tidak ditemukan" -->
-        <div id="searchForm" class="search-form container">
-            <form class="d-flex" role="search">
-                <button type="button" onclick="hideSearchForm();" class="btn btn-light me-2">
-                    <i class="bi bi-arrow-left"></i>
-                </button>
-                <input id="searchText" class="form-control" type="search" placeholder="Cari Film Kesayangan.." aria-label="Search">
-                <button class="btn btn-warning ms-2" type="button" onclick="searchFilm()">Search</button>
-            </form>
-        </div>
-
-        <script>
-            function searchFilm() {
-                const searchText = document.getElementById('searchText').value.toLowerCase();
-
-                const filmTitles = Array.from(document.querySelectorAll('.film-title')).map(title => title.textContent.toLowerCase());
-
-                if (filmTitles.includes(searchText)) {
-                    alert(`Film "${searchText}" ditemukan!`);
-                    document.getElementById('noResultMessage').style.display = 'none';
-                } else {
-                    alert(`Film "${searchText}" tidak ditemukan.`);
-                    document.getElementById('noResultMessage').style.display = 'block';
-                }
-            }
-
-            function hideSearchForm() {
-                const searchForm = $('#searchForm');
-                const notFoundText = $('#noResultMessage'); // Seleksi elemen teks "Film tidak ditemukan"
-                const headerHeight = $('.navbar').outerHeight();
-
-                searchForm.slideUp('slow', function() {
-                    const scrollToPosition = searchForm.offset().top - headerHeight - 10;
-                    $('html, body').animate({ scrollTop: scrollToPosition }, 500); // Menggunakan animasi untuk menggulung ke atas
-
-                    // Memeriksa apakah hasil pencarian tidak kosong
-                    const searchInput = $('.form-control').val(); // Mengambil nilai input pencarian
-                    if (!searchInput.trim()) {
-                        notFoundText.hide(); // Jika pencarian kosong, teks "Film tidak ditemukan" disembunyikan
-                    }
-                });
-            }
-        </script>
+        
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -250,9 +209,50 @@
     <section id="listFilm">
         <div class="container py-5 text-center">
             <h1 class="title-section">LIST FILM</h1>
-
+            <div id="searchForm" class="search-form container">
+                <form class="d-flex" role="search">
+                    <button type="button" onclick="hideSearchForm();" class="btn btn-light me-2">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                    <input id="searchText" class="form-control" type="search" placeholder="Cari Film Kesayangan.." aria-label="Search">
+                    <button class="btn btn-warning ms-2" type="button" onclick="searchFilm()">Search</button>
+                </form>
+            </div>
+    
+            <script>
+                function searchFilm() {
+                    const searchText = document.getElementById('searchText').value.toLowerCase();
+    
+                    const filmTitles = Array.from(document.querySelectorAll('.judul')).map(title => title.textContent.toLowerCase());
+    
+                    if (filmTitles.includes(searchText)) {
+                        alert(`Film "${searchText}" ditemukan!`);
+                        document.getElementById('noResultMessage').style.display = 'none';
+                    } else {
+                        alert(`Film "${searchText}" tidak ditemukan.`);
+                        document.getElementById('noResultMessage').style.display = 'block';
+                    }
+                }
+    
+                function hideSearchForm() {
+                    const searchForm = $('#searchForm');
+                    const notFoundText = $('#noResultMessage');
+                    const headerHeight = $('.navbar').outerHeight();
+    
+                    searchForm.slideUp('slow', function() {
+                        const scrollToPosition = searchForm.offset().top - headerHeight - 10;
+                        $('html, body').animate({ scrollTop: scrollToPosition }, 500); 
+    
+                        const searchInput = $('.form-control').val(); 
+                        if (!searchInput.trim()) {
+                            notFoundText.hide();
+                        }
+                    });
+                }
+            </script>
             <p id="noResultMessage" style="display: none; color: red;">Film tidak ditemukan.</p>
 
+            <br>
             <?php
             $conn = new mysqli('localhost','root','','premini');
 
@@ -265,20 +265,16 @@
                     
                     $deskripsi = $row['deskripsi'];
                     ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card bg-dark h-100">
-                            <!-- Assuming you don't have images in the database, you can skip the image part or provide a default image -->
-                            @foreach ($film as $f)
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $f->judul }}</h5>
-                                <img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="70px" width="100px">
-                                <p class="card-text">{{ $f->deskripsi}}</p>
-                                <a href="/order" class="btn btn-primary">Tonton</a>
-                            </div>
-                            @endforeach
+                    @foreach ($film as $f)
+                    <div class="card bg-dark h-100" style="width: 18rem;">
+                        <img class="card-img-top" src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="70px" width="100px">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $f->judul }}</h5>
+                            <p class="card-text">{{ $f->deskripsi}}</p>
+                            <a href="/order" class="btn btn-primary">Tonton</a>
                         </div>
                     </div>
-            
+                    @endforeach
                 <?php
                 }
             } else {
