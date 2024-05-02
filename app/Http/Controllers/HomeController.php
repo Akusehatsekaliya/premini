@@ -15,7 +15,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $film = Film::get();
+        $film = Film::paginate(2);
         if(auth()->check()) {
             if(auth()->user()->email == 'admin@gmail.com') {
                 return view('admin.dashboard');

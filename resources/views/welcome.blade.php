@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bioskop Online</title>
+    
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -221,7 +222,7 @@
                 });
             }
         </script>
-        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" data-interval="2000">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
                 <img src="assets/img/bg5.jpg" class="d-block w-100" alt="">
@@ -261,6 +262,7 @@
                 // Output data of each row
                 while($row = $result->fetch_assoc()) {
                     $judul = $row['judul'];
+                    
                     $deskripsi = $row['deskripsi'];
                     ?>
                     <div class="col-md-4 mb-4">
@@ -272,7 +274,6 @@
                                 <img src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="70px" width="100px">
                                 <p class="card-text">{{ $f->deskripsi}}</p>
                                 <a href="#" class="btn btn-primary">Tonton</a>
-                                <!-- Remove the rating button -->
                             </div>
                             @endforeach
                         </div>
@@ -288,12 +289,13 @@
 
             </div>
         </div>
-
+        
+ <!-- Pagination -->
+    {{ $film->links() }}
+    <!-- End Pagination -->
     </section>
 
  <!-- Maps -->
-
-
 
  <!-- END maps -->
 
