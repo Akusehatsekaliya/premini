@@ -42,6 +42,12 @@
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active">
+            <a href="{{ route('admindashboard') }}">
+              <i class="nc-icon nc-planet"></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="active">
             <a href="{{ route('adminfilm') }}">
               <i class="nc-icon nc-tv-2"></i>
               <p>Film</p>
@@ -69,12 +75,6 @@
             <a href="{{ route('admintanggal') }}">
               <i class="nc-icon nc-caps-small"></i>
               <p>Tanggal Tayang</p>
-            </a>
-          </li>
-          <li class="active">
-            <a href="{{ route('adminkeuangan') }}">
-              <i class="nc-icon nc-credit-card"></i>
-              <p>Laporan Keuangan</p>
             </a>
           </li>
         </ul>
