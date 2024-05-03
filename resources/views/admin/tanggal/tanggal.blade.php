@@ -109,6 +109,9 @@
               <table class="table">
                 <thead class=" text-primary">
                   <th style="color :#4ac29a">
+                    No
+                  </th>
+                  <th style="color :#4ac29a">
                     Judul Film
                   </th>
                   <th style="color :#4ac29a">
@@ -127,8 +130,11 @@
                     <td colspan="4" style="text-align:center;">Data masih kosong</td>
                 </tr>
                 @else
-                @foreach ($tanggal as $t)
+                @foreach ($tanggal as $key => $t)
                     <tr>
+                    <td>
+                        {{ $key + 1 }}
+                    </td>
                     <td>
                         {{ $t->Film->judul }}
                     </td>                  

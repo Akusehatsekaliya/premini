@@ -27,19 +27,23 @@
             <table>
                 <tr>
                     <td style="padding: 10px">
-                        <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                        <a href="">
-                             <img src="{{ asset('assets/img/bri.jpg') }}" alt="" height="70px" height="70px">
-                        </a>
+                        <input class="form-check-input" type="radio" id="radioBRI" name="metodePembayaran" value="BRI">
+                        <label for="radioBRI">
+                            <img src="{{ asset('assets/img/bri.jpg') }}" alt="" height="70px" height="70px">
+                        </label>
                     </td>
                     <td style="padding: 10px">
-                        <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                        <img src="{{ asset('assets/img/R.png') }}" alt="" height="70px" height="70px">
+                        <input class="form-check-input" type="radio" id="radioR" name="metodePembayaran" value="R">
+                        <label for="radioR">
+                            <img src="{{ asset('assets/img/R.png') }}" alt="" height="70px" height="70px">
+                        </label>
                     </td>
                     <td style="padding: 10px">
-                        <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                        <img src="{{ asset('assets/img/man.png') }}" alt="" height="70px" height="70px">
-                    </td>
+                        <input class="form-check-input" type="radio" id="radioMan" name="metodePembayaran" value="Man">
+                        <label for="radioMan">
+                            <img src="{{ asset('assets/img/man.png') }}" alt="" height="70px" height="70px">
+                        </label>
+                    </td>                    
                 </tr>
             </table>
             <p style="font-weight:bold ">E WALET</p>
@@ -53,9 +57,28 @@
                 </tr>
             </table>
             <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onchange="toggleRadio()">
                 <label class="form-check-label" for="flexSwitchCheckDefault">Bayar Nanti Saja</label>
             </div>
+            <script>
+                function toggleRadio() {
+                    var switchButton = document.getElementById("flexSwitchCheckDefault");
+                    var radioBRI = document.getElementById("radioBRI");
+                    var radioR = document.getElementById("radioR");
+                    var radioMan = document.getElementById("radioMan");
+                
+                    // Jika switch dinyalakan (checked), matikan radio button
+                    if (switchButton.checked) {
+                        radioBRI.disabled = true;
+                        radioR.disabled = true;
+                        radioMan.disabled = true;
+                    } else { // Jika switch dimatikan (unchecked), aktifkan kembali radio button
+                        radioBRI.disabled = false;
+                        radioR.disabled = false;
+                        radioMan.disabled = false;
+                    }
+                }
+            </script>
         </div>
         </div>
         <div class="modal-footer">
@@ -219,7 +242,7 @@
                         }
 
                         .booking {
-                            background-color: red; /* Warna untuk status kosong */
+                            background-color: red !important; /* Warna untuk status kosong */
                         }
 
                         .kosong {

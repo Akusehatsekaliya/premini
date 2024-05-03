@@ -19,11 +19,11 @@ class HomeController extends Controller
             if(auth()->user()->email == 'admin@gmail.com') {
                 return view('admin.dashboard');
             } else {
-                $film = Film::paginate(2); // Ambil data film jika pengguna terautentikasi dan bukan admin
+                $film = Film::paginate(10); // Ambil data film jika pengguna terautentikasi dan bukan admin
                 return view('welcome', compact('film'));
             }
         } else {
-            $film = Film::paginate(2); // Ambil data film jika pengguna tidak terautentikasi
+            $film = Film::paginate(10); // Ambil data film jika pengguna tidak terautentikasi
             return view('welcome', compact('film'));
         }
     }

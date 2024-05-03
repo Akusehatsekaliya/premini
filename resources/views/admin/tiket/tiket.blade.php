@@ -99,6 +99,9 @@
                   <table class="table">
                 <tr>
                     <thead class=" text-primary">
+                      <th>
+                        No
+                      </th>
                         <th>
                             Nama Film
                         </th>
@@ -123,8 +126,11 @@
                       <td></td>
                   </tr>
                   @else
-                    @foreach ($tiket as $t)
+                    @foreach ($tiket as $key => $t)
                       <tr>
+                        <td>
+                            {{ $key + 1 }}
+                        </td>
                         <td>
                             {{ $t->Film->judul }}
                         </td>

@@ -96,7 +96,7 @@
                 <div class="card card-stats">
                   <div class="card-body ">
                     <div class="row">
-                      <div class="col-7 col-md-8">
+                      <div class="col-9 col-md-10">
                         <div class="numbers">
                           <p class="card-category">{{ $f->judul }}</p>
                         </div>
