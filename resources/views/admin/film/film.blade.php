@@ -179,23 +179,7 @@
                                             <p>No Image</p>
                                         @endif
                                     </div>
-                                    <table class="table">
-                                        <tr>
-                                            <td>Judul Film</td>
-                                            <td>:</td>
-                                            <td>{{ $f->judul }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Total Kursi</td>
-                                            <td>:</td>
-                                            <td>{{ $f->Kursi->kursi }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Deskripsi</td>
-                                            <td>:</td>
-                                            <td>{{ $f->deskripsi }}</td>
-                                        </tr>
-                                    </table>
+                                    
                                 </div>
                             </div>
                             </div>
