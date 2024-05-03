@@ -64,50 +64,12 @@
             background-color: #005b8f; /* Warna latar belakang saat dihover */
         }
 
-        .search-form {
-            display: none; /* Initially hidden */
-            background-color: #ffffff; /* Mengubah latar belakang menjadi putih */
-            padding: 10px;
-            margin-top: 75px; /* Add top margin to place the form below the header */
-            border-radius: 15px;
-            margin-bottom: 20px; /* Add bottom margin to create space between the form and carousel */
-            border: 2px solid blue; /* Tambahkan outline biru dengan ketebalan 2px */
-        }
-
-        .search-form input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            outline: none;
-            border-radius: 5px;
-            background-color: #ffffff;
-            color: black;
-        }
-        .search-form input::placeholder {
-            color: black; /* Placeholder text color */
-        }
-
         .multiple-slide {
             display: flex;
             justify-content: center;
             align-items: center;
         }
     </style>
-    <script>
-        function toggleSearchForm() {
-            const searchForm = $('#searchForm');
-            const headerHeight = $('.navbar').outerHeight();
-
-            if (searchForm.is(':hidden')) {
-                searchForm.slideDown('slow', function() {
-                    const scrollToPosition = searchForm.offset().top - headerHeight - 10;
-                    $('html, body').animate({ scrollTop: scrollToPosition }, 5);
-                });
-            } else {
-                searchForm.slideUp('slow');
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -134,11 +96,6 @@
                         <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
                     </li>
                     <!-- Bagian navbar -->
-                    <li class="nav-item">
-                        <a class="nav-link" onclick="toggleSearchForm()">
-                            <i class="bi bi-search"></i>
-                        </a>
-                    </li>
                     @if (Route::has('login'))
                         <div class="sm:fixed sm:right-0 text-right ms-5">
                             @auth
@@ -209,76 +166,32 @@
     <section id="listFilm">
         <div class="container py-5 text-center">
             <h1 class="title-section">LIST FILM</h1>
-            <div id="searchForm" class="search-form container">
-                <form class="d-flex" role="search">
-                    <button type="button" onclick="hideSearchForm();" class="btn btn-light me-2">
-                        <i class="bi bi-arrow-left"></i>
-                    </button>
-                    <input id="searchText" class="form-control" type="search" placeholder="Cari Film Kesayangan.." aria-label="Search">
-                    <button class="btn btn-warning ms-2" type="button" onclick="searchFilm()">Search</button>
-                </form>
-            </div>
-    
-            <script>
-                function searchFilm() {
-                    const searchText = document.getElementById('searchText').value.toLowerCase();
-    
-                    const filmTitles = Array.from(document.querySelectorAll('.judul')).map(title => title.textContent.toLowerCase());
-    
-                    if (filmTitles.includes(searchText)) {
-                        alert(`Film "${searchText}" ditemukan!`);
-                        document.getElementById('noResultMessage').style.display = 'none';
-                    } else {
-                        alert(`Film "${searchText}" tidak ditemukan.`);
-                        document.getElementById('noResultMessage').style.display = 'block';
-                    }
-                }
-    
-                function hideSearchForm() {
-                    const searchForm = $('#searchForm');
-                    const notFoundText = $('#noResultMessage');
-                    const headerHeight = $('.navbar').outerHeight();
-    
-                    searchForm.slideUp('slow', function() {
-                        const scrollToPosition = searchForm.offset().top - headerHeight - 10;
-                        $('html, body').animate({ scrollTop: scrollToPosition }, 500); 
-    
-                        const searchInput = $('.form-control').val(); 
-                        if (!searchInput.trim()) {
-                            notFoundText.hide();
-                        }
-                    });
-                }
-            </script>
-            <p id="noResultMessage" style="display: none; color: red;">Film tidak ditemukan.</p>
 
             <br>
             <?php
-    $conn = new mysqli('localhost','root','','premini');
+                $conn = new mysqli('localhost','root','','premini');
 
-    $sql = "SELECT kursi_id, judul, film, deskripsi FROM films";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while($row = $result->fetch_assoc()) {
+                $sql = "SELECT kursi_id, judul, film, deskripsi FROM films";
+                $result = $conn->query($sql);
+                if ($result->num_rows > 0) {
+                    // Output data of each row
+                    while($row = $result->fetch_assoc()) {
+                        ?>
+                        <div class="card bg-dark h-100" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ asset('storage/vidio/'. $row['film']) }}" alt="" height="300px" width="100px">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $row['judul'] }}</h5>
+                                <p class="card-text">{{ $row['deskripsi'] }}</p>
+                                <a href="/order" class="btn btn-primary">Tonton</a>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                } else {
+                    echo '<div class="col text-center">Tidak ada data film.</div>';
+                }
+                $conn->close();
             ?>
-            <div class="card bg-dark h-100" style="width: 18rem;">
-                <img class="card-img-top" src="{{ asset('storage/vidio/'. $row['film']) }}" alt="" height="70px" width="100px">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $row['judul'] }}</h5>
-                    <p class="card-text">{{ $row['deskripsi'] }}</p>
-                    <a href="/order" class="btn btn-primary">Tonton</a>
-                </div>
-            </div>
-            <?php
-        }
-    } else {
-        echo '<div class="col text-center">Tidak ada data film.</div>';
-    }
-    $conn->close();
-?>
-
-
             </div>
         </div>
         

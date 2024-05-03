@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\Map;
 use Illuminate\Http\Request;
@@ -22,6 +23,8 @@ class MapController extends Controller
             'map' => $request->map
         ]);
 
+        Session::flash('successTambah', 'Data berhasil ditambahkan!');
+
         return back();
     }
 
@@ -36,6 +39,9 @@ class MapController extends Controller
             'map' => $request->map,
             ];
              $map->update($data);
+
+             Session::flash('successEdit', 'Data berhasil diubah!');
+
              return back();
     }
 
@@ -43,6 +49,8 @@ class MapController extends Controller
         $tiket = Map::find($id);
         $tiket->delete();
 
+        Session::flash('successHapus', 'Data berhasil dihapus!');
+        
         return back();
     }
 

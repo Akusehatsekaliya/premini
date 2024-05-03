@@ -204,12 +204,28 @@
                                 <div class="modal-body">
                                     <div class="col-6">
                                         @if($f->film)
-                                            <img src="{{ asset('storage/video' . $f->film) }}" class="img-fluid" alt="Gambar Film">
+                                            <img src="{{ asset('storage/video' . $f->film) }}" class="img-fluid" alt="Gambar Film" width="400" height="200">
                                         @else
                                             <p>No Image</p>
                                         @endif
                                     </div>
-                                    
+                                    <table class="table">
+                                        <tr>
+                                            <td>Judul Film</td>
+                                            <td>:</td>
+                                            <td>{{ $f->judul }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Kursi</td>
+                                            <td>:</td>
+                                            <td>{{ $f->Kursi->kursi }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Deskripsi</td>
+                                            <td>:</td>
+                                            <td>{{ $f->deskripsi }}</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                             </div>

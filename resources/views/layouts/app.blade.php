@@ -54,29 +54,6 @@
             background-color: #005b8f; /* Warna latar belakang saat dihover */
         }
 
-        .search-form {
-            display: none; /* Initially hidden */
-            background-color: #e0e0e0;
-            padding: 10px;
-            margin-top: 75px; /* Add top margin to place the form below the header */
-            border-radius: 15px;
-            margin-bottom: 20px; /* Add bottom margin to create space between the form and carousel */
-        }
-
-        .search-form input {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            outline: none;
-            border-radius: 5px;
-            background-color: #e0e0e0;
-            color: black;
-        }
-        .search-form input::placeholder {
-            color: black; /* Placeholder text color */
-        }
-
-
         .multiple-slide {
             display: flex;
             justify-content: center;
@@ -87,19 +64,6 @@
             color: white !important; /* Warna teks putih */
         }
     </style>
-    <script>
-        function toggleSearchForm() {
-            const searchForm = document.getElementById('searchForm');
-            // Periksa apakah formulir saat ini terlihat
-            if (searchForm.style.display === 'block') {
-                // Sembunyikan formulir
-                searchForm.style.display = 'none';
-            } else {
-                // Tampilkan formulir
-                searchForm.style.display = 'block';
-            }
-        }
-    </script>
 </head>
  
 <body>
@@ -124,12 +88,6 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
-                        </li>
-                        <!-- Bagian navbar -->
-                        <li class="nav-item">
-                            <a class="nav-link" onclick="toggleSearchForm()">
-                                <i class="bi bi-search"></i>
-                            </a>
                         </li>
                         @if (Route::has('login'))
                             <div class="sm:fixed sm:right-0 text-right ms-5">
