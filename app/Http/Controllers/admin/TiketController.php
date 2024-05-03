@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\Film;
 use App\Models\Tiket;
@@ -37,12 +38,16 @@ class TiketController extends Controller
             'harga'  => $request->harga,
         ]);
 
+        Session::flash('successTambah', 'Data berhasil ditambahkan!');
+
         return back();
     }
 
     public function delete_tiket(Request $request, $id){
         $tiket = Tiket::find($id);
         $tiket->delete();
+
+        Session::flash('successHapus', 'Data berhasil dihapus!');
 
         return back();
     }
@@ -68,6 +73,8 @@ class TiketController extends Controller
         $tiket->harga   = $request->harga;
         $tiket->save();
 
-    return back();
+        Session::flash('successEdit', 'Data berhasil diubah!');
+
+        return back();
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\Film;
 use App\Models\Kursi;
@@ -29,6 +30,8 @@ class KursiController extends Controller
             'kursi' => $request->kursi,
         ]);
 
+        Session::flash('successTambah', 'Data berhasil ditambahkan!');
+
         return back();
     }
 
@@ -47,6 +50,9 @@ class KursiController extends Controller
         'kursi' => $request->kursi,
         ];
          $kursi->update($data);
+
+         Session::flash('successEdit', 'Data berhasil diubah!');
+
          return back();
     }
 
@@ -62,6 +68,8 @@ class KursiController extends Controller
 
             $kursi->delete();
 
+            Session::flash('successHapus', 'Data berhasil dihapus!');
+            
             return back();
 
         } catch (\Exception $e) {

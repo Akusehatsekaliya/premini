@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\Film;
 use App\Models\Tanggal;
@@ -36,6 +37,8 @@ class TanggalController extends Controller
             'jam' => $request->jam
         ]);
 
+        Session::flash('successTambah', 'Data berhasil ditambahkan!');
+
         return back();
     }
 
@@ -43,6 +46,8 @@ class TanggalController extends Controller
     {
         $tanggal = Tanggal::find($id);
         $tanggal->delete();
+
+        Session::flash('successHapus', 'Data berhasil dihapus!');
 
         return back();
     }
@@ -74,6 +79,8 @@ class TanggalController extends Controller
         // $tanggal['tanggal'] = $request->tanggal;
         // $tanggal['jam'] = $request->jam;
         // $tanggal->save();
+
+        Session::flash('successEdit', 'Data berhasil diubah!');
 
         return back();
     }

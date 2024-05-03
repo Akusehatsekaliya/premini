@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\Film;
 use App\Models\Kursi;
@@ -25,27 +26,28 @@ class FilmController extends Controller
         return view('admin.dashboard');
     }
 
-    public function proses_film(Request $request){
-
-
+    public function proses_film(Request $request)
+    {
         $request->validate([
             'judul'        => 'required',
-            'film'         => 'required',
+            'film'         => 'required|file|mimes:mp4,mov,avi,wmv', // Menambahkan validasi file
             'kursi_id'     => 'required',
             'deskripsi'    => 'required',
         ],[
-            'judul.required'       => 'Tidak boleh kosong',
-            'film.required'        => 'Tidak boleh kosong',
-            'kursi_id.required'    => 'Tidak boleh kosong',
-            'deskripsi.required'   => 'Tidak boleh kosong',
+            'judul.required'       => 'Judul tidak boleh kosong',
+            'film.required'        => 'File tidak boleh kosong',
+            'film.mimes'           => 'Format file tidak valid. Harus berupa mp4, mov, avi, atau wmv',
+            'kursi_id.required'    => 'Kursi ID tidak boleh kosong',
+            'deskripsi.required'   => 'Deskripsi tidak boleh kosong',
         ]);
 
-
         $film = $request->file('film');
-        $extension = $film->getClientOriginalExtension();
-        $filename = uniqid() . '.' . $extension;
-        $path = 'vidio/'.$filename;
-        Storage::disk('public')->put($path,file_get_contents($film));
+
+        // Generate nama file yang unik
+        $filename = uniqid() . '.' . $film->getClientOriginalExtension();
+
+        // Simpan file ke dalam direktori penyimpanan
+        $path = $film->storeAs('public/vidio', $filename);
 
         $akses = Film::create([
             'judul'      => $request->judul,
@@ -53,6 +55,9 @@ class FilmController extends Controller
             'deskripsi'  => $request->deskripsi,
             'kursi_id'   => $request->kursi_id,
         ]);
+
+        // Set pesan sukses
+        Session::flash('successTambah', 'Film berhasil ditambahkan!');
 
         return back();
     }
@@ -71,6 +76,8 @@ class FilmController extends Controller
             // Hapus objek alat dari basis data
             $deletefilm->delete();
         }
+
+        Session::flash('successHapus', 'Data berhasil dihapus!');
 
         return back();
     }
@@ -111,6 +118,7 @@ class FilmController extends Controller
             $film->update($request->except('film'));
         }
 
+        Session::flash('successEdit', 'Data berhasil diubah!');
         return redirect()->route('adminfilm');
     }
 }

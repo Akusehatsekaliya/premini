@@ -1,7 +1,37 @@
 @extends('admin.main')
 @section('content')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if(session('successTambah'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('successTambah') }}',
+            });
+        @endif
 
+        @if(session('successEdit'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('successEdit') }}',
+            });
+        @endif
+
+        @if(session('successHapus'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('successHapus') }}',
+            });
+        @endif
+
+        $('.btn-edit').click(function() {
+            $('#ModalEdit').modal('show');
+        });
+
+    </script>
   <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -94,8 +124,8 @@
                                 {{ $f->judul }}
                             </td>                  
                             <td>
-                                {{ $f->film }}
-                            </td>
+                                <img src="{{ asset('storage/vidio/' . $f->film) }}" alt="Gambar Film">
+                            </td>                            
                             <td class="text-center" style="display: flex; flex-direction: row;">
                                 <div id="btn-edit{{ $f->id }}" class="btn-edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621"/><path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/></g></svg>
