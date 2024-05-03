@@ -254,34 +254,30 @@
 
             <br>
             <?php
-            $conn = new mysqli('localhost','root','','premini');
+    $conn = new mysqli('localhost','root','','premini');
 
-            $sql = "SELECT kursi_id, judul, film, deskripsi FROM films";
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
-                // Output data of each row
-                while($row = $result->fetch_assoc()) {
-                    $judul = $row['judul'];
-                    
-                    $deskripsi = $row['deskripsi'];
-                    ?>
-                    @foreach ($film as $f)
-                    <div class="card bg-dark h-100" style="width: 18rem;">
-                        <img class="card-img-top" src="{{ asset('storage/vidio/'. $f->film) }}" alt="" height="70px" width="100px">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $f->judul }}</h5>
-                            <p class="card-text">{{ $f->deskripsi}}</p>
-                            <a href="/order" class="btn btn-primary">Tonton</a>
-                        </div>
-                    </div>
-                    @endforeach
-                <?php
-                }
-            } else {
-                echo '<div class="col text-center">Tidak ada data film.</div>';
-            }
-            $conn->close();
+    $sql = "SELECT kursi_id, judul, film, deskripsi FROM films";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while($row = $result->fetch_assoc()) {
             ?>
+            <div class="card bg-dark h-100" style="width: 18rem;">
+                <img class="card-img-top" src="{{ asset('storage/vidio/'. $row['film']) }}" alt="" height="70px" width="100px">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $row['judul'] }}</h5>
+                    <p class="card-text">{{ $row['deskripsi'] }}</p>
+                    <a href="/order" class="btn btn-primary">Tonton</a>
+                </div>
+            </div>
+            <?php
+        }
+    } else {
+        echo '<div class="col text-center">Tidak ada data film.</div>';
+    }
+    $conn->close();
+?>
+
 
             </div>
         </div>
