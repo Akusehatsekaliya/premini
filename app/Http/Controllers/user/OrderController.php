@@ -27,8 +27,34 @@ class OrderController extends Controller
         return view('user.order', compact('film','tiket','tanggal','kursi'));
     }
 
-    public function payment(Request $request)
+    public function detail()
     {
-        $order = Order::create($request->all());
+        $film = Film::get();
+
+        return view('user.detail', compact('film'));
+    }
+
+    public function pesan()
+    {
+        $film = Film::get();
+        $tiket = Tiket::get();
+        $tanggal = Tanggal::get();
+
+        $jumlahTiket = request()->input('jumlah');; 
+
+        return view('user.pesan', compact('film','tiket','tanggal','jumlahTiket'));
+    }
+
+    public function pilihkursi()
+    {
+        $film = Film::first();
+        $kursi = Kursi::all();
+        $tiket = Tiket::first();
+        $tanggal = Tanggal::first();
+
+        $jumlahTiket = request()->input('jumlah');
+        $hargaTiket = $tiket->harga;
+
+        return view('user.pilihkursi', compact('film','kursi','tiket','tanggal','jumlahTiket','hargaTiket'));
     }
 }

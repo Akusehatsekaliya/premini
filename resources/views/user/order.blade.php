@@ -106,7 +106,7 @@
             }
         </style>
         <a href="/" class="btn btn-transparent">
-            <i class="bi bi-arrow-left"></i> Back
+            <i class="bi bi-arrow-left"></i> Kembali
         </a>
 
         <br>
@@ -140,7 +140,6 @@
                 <div class="form-group col-md-6">
                     <label for="jam" class="form-label">Jam Tayang</label>
                     <select class="form-control" id="jam" name="jam_tayang">
-                        <option value="" selected>--Pilih Jam Tayang--</option>
                         @foreach ($tanggal as $t)
                             <option value="{{ $t->id }}">{{ $t->jam }}</option>
                         @endforeach

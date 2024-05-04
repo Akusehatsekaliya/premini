@@ -90,9 +90,6 @@
                         <a class="nav-link @if( Request::is('login') || Request::is('register') || Request::is('order') || Request::is('history')) disabled @endif  @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link @if(Request::is('order')) active-menu @endif" href="/order"><i class="bi bi-card-text"></i> Beli Tiket</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
                     </li>
                     <!-- Bagian navbar -->
@@ -168,30 +165,20 @@
             <h1 class="title-section">LIST FILM</h1>
 
             <br>
-            <?php
-                $conn = new mysqli('localhost','root','','premini');
+            @if ($film->isEmpty())
+                <div class="col text-center">Tidak ada data film.</div>
+            @endif
+            @foreach ($film as $f)
+            <div class="card bg-dark h-100" style="width: 18rem;">
+                <img class="card-img-top" src="{{ asset('storage/vidio/'. $f['film']) }}" alt="" height="300px" width="100px">
+                <div class="card-body">
+                    <h5 class="card-title">{{ $f['judul'] }}</h5>
 
-                $sql = "SELECT kursi_id, judul, film, deskripsi FROM films";
-                $result = $conn->query($sql);
-                if ($result->num_rows > 0) {
-                    // Output data of each row
-                    while($row = $result->fetch_assoc()) {
-                        ?>
-                        <div class="card bg-dark h-100" style="width: 18rem;">
-                            <img class="card-img-top" src="{{ asset('storage/vidio/'. $row['film']) }}" alt="" height="300px" width="100px">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $row['judul'] }}</h5>
-                                <p class="card-text">{{ $row['deskripsi'] }}</p>
-                                <a href="/order" class="btn btn-primary">Tonton</a>
-                            </div>
-                        </div>
-                        <?php
-                    }
-                } else {
-                    echo '<div class="col text-center">Tidak ada data film.</div>';
-                }
-                $conn->close();
-            ?>
+                    <br>
+                    <a href="/detail" class="btn btn-primary">Detail</a>
+                </div>
+            </div>
+            @endforeach
             </div>
         </div>
         

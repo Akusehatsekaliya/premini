@@ -82,10 +82,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link @if( Request::is('login') || Request::is('register') || Request::is('order') || Request::is('history')) disabled @endif  @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
-                        </li>                        
-                        <li class="nav-item">
-                            <a class="nav-link @if(Request::is('order')) active-menu @endif" href="/order"><i class="bi bi-card-text"></i> Beli Tiket</a>
-                        </li>
+                        </li>          
                         <li class="nav-item">
                             <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
                         </li>

@@ -20,12 +20,16 @@
             }
         </style>
         <a href="/" class="btn btn-transparent">
-            <i class="bi bi-arrow-left"></i> Back
+            <i class="bi bi-arrow-left"></i> Kembali
         </a>
 
         <br>
         <br>
         <h1>History Pesanan</h1>
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <i class="bi bi-clock" style="font-size: 3rem;"></i>
+            <p class="center-text">History pesanan Anda akan muncul di sini.</p>
+        </div>
 
     </div>
 @endsection
