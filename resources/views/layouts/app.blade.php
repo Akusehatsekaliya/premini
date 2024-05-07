@@ -83,7 +83,7 @@
                             <a class="nav-link @if(Request::is('/')) active-menu @endif" href="/"><i class="bi bi-house-door"></i>Home</a>
                         </li>
                         <li class="nav-item @if(!Auth::check()) d-none @endif">
-                            <a class="nav-link @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
+                            <a class="nav-link @if( Request::is('detail') || Request::is('pesan') || Request::is('pilihkursi') || Request::is('order') || Request::is('history')) disabled @endif  @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
                         </li>
                         <li class="nav-item @if(!Auth::check()) d-none @endif">
                             <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
