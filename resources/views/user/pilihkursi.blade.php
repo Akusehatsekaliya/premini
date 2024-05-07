@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
 <br>
 <br>
 <div class="container">
@@ -27,7 +27,7 @@
     <br>
     <p>Film : {{ $film['judul'] }}</p>
     <p>Studio : {{ $tiket['tiket'] }}</p>
-    <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY'); }}</p>
+    <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY') }}</p>
     <p>Jam: <span id="selectedTime">{{ $tanggal['jam'] }}</span></p>
     <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }} /  </span></p>
     <p>Total Harga : <span id="totalHarga"></span></p>
@@ -102,7 +102,7 @@
                             const selectedSeats = document.querySelectorAll('.seat.booked');
                             const pesanTiketButton = document.getElementById('pesanTiketButton');
                             pesanTiketButton.disabled = true;
-                            
+
                             // Jika ada kursi yang dipilih, aktifkan tombol Pesan Tiket
                             if (selectedSeats.length > 0) {
                                 pesanTiketButton.removeAttribute('disabled');
@@ -116,14 +116,14 @@
                                 pesanTiketButton.classList.add('btn-outline-primary');
                             }
                         }
-                    
+
                         // Fungsi untuk mengatur kursi dan jumlah tiket
                         function createSeats(section, seatCount, label) {
                             for (let i = 0; i < seatCount; i++) {
                                 const seat = document.createElement('div');
                                 seat.classList.add('seat');
                                 seat.innerText = i + 1 + label;
-                                
+
                                 // Tambahkan event listener untuk mengubah warna kursi saat kursi dipesan
                                 seat.addEventListener('click', function() {
                                     if (!seat.classList.contains('booked')) {
@@ -133,7 +133,7 @@
                                         // Jika kursi sudah dipesan, kembalikan ke warna merah
                                         seat.classList.remove('booked');
                                     }
-                                    
+
                                     // Perbarui jumlah tiket
                                     updateJumlahTiket();
                                     // Perbarui total harga
@@ -141,33 +141,33 @@
                                     // Periksa apakah ada kursi yang dipilih
                                     checkSelectedSeats();
                                 });
-                                
+
                                 section.appendChild(seat);
                             }
                         }
-                    
+
                         // Fungsi untuk memperbarui tampilan jumlah tiket
                         function updateJumlahTiket() {
                             const bookedSeats = document.querySelectorAll('.seat.booked');
                             const jumlahTiket = bookedSeats.length;
                             document.getElementById('jumlahTiket').innerText = jumlahTiket > 0 ? jumlahTiket : '0';
                         }
-                    
+
                         // Fungsi untuk memperbarui tampilan total harga tiket
                         function updateTotalHarga() {
                             const bookedSeats = document.querySelectorAll('.seat.booked');
                             const jumlahTiket = bookedSeats.length;
-                            
+
                             // Ambil harga tiket dari variabel PHP
                             const hargaTiket = {{ $hargaTiket }};
-                            
+
                             // Hitung total harga tiket
                             const totalHarga = jumlahTiket * hargaTiket;
-                            
+
                             // Tampilkan total harga tiket dengan format mata uang
                             document.getElementById('totalHarga').innerText = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '');
                         }
-                        // Format Jam 
+                        // Format Jam
                         document.getElementById('selectedTime').innerText = "{{ $tanggal->jam }}".replace(/:\d{2}$/, '');
                         // Membuat 30 kursi di kiri dan 30 kursi di kanan
                         const leftSection = document.getElementById('left-section');
@@ -176,7 +176,7 @@
                         createSeats(leftSection, {{ $k->kursi }}, 'a');
                         createSeats(rightSection, {{ $k->kursi }}, 'b');
                         @endforeach
-                    
+
                         // Panggil fungsi updateTotalHarga, updateJumlahTiket, dan checkSelectedSeats saat halaman dimuat
                         updateTotalHarga();
                         updateJumlahTiket();
