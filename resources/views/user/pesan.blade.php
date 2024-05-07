@@ -141,14 +141,12 @@
                         var switches = document.querySelectorAll('.form-check-input');
                         var clickedSwitch = switches[clickedIndex];
                         var selectedTicketText = document.getElementById('selectedTicketText');
-                
-                        // Memperbarui teks pada <p> berdasarkan tiket yang dipilih
-                        //if (clickedSwitch.checked) {
-                        //    selectedTicketText.textContent = 'Studio: ' + clickedSwitch.value;
-                        //} else {
-                        //    selectedTicketText.textContent = '';
-                        //}
-                
+                        var timeButtons = document.querySelectorAll('.btn-outline-primary');
+
+                    // Memperbarui status tombol waktu tergantung pada status switch
+                    timeButtons.forEach(function(button) {
+                        button.disabled = !clickedSwitch.checked;
+                    });
                         // Mematikan semua switch jika switch utama diaktifkan (on)
                         if (clickedSwitch.checked) {
                             for (var i = 0; i < switches.length; i++) {
