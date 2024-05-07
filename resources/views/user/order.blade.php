@@ -92,8 +92,7 @@
         </div>
       </div>
     </div>
-  </div>
-
+</div>
   <br>
   <br>
   <div class="container">
@@ -123,18 +122,23 @@
     <div style="display: flex; align-items: flex-start;">
         <img class="card-img-top" src="{{ asset('storage/vidio/'. $f['film']) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
         <div style="display: flex; flex-direction: column;">
-            <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $f['judul'] }}</h2>
-            <p class="card-text" style="margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
-            <br>
-            
+            <p>Film : {{ $f->judul }}</p>
+            <p>Tiket : </p>
+            <p>Tanggal : </p>
+            @php
+                $selectedTime = session('selectedTime'); // Mendapatkan nilai tiket dari session
+            @endphp
+
+            <p>Jam Tayang : {{ $selectedTime }}</p>
+            <p>Jumlah Tiket : <span id="jumlahTiket"></span></p>
+            <p>Nomor Kursi : <span id="nomorKursi"></span></p>
+            <p>Total Harga : <span id="totalHarga"></span></p>
+             <!-- Modal Bayar -->
+                <div data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-primary">Bayar</button>
+                </div>
+            <!-- End -->
         </div> 
     </div>   
     @endforeach
-    <br>
-        <!-- Modal Bayar -->
-        <div data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <button type="button" class="btn btn-primary">Bayar</button>
-        </div>
-        <!-- End -->
-    </div>
 @endsection

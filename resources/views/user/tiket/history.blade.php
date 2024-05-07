@@ -25,11 +25,15 @@
 
         <br>
         <br>
-        <h1>History Pesanan</h1>
-        <div class="d-flex flex-column justify-content-center align-items-center">
-            <i class="bi bi-clock" style="font-size: 3rem;"></i>
-            <p class="center-text">History pesanan Anda akan muncul di sini.</p>
-        </div>
+        @if ($order->isEmpty())
+            <div class="d-flex flex-column justify-content-center align-items-center" style="height: 60vh;">
+                <i class="bi bi-clock" style="font-size: 3rem;"></i>
+                <p class="center-text">History pesanan Anda akan muncul di sini.</p>
+            </div>
+        @else
+
+        @endif
+  
 
     </div>
 @endsection
