@@ -34,25 +34,33 @@ class OrderController extends Controller
         return view('user.detail', compact('film'));
     }
 
-    public function pesan()
+    public function pesan(Request $request)
     {
         $film = Film::get();
         $tiket = Tiket::get();
         $tanggal = Tanggal::get();
 
-        $jumlahTiket = request()->input('jumlah');; 
+        $jumlahTiket = $request->input('jumlah');
+        
+        // Validasi jumlah tiket
+        if ($jumlahTiket > 10) {
+            return redirect()->back()->with('error', 'Jumlah tiket tidak boleh lebih dari 10.');
+        }
 
-        return view('user.pesan', compact('film','tiket','tanggal','jumlahTiket'));
+        session(['jumlahTiket' => $jumlahTiket]);
+
+        return view('user.pesan', compact('film', 'tiket', 'tanggal', 'jumlahTiket'));
     }
 
-    public function pilihkursi()
+
+    public function pilihkursi(Request $request)
     {
         $film = Film::first();
         $kursi = Kursi::all();
         $tiket = Tiket::first();
         $tanggal = Tanggal::first();
 
-        $jumlahTiket = request()->input('jumlah');
+        $jumlahTiket = session('jumlahTiket');
         $hargaTiket = $tiket->harga;
 
         return view('user.pilihkursi', compact('film','kursi','tiket','tanggal','jumlahTiket','hargaTiket'));

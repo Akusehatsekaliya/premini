@@ -2,6 +2,8 @@
 @section('content')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
     <script>
         @if(session('successTambah'))
             Swal.fire({
@@ -24,6 +26,14 @@
                 icon: 'success',
                 title: 'Berhasil',
                 text: '{{ session('successHapus') }}',
+            });
+        @endif
+
+        @if(session('errorHapus'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('errorHapus') }}',
             });
         @endif
 
@@ -124,8 +134,8 @@
                                 {{ $f->judul }}
                             </td>                  
                             <td>
-                                <img src="{{ asset('storage/vidio/' . $f->film) }}" alt="Gambar Film">
-                            </td>                            
+                                <img src="{{ asset('storage/vidio/' . $f->film) }}" alt="Gambar Film" style="max-width: 300px; max-height: 300px;">
+                            </td>                                                   
                             <td class="text-center" style="display: flex; flex-direction: row;">
                                 <div id="btn-edit{{ $f->id }}" class="btn-edit">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621"/><path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3"/></g></svg>
@@ -140,6 +150,8 @@
                                 </div>
                             </td>
                         </tr>
+                        </tbody>
+                      </table>
 
                         {{-- modal edit --}}
                         <div class="modal fade" id="ModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -195,21 +207,19 @@
 
                         {{-- modal detail --}}
                         <div class="modal fade" id="Modaldetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-xl">
                             <div class="modal-content">
                                 <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Detail Film</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="col-6">
-                                        @if($f->film)
-                                            <img src="{{ asset('storage/video' . $f->film) }}" class="img-fluid" alt="Gambar Film" width="400" height="200">
-                                        @else
-                                            <p>No Image</p>
-                                        @endif
-                                    </div>
                                     <table class="table">
+                                        <tr>
+                                            <td>
+                                                <img src="{{ asset('storage/vidio/' . $f->film) }}" alt="Gambar Film" style="max-width: 300px; max-height: 300px;">
+                                            </td>   
+                                        </tr>
                                         <tr>
                                             <td>Judul Film</td>
                                             <td>:</td>

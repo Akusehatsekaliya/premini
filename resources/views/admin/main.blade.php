@@ -20,6 +20,7 @@
   <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body class="">
@@ -103,9 +104,26 @@
             <ul class="navbar-nav">
               <li class="nav-item">
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="dropdown-item">Logout</button>
-                </form>
+                  @csrf
+                  <button type="button" id="logoutButton" class="dropdown-item">Logout</button>
+              </form>
+              
+              <script>
+                  document.getElementById('logoutButton').addEventListener('click', function() {
+                      swal({
+                          title: "Konfirmasi Logout",
+                          text: "Apakah Anda yakin ingin logout?",
+                          icon: "warning",
+                          buttons: true,
+                          dangerMode: true,
+                      })
+                      .then((willLogout) => {
+                          if (willLogout) {
+                              document.getElementById('logout-form').submit();
+                          }
+                      });
+                  });
+              </script>              
               </li>
             </ul>
           </div>

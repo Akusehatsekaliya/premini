@@ -63,24 +63,49 @@ class FilmController extends Controller
     }
 
     public function delete_film(Request $request, $id)
-    {
-        $deletefilm = Film::find($id);
+{
+    $deletefilm = Film::find($id);
 
-        if ($deletefilm) {
+    if ($deletefilm) {
+        // Periksa apakah data masih digunakan sebelum menghapus
+        $isDataUsed = $this->checkDataUsage($deletefilm);
+
+        if ($isDataUsed) {
+            // Tampilkan alert error jika data masih digunakan
+            Session::flash('errorHapus', 'Data tidak dapat dihapus karena masih digunakan!');
+        } else {
             // Hapus file foto terkait jika ada
             $vidioPath = public_path('storage/vidio/' . $deletefilm->film);
             if (file_exists($vidioPath)) {
                 unlink($vidioPath);
             }
 
-            // Hapus objek alat dari basis data
+            // Hapus objek film dari basis data
             $deletefilm->delete();
+            Session::flash('successHapus', 'Data berhasil dihapus!');
         }
-
-        Session::flash('successHapus', 'Data berhasil dihapus!');
-
-        return back();
     }
+
+    return back();
+}
+
+private function checkDataUsage($film)
+{
+    // Implementasikan logika pemeriksaan penggunaan data di sini
+    // Misalnya, periksa apakah film masih digunakan oleh entitas lain
+    // Jika masih digunakan, kembalikan nilai true; jika tidak, kembalikan nilai false
+
+    // Contoh implementasi sederhana
+    $isUsed = false;
+
+    // Periksa apakah film digunakan oleh entitas lain, misalnya, tabel Tiket
+    $tikets = Tiket::where('film_id', $film->id)->get();
+    if ($tikets->count() > 0) {
+        $isUsed = true;
+    }
+
+    return $isUsed;
+}
 
     public function update_film(Request $request, $id)
     {

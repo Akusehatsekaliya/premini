@@ -25,11 +25,11 @@
 
     <br>
     <br>
-    <p>Film : {{ $film->judul }}</p>
-    <p>Tiket : {{ $tiket->tiket }}</p>
+    <p>Film : {{ $film['judul'] }}</p>
+    <p>Studio : {{ $tiket['tiket'] }}</p>
     <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY'); }}</p>
-    <p>Jam : {{ rtrim(substr($tanggal->jam, 0, -2), ':'); }}</p>
-    <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }}</span></p>
+    <p>Jam: <span id="selectedTime">{{ $tanggal['jam'] }}</span></p>
+    <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }} /  </span></p>
     <p>Total Harga : <span id="totalHarga"></span></p>
     <br>
             <div class="form-group">
@@ -97,13 +97,33 @@
                     </div>
 
                     <script>
+                        // Fungsi untuk memeriksa apakah ada kursi yang dipilih
+                        function checkSelectedSeats() {
+                            const selectedSeats = document.querySelectorAll('.seat.booked');
+                            const pesanTiketButton = document.getElementById('pesanTiketButton');
+                            pesanTiketButton.disabled = true;
+                            
+                            // Jika ada kursi yang dipilih, aktifkan tombol Pesan Tiket
+                            if (selectedSeats.length > 0) {
+                                pesanTiketButton.removeAttribute('disabled');
+                                pesanTiketButton.classList.remove('btn-outline-primary');
+                                pesanTiketButton.classList.add('btn-primary');
+                            } else {
+                                // Jika tidak ada kursi yang dipilih, nonaktifkan tombol Pesan Tiket
+                                pesanTiketButton.disabled = false;
+                                pesanTiketButton.setAttribute('disabled', 'disabled');
+                                pesanTiketButton.classList.remove('btn-primary');
+                                pesanTiketButton.classList.add('btn-outline-primary');
+                            }
+                        }
+                    
                         // Fungsi untuk mengatur kursi dan jumlah tiket
                         function createSeats(section, seatCount, label) {
                             for (let i = 0; i < seatCount; i++) {
                                 const seat = document.createElement('div');
                                 seat.classList.add('seat');
                                 seat.innerText = i + 1 + label;
-                    
+                                
                                 // Tambahkan event listener untuk mengubah warna kursi saat kursi dipesan
                                 seat.addEventListener('click', function() {
                                     if (!seat.classList.contains('booked')) {
@@ -118,8 +138,10 @@
                                     updateJumlahTiket();
                                     // Perbarui total harga
                                     updateTotalHarga();
+                                    // Periksa apakah ada kursi yang dipilih
+                                    checkSelectedSeats();
                                 });
-                    
+                                
                                 section.appendChild(seat);
                             }
                         }
@@ -135,17 +157,18 @@
                         function updateTotalHarga() {
                             const bookedSeats = document.querySelectorAll('.seat.booked');
                             const jumlahTiket = bookedSeats.length;
-                    
+                            
                             // Ambil harga tiket dari variabel PHP
                             const hargaTiket = {{ $hargaTiket }};
-                    
+                            
                             // Hitung total harga tiket
                             const totalHarga = jumlahTiket * hargaTiket;
-                    
+                            
                             // Tampilkan total harga tiket dengan format mata uang
-                            document.getElementById('totalHarga').innerText = totalHarga.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+                            document.getElementById('totalHarga').innerText = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '');
                         }
-                    
+                        // Format Jam 
+                        document.getElementById('selectedTime').innerText = "{{ $tanggal->jam }}".replace(/:\d{2}$/, '');
                         // Membuat 30 kursi di kiri dan 30 kursi di kanan
                         const leftSection = document.getElementById('left-section');
                         const rightSection = document.getElementById('right-section');
@@ -154,19 +177,17 @@
                         createSeats(rightSection, {{ $k->kursi }}, 'b');
                         @endforeach
                     
-                        // Panggil fungsi updateTotalHarga dan updateJumlahTiket saat halaman dimuat
+                        // Panggil fungsi updateTotalHarga, updateJumlahTiket, dan checkSelectedSeats saat halaman dimuat
                         updateTotalHarga();
                         updateJumlahTiket();
+                        checkSelectedSeats();
                     </script>
-                    
-                    
-
 
             <br>
             <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
 
-            <div data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <button type="button" class="btn btn-primary">Continue</button>
-            </div>
+            <br>
+            <a href="/pesan" type="button" class="btn btn-secondary">Cancel</a>
+            <a href="/order" type="button" id="pesanTiketButton" class="btn btn-outline-primary" onchange="checkSelectedSeats();" disabled=""> Konfirmasi Pembayaran </a>
             </div>
 @endsection

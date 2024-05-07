@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- BOOTSTRAP ICON -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <style>
         body {
             background-color: #011228; /* Ubah kode warna sesuai keinginan */
@@ -70,20 +72,20 @@
     <div id="app">
         <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark border-bottom" style="background-color: #0E46A3;">
             <div class="container">
-                <a class="navbar-brand" href="#">FILMKUY</a>
+                <a class="navbar-brand" href="/">FILMKUY</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
+                        <li class="nav-item @if(!Auth::check()) d-none @endif">
                             <a class="nav-link @if(Request::is('/')) active-menu @endif" href="/"><i class="bi bi-house-door"></i>Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link @if( Request::is('login') || Request::is('register') || Request::is('order') || Request::is('history')) disabled @endif  @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
-                        </li>          
-                        <li class="nav-item">
+                        <li class="nav-item @if(!Auth::check()) d-none @endif">
+                            <a class="nav-link @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
+                        </li>
+                        <li class="nav-item @if(!Auth::check()) d-none @endif">
                             <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
                         </li>
                         @if (Route::has('login'))
@@ -96,20 +98,34 @@
                                         <ul class="dropdown-menu" aria-labelledby="userDropdown" style="transform: translateY(-10px); left: 0;">
                                             <li><a class="dropdown-item" href="/profile">Profile</a></li>
                                             <li class="border-t border-white-light dark:border-white-light/10">
-                                                <form action="{{ route('logout') }}" method="POST">
+                                                <form id="logoutForm" action="{{ route('logout') }}" method="POST">
                                                     @csrf
-                                                    <button type="submit" class="dropdown-item text-danger">
-                                                        <svg class="h-4.5 w-4.5 rotate-90 ltr:mr-5 rtl:ml-2" width="18" height="18"
-                                                            viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                            <path opacity="0.5"
-                                                                d="M17 9.00195C19.175 9.01406 20.3529 9.11051 21.1213 9.8789C22 10.7576 22 12.1718 22 15.0002V16.0002C22 18.8286 22 20.2429 21.1213 21.1215C20.2426 22.0002 18.8284 22.0002 16 22.0002H8C5.17157 22.0002 3.75736 22.0002 2.87868 21.1215C2 20.2429 2 18.8286 2 16.0002L2 15.0002C2 12.1718 2 10.7576 2.87868 9.87889C3.64706 9.11051 4.82497 9.01406 7 9.00195"
-                                                                stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                                            <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="currentColor"
-                                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                    <button type="button" id="logoutButton" class="dropdown-item text-danger">
+                                                        <svg class="h-4.5 w-4.5 rotate-90 ltr:mr-5 rtl:ml-2" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <path opacity="0.5" d="M17 9.00195C19.175 9.01406 20.3529 9.11051 21.1213 9.8789C22 10.7576 22 12.1718 22 15.0002V16.0002C22 18.8286 22 20.2429 21.1213 21.1215C20.2426 22.0002 18.8284 22.0002 16 22.0002H8C5.17157 22.0002 3.75736 22.0002 2.87868 21.1215C2 20.2429 2 18.8286 2 16.0002L2 15.0002C2 12.1718 2 10.7576 2.87868 9.87889C3.64706 9.11051 4.82497 9.01406 7 9.00195" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                                            <path d="M12 15L12 2M12 2L15 5.5M12 2L9 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                                                         </svg>
                                                         Log out
                                                     </button>
                                                 </form>
+                                                
+                                                <script>
+                                                    document.getElementById('logoutButton').addEventListener('click', function() {
+                                                        swal({
+                                                            title: "Konfirmasi Logout",
+                                                            text: "Apakah Anda yakin ingin logout?",
+                                                            icon: "warning",
+                                                            buttons: true,
+                                                            dangerMode: true,
+                                                        })
+                                                        .then((willLogout) => {
+                                                            if (willLogout) {
+                                                                document.getElementById('logoutForm').submit();
+                                                            }
+                                                        });
+                                                    });
+                                                </script>
+                                                
                                             </li>                                            
                                         </ul>
                                     </div>

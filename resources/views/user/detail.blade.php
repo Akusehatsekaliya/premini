@@ -33,7 +33,7 @@
                 <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $f['judul'] }}</h2>
                 <p class="card-text" style="margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
                 <br>
-                <a href="/pesan" class="btn btn-primary" style="display: inline-block;">Beli Tiket</a>
+                <a href="/pesan" class="btn btn-primary" style="display: inline-block;">Pesan Tiket</a>
             </div>            
         </div>        
         @endforeach
