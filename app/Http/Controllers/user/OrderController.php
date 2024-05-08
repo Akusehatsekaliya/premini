@@ -61,7 +61,7 @@ class OrderController extends Controller
         $tanggal = Tanggal::first();
 
         $jumlahTiket = session('jumlahTiket');
-        $hargaTiket = $tiket->harga;
+        $hargaTiket = $tiket['harga'];
 
         return view('user.pilihkursi', compact('film','kursi','tiket','tanggal','jumlahTiket','hargaTiket'));
     }

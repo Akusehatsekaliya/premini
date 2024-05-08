@@ -29,7 +29,7 @@
     <p>Studio : {{ $tiket['tiket'] }}</p>
     <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY'); }}</p>
     <p>Jam: <span id="selectedTime">{{ $tanggal['jam'] }}</span></p>
-    <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }} /  </span></p>
+    <p>Jumlah Tiket : <span id="jumlahTiket">{{ $tiket['stok'] }}  </span></p>
     <p>Total Harga : <span id="totalHarga"></span></p>
     <br>
             <div class="form-group">
@@ -148,10 +148,11 @@
                     
                         // Fungsi untuk memperbarui tampilan jumlah tiket
                         function updateJumlahTiket() {
-                            const bookedSeats = document.querySelectorAll('.seat.booked');
-                            const jumlahTiket = bookedSeats.length;
-                            document.getElementById('jumlahTiket').innerText = jumlahTiket > 0 ? jumlahTiket : '0';
-                        }
+                        const bookedSeats = document.querySelectorAll('.seat.booked');
+                        const jumlahTiket = bookedSeats.length;
+                        const stokTiket = "{{ $tiket->stok }}"; // Ambil nilai stok tiket dari variabel PHP
+                        document.getElementById('jumlahTiket').innerText = jumlahTiket > 0 ? jumlahTiket + " / " + stokTiket : '0 / ' + stokTiket;
+                    }
                     
                         // Fungsi untuk memperbarui tampilan total harga tiket
                         function updateTotalHarga() {

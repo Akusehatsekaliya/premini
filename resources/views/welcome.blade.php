@@ -184,12 +184,11 @@
             @endif
             @foreach ($film as $f)
             <div class="card bg-dark mb-6" style="max-width: 1200px;">
-                <div class="row g-0">
                 <div style="display: flex; align-items: flex-start;">
                     <img class="card-img-top" src="{{ asset('storage/vidio/'. $f['film']) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
                     <div style="display: flex; flex-direction: column;">
                         <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $f['judul'] }}</h2>
-                        <p class="card-text" style="margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
+                        <p class="card-text" style="align-self: flex-start; margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
                         <br>
                         <a href="/detail" class="btn btn-primary" style="display: inline-block;">Detail</a>
                     </div>            

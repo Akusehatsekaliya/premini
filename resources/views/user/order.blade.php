@@ -125,11 +125,7 @@
             <p>Film : {{ $f->judul }}</p>
             <p>Tiket : </p>
             <p>Tanggal : </p>
-            @php
-                $selectedTime = session('selectedTime'); // Mendapatkan nilai tiket dari session
-            @endphp
-
-            <p>Jam Tayang : {{ $selectedTime }}</p>
+            <p>Jam Tayang : </p>
             <p>Jumlah Tiket : <span id="jumlahTiket"></span></p>
             <p>Nomor Kursi : <span id="nomorKursi"></span></p>
             <p>Total Harga : <span id="totalHarga"></span></p>

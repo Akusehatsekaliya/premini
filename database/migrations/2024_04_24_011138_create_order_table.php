@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('stok');
             $table->string('tiket');
             $table->string('kursi');
+            $table->enum('status', ['unpaid', 'paid'])->default('unpaid');
             $table->timestamps();
         });
     }
