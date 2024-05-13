@@ -62,7 +62,7 @@
                         }
 
                         .seat.booked {
-                            background-color: yellow;
+                            background-color: blue;
                         }
 
                         .status-box {
@@ -86,7 +86,7 @@
                         }
 
                         .dipilih {
-                            background-color: yellow;
+                            background-color: blue;
                         }
                     </style>
                         <div class="section" id="left-section">
@@ -176,9 +176,13 @@
                             // Hitung total harga tiket
                             const totalHarga = jumlahTiket * hargaTiket;
 
+                            // Simpan total harga tiket ke local storage
+                            localStorage.setItem('totalHarga', totalHarga);
+
                             // Tampilkan total harga tiket dengan format mata uang
                             document.getElementById('totalHarga').innerText = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '');
                         }
+
                         // Format Jam
                         document.getElementById('selectedTime').innerText = "{{ $tanggal->jam }}".replace(/:\d{2}$/, '');
                         // Membuat 30 kursi di kiri dan 30 kursi di kanan
@@ -194,7 +198,11 @@
                         updateJumlahTiket();
                         checkSelectedSeats();
                     </script>
-
+                <!-- Tambahkan screen di bawah kursi -->
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
+                </div>
+            
             <br>
             <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
 

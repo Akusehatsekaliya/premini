@@ -22,17 +22,25 @@
                 <br>
                 <div class="form-group">
                     <label for="total" class="form-label">Total Pesanan</label>
-                    <input type="text" class="form-control" name="total" disabled>
+                    <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format(0, 0, ',', '.') }}" disabled>
                 </div>
+                <script>
+                    window.onload = function() {
+                        const totalHarga = localStorage.getItem('totalHarga');
+
+                        // Tetapkan nilai total harga tiket ke input total
+                        document.getElementById('total').value = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                    };
+                </script>                
             </form>
-            <div class="form-check form-switch mt-5">
+            <div class="form-check form-switch mt-5">target
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                 <label class="form-check-label" for="flexSwitchCheckDefault">Bayar Nanti Saja</label>
             </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                <button type="button" class="btn btn-primary" id="submitButton">Lanjut</button>
+                <button type="button" class="btn btn-primary" id="submitButton" data-bs-="modal1">Lanjut</button>
                 <button type="button" class="btn btn-primary d-none" id="saveButton">Simpan</button>
             </div>
             
