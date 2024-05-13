@@ -11,86 +11,6 @@
             });
         @endif
     </script>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: black">
-        <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header d-flex justify-content-center align-items-center">
-                <h5 class="modal-title" id="exampleModalLabel">Pilih Tiket</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="/pesan">
-                    <div class="form-group col-md-12">
-                        <label for="jumlah" class="form-label">Jumlah Tiket :</label>
-                        <input type="number" class="form-control" id="jumlah" name="jumlah" placeholder="Masukkan Jumlah Tiket" min="1" max="10" value="{{ $jumlahTiket }}" onchange="checkTicketQuantity()">
-                        <div id="ticketQuantityWarning" style="display: none; color: red;">Pesan peringatan</div>
-                        <input type="hidden" id="selectedTicket" name="selectedTicket" value="">
-                    </div>
-                </form>
-                <script>
-                    function checkTicketQuantity() {
-                        var jumlahInput = document.getElementById('jumlah');
-                        var pilihTiket = document.getElementById('jumlahTiket');
-                        jumlahTiket.innerText = jumlahInput.value;
-                        var ticketQuantity = document.getElementById('ticketQuantityWarning');
-
-                        var minPembelian = 1;
-                        var maxPembelian = 10;
-
-                        if (jumlahInput.value < minPembelian) {
-                            jumlahInput.value = minPembelian;
-                            ticketQuantityWarning.innerText = 'Minimal pembelian tiket adalah ' + minPembelian;
-                            ticketQuantityWarning.style.display = 'block';
-                        } else if (jumlahInput.value > maxPembelian) {
-                            jumlahInput.value = maxPembelian;
-                            ticketQuantityWarning.innerText = 'Maksimal pembelian tiket adalah ' + maxPembelian;
-                            ticketQuantityWarning.style.display = 'block';
-                        } else {
-                            ticketQuantityWarning.style.display = 'none';
-                        }
-                    }
-
-                    function selectTicket(tiket) {
-                        document.getElementById('selectedTicket').value = tiket;
-                    }
-                </script>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                <button type="button" class="btn btn-primary"  onclick="validateAndRedirect()">Lanjut</button>
-            </div>
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-            <script>
-                function validateAndRedirect() {
-                    var jumlahInput = document.getElementById('jumlah').value;
-                    var selectedTicket = document.getElementById('selectedTicket').value;
-
-                    if (jumlahInput === "") {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Oops...',
-                            text: 'Jumlah tiket tidak boleh kosong!',
-                        });
-                    } else if (selectedTicket === "") {
-                        Swal.fire({
-                            icon: 'warning',
-                            title: 'Oops...',
-                            text: 'Harap pilih tiket terlebih dahulu!',
-                        });
-                    } else {
-                        redirectToPilihKursi();
-                    }
-                }
-
-                function redirectToPilihKursi() {
-                    window.location.href = "/pilihkursi";
-                }
-            </script>
-        </div>
-        </div>
-    </div>
-    <br>
-    <br>
     <div class="container">
         <style>
             .btn-transparent {
@@ -114,10 +34,10 @@
         <br>
         <h1 style="margin-bottom: 50px;">Pesan Film</h1>
         <div style="display: flex; align-items: flex-start;">
-            <img class="card-img-top" src="{{ asset('storage/vidio/'. $film->film) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
+            <img class="card-img-top" src="{{ asset('storage/vidio/'. $films->film) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
             <div style="display: flex; flex-direction: column;">
-                <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $film->judul }}</h2>
-                <p class="card-text" style="margin-bottom: 27px;">{{ $film->deskripsi }}</p>
+                <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $films->judul }}</h2>
+                <p class="card-text" style="margin-bottom: 27px;">{{ $films->deskripsi }}</p>
             </div>
         </div>
         <div style="margin-top: 20px;"></div>
@@ -192,7 +112,7 @@
                         <div style="margin-bottom: 10px; display: flex;">
                             @foreach ($timeButtons as $button)
                                 <div style="margin-right: 10px;">
-                                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="selectTicket('{{ $t->tiket }} - {{ $button }}'); updateSelectedTime('{{ $button }}')">{{ $button }}</button>
+                                    <button type="button" class="btn btn-outline-primary"  onclick="selectTicket('{{ $t->tiket }} - {{ $button }}'); updateSelectedTime('{{ $button }}')">{{ $button }}</button>
                                 </div>
                             @endforeach
                         </div>
@@ -235,4 +155,6 @@
         <div style="margin-bottom: 20px;"></div>
         <div style="margin-top: 20px;"></div>
         @endforeach
+
+        <a href="{{ route('pilihkursi') }}" class="btn btn-primary text-end">Lanjut</a>
 @endsection

@@ -38,7 +38,8 @@ class OrderController extends Controller
 
     public function pesan(Request $request,$id)
     {
-        $film = Film::find($id);
+        $films = Film::find($id);
+        $film = Film::get();
         $tiket = Tiket::get();
         $tanggal = Tanggal::get();
 
@@ -51,7 +52,7 @@ class OrderController extends Controller
 
         session(['jumlahTiket' => $jumlahTiket]);
 
-        return view('user.pesan', compact('film', 'tiket', 'tanggal', 'jumlahTiket'));
+        return view('user.pesan', compact('film', 'tiket', 'tanggal', 'jumlahTiket', 'films'));
     }
 
 
