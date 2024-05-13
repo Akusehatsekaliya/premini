@@ -18,7 +18,7 @@ class KursiController extends Controller
 
     public function proses_kursi(Request $request){
         $request->validate([
-            'kursi' => 'required|unique:kursis,kursi|min:1|max:30'
+            'kursi' => 'required|unique:kursis,kursi|numeric|min:1|max:30'
         ],[
             'kursi.required' => 'kursi tidak boleh kosong',
             'kursi.uniqiu' => 'kursi sudah ada',
@@ -38,7 +38,7 @@ class KursiController extends Controller
     public function update_kursi(Request $request,$id){
         $kursi = Kursi::find($id);
         $request->validate([
-            'kursi' => 'required|unique:kursis,kursi|min:1|max:30'
+            'kursi' => 'required|unique:kursis,kursi|numeric|min:1|max:30'
         ],[
             'kursi.required' => 'kursi tidak boleh kosong',
             'kursi.uniqiu' => 'kursi sudah ada',
@@ -69,7 +69,7 @@ class KursiController extends Controller
             $kursi->delete();
 
             Session::flash('successHapus', 'Data berhasil dihapus!');
-            
+
             return back();
 
         } catch (\Exception $e) {
