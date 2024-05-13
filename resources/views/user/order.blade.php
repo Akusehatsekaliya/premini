@@ -33,7 +33,7 @@
                     };
                 </script>                
             </form>
-            <div class="form-check form-switch mt-5">target
+            <div class="form-check form-switch mt-5">
                 <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                 <label class="form-check-label" for="flexSwitchCheckDefault">Bayar Nanti Saja</label>
             </div>

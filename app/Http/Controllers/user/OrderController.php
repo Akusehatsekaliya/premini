@@ -22,7 +22,6 @@ class OrderController extends Controller
 
         if(auth()->guest()) {
             return redirect()->route('login')->with('warning', 'Anda harus login terlebih dahulu');
-
         }
 
         return view('user.order', compact('film','tiket','tanggal','kursi'));
