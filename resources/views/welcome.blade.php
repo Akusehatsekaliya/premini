@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bioskop Online</title>
-    
+
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -114,7 +114,7 @@
                                                     Log out
                                                 </button>
                                             </form>
-                                            
+
                                             <script>
                                                 document.getElementById('logoutButton').addEventListener('click', function() {
                                                     swal({
@@ -130,7 +130,7 @@
                                                         }
                                                     });
                                                 });
-                                            </script>                                            
+                                            </script>
                                         </li>
                                     </ul>
                                 </div>
@@ -148,7 +148,7 @@
     </nav>
     <!-- END NAVBAR -->
     <!-- Tambahkan elemen <p> untuk menampilkan pesan "Film tidak ditemukan" -->
-        
+
         <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -177,30 +177,27 @@
     <section id="listFilm">
         <div class="container py-5 text-center">
             <h1 class="title-section">LIST FILM</h1>
-
             <br>
             @if ($film->isEmpty())
                 <div class="col text-center">Tidak ada data film.</div>
             @endif
             @foreach ($film as $f)
             <div class="card bg-dark mb-6" style="max-width: 1200px;">
-                <div class="row g-0">
                 <div style="display: flex; align-items: flex-start;">
                     <img class="card-img-top" src="{{ asset('storage/vidio/'. $f['film']) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
                     <div style="display: flex; flex-direction: column;">
                         <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $f['judul'] }}</h2>
-                        <p class="card-text" style="margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
+                        <p class="card-text" style="align-self: flex-start; margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
                         <br>
-                        <a href="/detail" class="btn btn-primary" style="display: inline-block;">Detail</a>
-                    </div>            
-                </div>    
+                        <a href={{ route('detail',['id'=>$f->id]) }} class="btn btn-primary" style="display: inline-block;">Detail</a>
+                    </div>
                 </div>
+                </div>
+                @endforeach
             </div>
-            @endforeach
-
             </div>
         </div>
-        
+
         <!-- Pagination -->
         {{ $film->links() }}
         <!-- End Pagination -->

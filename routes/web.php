@@ -81,8 +81,8 @@ Route::get('/history', function () {
     return view('user.history');
 });
 /* Order */
-Route::get('/detail', [OrderController::class, 'detail'])->name('detail');
-Route::get('/pesan', [OrderController::class, 'pesan'])->name('pesan');
+Route::get('/detail/{id}', [OrderController::class, 'detail'])->name('detail');
+Route::get('/pesan/{id}', [OrderController::class, 'pesan'])->name('pesan');
 Route::get('/pilihkursi', [OrderController::class, 'pilihkursi'])->name('pilihkursi');
 Route::get('/order', [OrderController::class, 'index'])->name('order');
 /* History */

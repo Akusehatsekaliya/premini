@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    
+
     <br>
     <br>
     <div class="container">
@@ -26,15 +26,13 @@
         <br>
         <br>
         <h1 style="margin-bottom: 50px;">Detail Film</h1>
-        @foreach ($film as $f)
         <div style="display: flex; align-items: flex-start;">
-            <img class="card-img-top" src="{{ asset('storage/vidio/'. $f['film']) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
+            <img class="card-img-top" src="{{ asset('storage/vidio/'. $film->film) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
             <div style="display: flex; flex-direction: column;">
-                <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $f['judul'] }}</h2>
-                <p class="card-text" style="margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
+                <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $film->judul }}</h2>
+                <p class="card-text" style="margin-bottom: 27px;">{{ $film->detail }}</p>
                 <br>
-                <a href="/pesan" class="btn btn-primary" style="display: inline-block;">Pesan Tiket</a>
-            </div>            
-        </div>        
-        @endforeach
+                <a href="{{ route('pesan',['id'=>$film->id]) }}" class="btn btn-primary" style="display: inline-block;">Pesan Tiket</a>
+            </div>
+        </div>
 @endsection

@@ -22,26 +22,28 @@ class OrderController extends Controller
 
         if(auth()->guest()) {
             return redirect()->route('login')->with('warning', 'Anda harus login terlebih dahulu');
+
         }
 
         return view('user.order', compact('film','tiket','tanggal','kursi'));
     }
 
-    public function detail()
+    public function detail($id)
     {
-        $film = Film::get();
+        $film = Film::find($id);
+        // dd($film);/
 
         return view('user.detail', compact('film'));
     }
 
-    public function pesan(Request $request)
+    public function pesan(Request $request,$id)
     {
-        $film = Film::get();
+        $film = Film::find($id);
         $tiket = Tiket::get();
         $tanggal = Tanggal::get();
 
         $jumlahTiket = $request->input('jumlah');
-        
+
         // Validasi jumlah tiket
         if ($jumlahTiket > 10) {
             return redirect()->back()->with('error', 'Jumlah tiket tidak boleh lebih dari 10.');

@@ -17,7 +17,7 @@
             <div class="modal-header d-flex justify-content-center align-items-center">
                 <h5 class="modal-title" id="exampleModalLabel">Pilih Tiket</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>            
+            </div>
             <div class="modal-body">
                 <form action="/pesan">
                     <div class="form-group col-md-12">
@@ -36,7 +36,7 @@
 
                         var minPembelian = 1;
                         var maxPembelian = 10;
-                    
+
                         if (jumlahInput.value < minPembelian) {
                             jumlahInput.value = minPembelian;
                             ticketQuantityWarning.innerText = 'Minimal pembelian tiket adalah ' + minPembelian;
@@ -106,19 +106,18 @@
                 background-color: rgba(255, 255, 255, 0.2);
             }
         </style>
-        <a href="/detail" class="btn btn-transparent">
+        <a href="javascript:history.back()" class="btn btn-transparent">
             <i class="bi bi-arrow-left"></i> Kembali
         </a>
 
         <br>
         <br>
         <h1 style="margin-bottom: 50px;">Pesan Film</h1>
-        @foreach ($film as $f)
         <div style="display: flex; align-items: flex-start;">
-            <img class="card-img-top" src="{{ asset('storage/vidio/'. $f['film']) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
+            <img class="card-img-top" src="{{ asset('storage/vidio/'. $film->film) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
             <div style="display: flex; flex-direction: column;">
-                <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $f['judul'] }}</h2>
-                <p class="card-text" style="margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
+                <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $film->judul }}</h2>
+                <p class="card-text" style="margin-bottom: 27px;">{{ $film->deskripsi }}</p>
             </div>
         </div>
         <div style="margin-top: 20px;"></div>
@@ -135,20 +134,20 @@
                         </div>
                     </label>
                 </div>
-                
+
                 <script>
                     function handleSwitchClick(clickedIndex) {
                         var switches = document.querySelectorAll('.form-check-input');
                         var clickedSwitch = switches[clickedIndex];
                         var selectedTicketText = document.getElementById('selectedTicketText');
-                
+
                         // Memperbarui teks pada <p> berdasarkan tiket yang dipilih
                         //if (clickedSwitch.checked) {
                         //    selectedTicketText.textContent = 'Studio: ' + clickedSwitch.value;
                         //} else {
                         //    selectedTicketText.textContent = '';
                         //}
-                
+
                         // Mematikan semua switch jika switch utama diaktifkan (on)
                         if (clickedSwitch.checked) {
                             for (var i = 0; i < switches.length; i++) {
@@ -164,9 +163,9 @@
                         }
                     }
                 </script>
-                
-                
-                
+
+
+
                 <div style="margin-left: auto;">
                     <p>Rp. {{ number_format($t->harga, 0, ',', '.') }}</p>
                 </div>
@@ -197,12 +196,12 @@
                                 </div>
                             @endforeach
                         </div>
-                        
+
                         {{-- Reset time buttons --}}
                         @php
                             $timeButtons = [];
                         @endphp
-                        
+
                         <script>
                             function updateSelectedTime(time) {
                                 var selectedTimeElement = document.getElementById('selectedTime');
@@ -234,7 +233,6 @@
 
 
         <div style="margin-bottom: 20px;"></div>
-        @endforeach
         <div style="margin-top: 20px;"></div>
         @endforeach
 @endsection
