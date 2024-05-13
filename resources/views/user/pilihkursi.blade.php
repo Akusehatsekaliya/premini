@@ -29,7 +29,8 @@
     <p>Studio : {{ $tiket['tiket'] }}</p>
     <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY') }}</p>
     <p>Jam: <span id="selectedTime">{{ $tanggal['jam'] }}</span></p>
-    <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }} /  </span></p>
+    <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }}</span></p>
+    <p>Nomor Kursi : <span id="nomorKursi"></span></p>
     <p>Total Harga : <span id="totalHarga"></span></p>
     <br>
             <div class="form-group">

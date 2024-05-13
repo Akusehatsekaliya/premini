@@ -11,6 +11,9 @@
             });
         @endif
     </script>
+
+    <br>
+    <br>
     <div class="container">
         <style>
             .btn-transparent {
@@ -156,5 +159,7 @@
         <div style="margin-top: 20px;"></div>
         @endforeach
 
-        <a href="{{ route('pilihkursi') }}" class="btn btn-primary text-end">Lanjut</a>
+        <div style="text-align: end">
+            <a href="{{ route('pilihkursi') }}" class="btn btn-primary">Lanjut</a>
+        </div>
 @endsection
