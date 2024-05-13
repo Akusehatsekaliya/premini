@@ -19,7 +19,7 @@
             background-color: rgba(255, 255, 255, 0.2); /* Ubah opasitas sesuai kebutuhan */
         }
     </style>
-    <a href="/pesan" class="btn btn-transparent">
+    <a href="/pesan/{{ $film['id'] }}" class="btn btn-transparent">
         <i class="bi bi-arrow-left"></i> Kembali
     </a>
 
@@ -104,6 +104,17 @@
                             const pesanTiketButton = document.getElementById('pesanTiketButton');
                             pesanTiketButton.disabled = true;
 
+                            // Menyimpan nomor kursi yang dipilih
+                            let nomorKursi = [];
+
+                            // Memperbarui nomor kursi yang dipilih
+                            selectedSeats.forEach(function(seat) {
+                                nomorKursi.push(seat.innerText);
+                            });
+
+                            // Menampilkan nomor kursi pada elemen "Nomor Kursi"
+                            document.getElementById('nomorKursi').innerText = nomorKursi.join(', ');
+
                             // Jika ada kursi yang dipilih, aktifkan tombol Pesan Tiket
                             if (selectedSeats.length > 0) {
                                 pesanTiketButton.removeAttribute('disabled');
@@ -111,7 +122,7 @@
                                 pesanTiketButton.classList.add('btn-primary');
                             } else {
                                 // Jika tidak ada kursi yang dipilih, nonaktifkan tombol Pesan Tiket
-                                pesanTiketButton.disabled = false;
+                                pesanTiketButton.disabled = true;
                                 pesanTiketButton.setAttribute('disabled', 'disabled');
                                 pesanTiketButton.classList.remove('btn-primary');
                                 pesanTiketButton.classList.add('btn-outline-primary');
@@ -189,6 +200,6 @@
 
             <br>
             <a href="/pesan" type="button" class="btn btn-secondary">Cancel</a>
-            <a href="/order" type="button" id="pesanTiketButton" class="btn btn-outline-primary" onchange="checkSelectedSeats();" disabled=""> Konfirmasi Pembayaran </a>
+            <a href="/order" type="button" id="pesanTiketButton" class="btn btn-outline-primary" onchange="stateHandle();" disabled=""> Konfirmasi Pembayaran </a>
             </div>
 @endsection

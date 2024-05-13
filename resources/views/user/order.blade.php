@@ -95,7 +95,7 @@
     @endforeach
     <br>
         <!-- Modal Bayar -->
-        <div style="text-align: end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <div data-bs-toggle="modal" data-bs-target="#exampleModal">
             <button type="button" class="btn btn-primary">Bayar</button>
         </div>
         <!-- End -->

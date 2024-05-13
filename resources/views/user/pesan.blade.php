@@ -29,9 +29,11 @@
                 background-color: rgba(255, 255, 255, 0.2);
             }
         </style>
-        <a href="javascript:history.back()" class="btn btn-transparent">
+        @foreach ($film as $f)
+        <a href="/detail/{{ $f->id }}" class="btn btn-transparent">
             <i class="bi bi-arrow-left"></i> Kembali
         </a>
+    @endforeach          
 
         <br>
         <br>
