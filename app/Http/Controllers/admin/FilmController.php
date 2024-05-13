@@ -30,7 +30,7 @@ class FilmController extends Controller
     {
         $request->validate([
             'judul'        => 'required',
-            'film'         => 'required|file|mimes:mp4,mov,avi,wmv', // Menambahkan validasi file
+            'film'         => 'required|file|mimes:jpg,jpeg,png', // Menambahkan validasi file
             'kursi_id'     => 'required',
             'deskripsi'    => 'required',
         ],[

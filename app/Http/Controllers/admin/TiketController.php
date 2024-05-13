@@ -21,14 +21,16 @@ class TiketController extends Controller
 
         $request->validate([
             'tiket' => 'required',
-            'stok'  => 'required',
+            'stok'  => 'required|min:1|max:50',
             'film_id' => 'required',
-            'harga'   => 'required'
+            'harga'   => 'required|min:1|max:100000'
         ], [
             'tiket.required' => 'Tiket tidak boleh kosong',
             'stok.required'  => 'Stok tidak boleh kosong',
             'film_id.required'  => 'nama tidak boleh kosong',
             'harga.required'  => 'harga tidak boleh kosong',
+            'harga.min' => 'minimal 1.000',
+            'harga.max' => 'maksimal 100.000'
         ]);
 
         $kirim = Tiket::create([
