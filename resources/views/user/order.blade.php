@@ -9,15 +9,15 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="">
+            <form id="submitForm">
                 <div class="form-group">
-                    <label for="" class="form-label">Nama</label>
-                    <input type="text" class="form-control" name="nama" placeholder="Masukkan Nama">
+                    <label for="nama" class="form-label">Nama</label>
+                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama">
                 </div>
                 <br>
                 <div class="form-group">
-                    <label for="" class="form-label">No. HP</label>
-                    <input type="number" class="form-control" name="nama" placeholder="Masukkan Nomor HP">
+                    <label for="noHp" class="form-label">No. HP</label>
+                    <input type="number" class="form-control" id="noHp" name="noHp" placeholder="Masukkan Nomor HP">
                 </div>
                 <br>
                 <div class="form-group">
@@ -40,16 +40,34 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                <button type="button" class="btn btn-primary" id="submitButton" data-bs-="modal1">Lanjut</button>
-                <button type="button" class="btn btn-primary d-none" id="saveButton">Simpan</button>
+                <button type="button" class="btn btn-primary disabled" id="submitButton" data-bs-toggle="modal">Lanjut</button>
+                <button type="button" class="btn btn-primary d-none disabled" id="saveButton">Simpan</button>
             </div>
             
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
+                    const form = document.getElementById("submitForm");
+                    const namaInput = document.getElementById("nama");
+                    const noHpInput = document.getElementById("noHp");
                     const switchButton = document.getElementById("flexSwitchCheckDefault");
                     const lanjutButton = document.getElementById("submitButton");
                     const simpanButton = document.getElementById("saveButton");
-            
+
+                    function checkFormCompletion() {
+                        const isFormComplete = namaInput.value.trim() !== "" && noHpInput.value.trim() !== "";
+                        const isSwitchChecked = switchButton.checked;
+                        const isReadyToSubmit = isFormComplete && (isSwitchChecked || !isSwitchChecked);
+
+                        if (isReadyToSubmit) {
+                            lanjutButton.classList.remove("disabled");
+                            simpanButton.classList.remove("disabled");
+                        } else {
+                            lanjutButton.classList.add("disabled");
+                            simpanButton.classList.add("disabled");
+                        }
+                    }
+
+                    form.addEventListener("input", checkFormCompletion);
                     switchButton.addEventListener("change", function() {
                         if (this.checked) {
                             lanjutButton.classList.add("d-none");
@@ -58,7 +76,10 @@
                             lanjutButton.classList.remove("d-none");
                             simpanButton.classList.add("d-none");
                         }
+                        checkFormCompletion();
                     });
+
+                    checkFormCompletion();
                 });
             </script>            
       </div>
@@ -81,6 +102,24 @@
         .btn-transparent:hover {
             background-color: rgba(255, 255, 255, 0.2); /* Ubah opasitas sesuai kebutuhan */
         }
+
+        .detail-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .detail-label {
+            min-width: 150px;
+        }
+
+        .detail-value {
+            flex-grow: 1;
+        }
     </style>
     <a href="/pilihkursi" class="btn btn-transparent">
         <i class="bi bi-arrow-left"></i> Kembali
@@ -89,23 +128,36 @@
     <br>
     <br>
     <h1 style="margin-bottom: 50px;">Pembayaran</h1>
-    <p>Detail Pesanan :</p>
-    @foreach ($film as $f)
-    <div style="display: flex; align-items: flex-start;">
-        <img class="card-img-top" src="{{ asset('storage/vidio/'. $f['film']) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
-        <div style="display: flex; flex-direction: column;">
-            <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $f['judul'] }}</h2>
-            <p class="card-text" style="margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
-            <br>
-            
-        </div> 
-    </div>   
-    @endforeach
-    <br>
-        <!-- Modal Bayar -->
-        <div data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <button type="button" class="btn btn-primary">Bayar</button>
+    <h4>Detail Pesanan </h4>
+    <div style="margin-top: 20px">
+        <div class="detail-info">
+            <div class="detail-row">
+                <p class="detail-label">Film </p>
+                <p class="detail-value">:</p>
+            </div>
+            <div class="detail-row">
+                <p class="detail-label">Tiket </p>
+                <p class="detail-value">:</p>
+            </div>
+            <div class="detail-row">
+                <p class="detail-label">Jam </p>
+                <p class="detail-value">:</p>
+            </div>
+            <div class="detail-row">
+                <p class="detail-label">Jumlah Tiket </p>
+                <p class="detail-value">: </p>
+            </div>
+            <div class="detail-row">
+                <p class="detail-label">Nomor Kursi </p>
+                <p class="detail-value">: </p>
+            </div>
         </div>
-        <!-- End -->
     </div>
+    <br>
+    <!-- Modal Bayar -->
+    <div data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-primary">Bayar</button>
+    </div>
+    <!-- End -->
+</div>
 @endsection

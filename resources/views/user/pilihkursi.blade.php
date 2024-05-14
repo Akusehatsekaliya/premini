@@ -23,10 +23,14 @@
         <i class="bi bi-arrow-left"></i> Kembali
     </a>
 
-    <br>
-    <br>
-    <p>Film : {{ $film['judul'] }}</p>
-    <p>Studio : {{ $tiket['tiket'] }}</p>
+    <form action="/pesan" method="POST">
+        @csrf
+        <div style="display: flex; align-items: center; margin-top: 20px;">
+            <label for="tiket">Pilihan Tiket</label>
+            
+        </div>
+        
+    </form>
     <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY') }}</p>
     <p>Jam: <span id="selectedTime">{{ $tanggal['jam'] }}</span></p>
     <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }}</span></p>
@@ -207,7 +211,7 @@
             <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
 
             <br>
-            <a href="/pesan" type="button" class="btn btn-secondary">Cancel</a>
+            <a href="/pesan/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
             <a href="/order" type="button" id="pesanTiketButton" class="btn btn-outline-primary" onchange="stateHandle();" disabled=""> Konfirmasi Pembayaran </a>
             </div>
 @endsection
