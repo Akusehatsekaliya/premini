@@ -59,12 +59,14 @@ class OrderController extends Controller
     {
         $film = Film::first();
         $kursi = Kursi::all();
+        $tikets = Tiket::get();
         $tiket = Tiket::first();
         $tanggal = Tanggal::first();
 
         $jumlahTiket = session('jumlahTiket');
         $hargaTiket = $tiket->harga;
+        // dd($tikets);
 
-        return view('user.pilihkursi', compact('film','kursi','tiket','tanggal','jumlahTiket','hargaTiket'));
+        return view('user.pilihkursi', compact('film','kursi','tiket','tanggal','jumlahTiket','hargaTiket','tikets'));
     }
 }

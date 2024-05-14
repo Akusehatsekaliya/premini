@@ -25,11 +25,16 @@
 
     <form action="/pesan" method="POST">
         @csrf
+        
         <div style="display: flex; align-items: center; margin-top: 20px;">
             <label for="tiket">Pilihan Tiket</label>
-            
+            <select class="form-control" name="tiket" id="tiket">
+                @foreach ($tikets as $k)
+                    <option value="{{ $k->id }}">{{ $k->tiket }}</option>
+                @endforeach
+            </select>
         </div>
-        
+
     </form>
     <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY') }}</p>
     <p>Jam: <span id="selectedTime">{{ $tanggal['jam'] }}</span></p>
@@ -206,7 +211,7 @@
                 <div style="text-align: center; margin-top: 50px;">
                     <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
                 </div>
-            
+
             <br>
             <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
 
