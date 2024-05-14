@@ -28,7 +28,6 @@ class LoginController extends Controller
      *
      * @var string
      */
-
     protected $redirectTo = '/';
 
     /**
@@ -46,7 +45,7 @@ class LoginController extends Controller
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
-        ]);        
+        ]);
 
         // Periksa apakah email terdaftar
         $user = User::where('email', $request->email)->first();
@@ -59,7 +58,8 @@ class LoginController extends Controller
 
         // Lakukan login pengguna jika email dan password valid
         if (Auth::attempt($request->only('email', 'password'), $request->remember)) {
-            return redirect()->intended('/');
+            // Mengarahkan pengguna ke halaman yang diinginkan setelah login
+            return redirect()->intended($this->redirectTo);
         } else {
             if (User::where('email', $request->email)->exists()) {
                 return redirect()->back()->withErrors([

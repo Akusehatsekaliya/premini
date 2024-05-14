@@ -27,6 +27,7 @@ class OrderController extends Controller
         return view('user.order', compact('film','tiket','tanggal','kursi'));
     }
 
+
     public function detail($id)
     {
         $film = Film::find($id);

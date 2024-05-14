@@ -19,15 +19,16 @@
             background-color: rgba(255, 255, 255, 0.2); /* Ubah opasitas sesuai kebutuhan */
         }
     </style>
-    <a href="/pesan/{{ $film['id'] }}" class="btn btn-transparent">
-        <i class="bi bi-arrow-left"></i> Kembali
-    </a>
+        <a href="/detail/{{ $film->id }}" class="btn btn-transparent">
+            <i class="bi bi-arrow-left"></i> Kembali
+        </a>
 
+    <br>
+    <br>
     <form action="/pesan" method="POST">
         @csrf
-        
-        <div style="display: flex; align-items: center; margin-top: 20px;">
-            <label for="tiket">Pilihan Tiket</label>
+        <div class="col-md-6" style="margin-top: 20px; margin-bottom:20px;">
+            <label for="tiket">Pilihan Tiket :</label>
             <select class="form-control" name="tiket" id="tiket">
                 @foreach ($tikets as $k)
                     <option value="{{ $k->id }}">{{ $k->tiket }}</option>
@@ -35,12 +36,12 @@
             </select>
         </div>
 
+        <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY') }}</p>
+        <p>Jam: <span id="selectedTime">{{ $tanggal['jam'] }}</span></p>
+        <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }}</span></p>
+        <p>Nomor Kursi : <span id="nomorKursi"></span></p>
+        <p>Total Harga : <span id="totalHarga"></span></p>
     </form>
-    <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY') }}</p>
-    <p>Jam: <span id="selectedTime">{{ $tanggal['jam'] }}</span></p>
-    <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }}</span></p>
-    <p>Nomor Kursi : <span id="nomorKursi"></span></p>
-    <p>Total Harga : <span id="totalHarga"></span></p>
     <br>
             <div class="form-group">
                 <label for="kursi" class="form-label">Pilih Kursi Bioskop :</label>
@@ -192,6 +193,7 @@
                             document.getElementById('totalHarga').innerText = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '');
                         }
 
+
                         // Format Jam
                         document.getElementById('selectedTime').innerText = "{{ $tanggal->jam }}".replace(/:\d{2}$/, '');
                         // Membuat 30 kursi di kiri dan 30 kursi di kanan
@@ -217,6 +219,9 @@
 
             <br>
             <a href="/pesan/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
-            <a href="/order" type="button" id="pesanTiketButton" class="btn btn-outline-primary" onchange="stateHandle();" disabled=""> Konfirmasi Pembayaran </a>
+            <a href="/order" type="button" id="pesanTiketButton" class="btn btn-outline-primary">Konfirmasi Pembayaran</a>
+
             </div>
+
+
 @endsection
