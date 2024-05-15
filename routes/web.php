@@ -60,7 +60,11 @@ Route::post('/tambah-map', [MapController::class, 'tambah_map'])->name('tambah_m
 Route::post('/update-map/{id}', [MapController::class, 'update_map'])->name('update_map');
 Route::DELETE('delete-map/{id}', [MapController::class, 'delete_map'])->name('delete_map');
 // halaman keuangan
-Route::get('/Keuangan', [KeuanganController::class, 'keuangan'])->name('keuangan');
+Route::get('/keuangan', [KeuanganController::class, 'keuangan'])->name('keuangan');
+Route::post('/tambahkeuangan', [KeuanganController::class, 'proses_keuangan'])->name('proses_keuangan');
+Route::post('/update-jadwal/{id}', [KeuanganController::class, 'update_keuangan'])->name('update_keuangan');
+Route::DELETE('/hapus keuangan/{id}', [KeuanganController::class, 'delete_keuangan'])->name('delete_keuangan');
+
 });
 
 Auth::routes();

@@ -78,6 +78,12 @@
               <p>Tanggal Tayang</p>
             </a>
           </li>
+          <li class="active">
+            <a href="{{ route('adminkeuangan') }}">
+              <i class="nc-icon nc-money-coins"></i>
+              <p>Keuangan</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -107,7 +113,7 @@
                   @csrf
                   <button type="button" id="logoutButton" class="dropdown-item">Logout</button>
               </form>
-              
+
               <script>
                   document.getElementById('logoutButton').addEventListener('click', function() {
                       swal({
@@ -123,7 +129,7 @@
                           }
                       });
                   });
-              </script>              
+              </script>
               </li>
             </ul>
           </div>
@@ -135,7 +141,7 @@
       @yield('content')
       <!-- End content -->
 
-      
+
     </div>
   </div>
   <!--   Core JS Files   -->
@@ -160,7 +166,7 @@
     });
 
     var currentLocation = window.location.href;
-  
+
     $('.sidebar-wrapper ul.nav li').each(function() {
       var link = $(this).find('a').attr('href');
       if (currentLocation.indexOf(link) !== -1) {
