@@ -18,10 +18,70 @@
                 <script>
                     window.onload = function() {
                         const totalHarga = localStorage.getItem('totalHarga');
-
-                        // Tetapkan nilai total harga tiket ke input total
                         document.getElementById('total').value = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        setupEventListeners();
                     };
+
+                    function setupEventListeners() {
+                        const checkboxes = document.querySelectorAll('input[name="metodePembayaran"]');
+                        const switchButton = document.getElementById('flexSwitchCheckDefault');
+                        const bankInput = document.getElementById('inputBank').querySelector('input');
+                        const ewalletInput = document.getElementById('inputEwallet').querySelector('input');
+
+                        checkboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', toggleInput);
+                        });
+
+                        switchButton.addEventListener('change', toggleButtonState);
+                        bankInput.addEventListener('input', toggleButtonState);
+                        ewalletInput.addEventListener('input', toggleButtonState);
+                    }
+
+                    function toggleInput() {
+                        const bankChecked = document.getElementById('radioBRI').checked || document.getElementById('radioBTN').checked;
+                        const ewalletChecked = document.getElementById('gopay').checked;
+                        const bankInputDiv = document.getElementById('inputBank');
+                        const ewalletInputDiv = document.getElementById('inputEwallet');
+
+                        if (bankChecked) {
+                            bankInputDiv.style.display = 'block';
+                            ewalletInputDiv.style.display = 'none';
+                        } else if (ewalletChecked) {
+                            bankInputDiv.style.display = 'none';
+                            ewalletInputDiv.style.display = 'block';
+                        } else {
+                            bankInputDiv.style.display = 'none';
+                            ewalletInputDiv.style.display = 'none';
+                        }
+
+                        toggleButtonState();
+                    }
+
+                    function toggleButtonState() {
+                        const bankChecked = document.getElementById('radioBRI').checked || document.getElementById('radioBTN').checked;
+                        const ewalletChecked = document.getElementById('gopay').checked;
+                        const switchChecked = document.getElementById('flexSwitchCheckDefault').checked;
+                        const bankInput = document.getElementById('inputBank').querySelector('input').value;
+                        const ewalletInput = document.getElementById('inputEwallet').querySelector('input').value;
+
+                        const isFormFilled = (bankChecked && bankInput) || (ewalletChecked && ewalletInput) || switchChecked;
+
+                        const submitButton = document.getElementById('submitButton');
+                        const saveButton = document.getElementById('saveButton');
+
+                        if (switchChecked) {
+                            saveButton.classList.remove('disabled');
+                            saveButton.classList.remove('d-none');
+                            submitButton.classList.add('d-none');
+                        } else if (isFormFilled) {
+                            submitButton.classList.remove('disabled');
+                            saveButton.classList.add('d-none');
+                        } else {
+                            submitButton.classList.add('disabled');
+                            saveButton.classList.add('disabled');
+                            saveButton.classList.add('d-none');
+                        }
+                    }
                 </script>   
                 <br> 
                 <p style="font-weight: bold; text-decoration : underline; padding-bottom: 10px;">Pilih Metode Pembayaran</p>
@@ -31,13 +91,13 @@
                     <table>
                         <tr>
                             <td style="padding: 10px">
-                                <input class="form-check-input" type="checkbox" id="radioBRI" name="metodePembayaran" value="BRI" onchange="toggleInput()">
+                                <input class="form-check-input" type="checkbox" id="radioBRI" name="metodePembayaran" value="BRI">
                                 <label for="radioBRI">
                                     <img src="{{ asset('assets/img/bri.jpg') }}" alt="" height="70px" width="90px">
                                 </label>
                             </td>
                             <td style="padding: 10px">
-                                <input class="form-check-input" type="checkbox" id="radioBTN" name="metodePembayaran" value="BTN" onchange="togleInput()">
+                                <input class="form-check-input" type="checkbox" id="radioBTN" name="metodePembayaran" value="BTN">
                                 <label for="radioBTN">
                                     <img src="{{ asset('assets/img/b.png') }}" alt="" height="70px" width="90px">
                                 </label>
@@ -49,7 +109,7 @@
                     <table>
                         <tr>
                             <td style="padding: 10px">
-                                <input class="form-check-input" type="checkbox" id="gopay" name="metodePembayaran" value="gopay" onchange="toggelInput()">
+                                <input class="form-check-input" type="checkbox" id="gopay" name="metodePembayaran" value="gopay">
                                 <label for="gopay">
                                     <img src="{{ asset('assets/img/gopay.png') }}" alt="" height="70px" width="70px">
                                 </label>
@@ -59,12 +119,12 @@
                     <!-- inputbank -->
                     <div id="inputBank" style="display: none;">
                         <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan Nomor Rekening Bank</label>
-                        <input type="number" class="form-control" id="nama" name="nama" placeholder="Masukkan Nomor">
+                        <input type="number" class="form-control" id="namaBank" name="namaBank" placeholder="Masukkan Nomor">
                     </div>
                     <!-- inputewallet -->
                     <div id="inputEwallet" style="display: none;">
                         <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan Nomor HP</label>
-                        <input type="number" class="form-control" id="nama" name="nama" placeholder="Masukkan Nomor">
+                        <input type="number" class="form-control" id="namaEwallet" name="namaEwallet" placeholder="Masukkan Nomor">
                     </div>
                 </div> 
                 <div class="form-check form-switch mt-5">
@@ -144,42 +204,43 @@
     </div>
     <!-- End -->
     <script>
-        function toggleInput() {
-            var inputBank = document.getElementById("inputBank");
-            var checkbox = document.getElementById("radioBRI");
+        document.addEventListener('DOMContentLoaded', (event) => {
+            function toggleInput() {
+                var inputBank = document.getElementById("inputBank");
+                var inputEwallet = document.getElementById("inputEwallet");
+                var bankChecked = document.getElementById("radioBRI").checked || document.getElementById("radioBTN").checked;
+                var ewalletChecked = document.getElementById("gopay").checked;
     
-            // Jika checkbox dicentang, tampilkan input
-            if (checkbox.checked) {
-                inputBank.style.display = "block";
-            } else {
-                // Jika tidak, sembunyikan input
-                inputBank.style.display = "none";
+                inputBank.style.display = bankChecked ? "block" : "none";
+                inputEwallet.style.display = ewalletChecked ? "block" : "none";
+                toggleButtonState();
             }
-        }
 
-        function togleInput() {
-            var inputBank = document.getElementById("inputBank");
-            var checkbox = document.getElementById("radioBTN");
-    
-            // Jika checkbox dicentang, tampilkan input
-            if (checkbox.checked) {
-                inputBank.style.display = "block";
-            } else {
-                // Jika tidak, sembunyikan input
-                inputBank.style.display = "none";
+            function toggleButtonState() {
+                var switchChecked = document.getElementById("flexSwitchCheckDefault").checked;
+                var submitButton = document.getElementById("submitButton");
+                var saveButton = document.getElementById("saveButton");
+
+                if (switchChecked) {
+                    submitButton.classList.add('d-none');
+                    submitButton.classList.add('disabled');
+                    saveButton.classList.remove('d-none');
+                    saveButton.classList.remove('disabled');
+                } else {
+                    saveButton.classList.add('d-none');
+                    saveButton.classList.add('disabled');
+                    submitButton.classList.remove('d-none');
+                    submitButton.classList.remove('disabled');
+                }
             }
-        }
 
-        function toggelInput() {
-            var inputEwallet = document.getElementById("inputEwallet");
-            var checkbox = document.getElementById("gopay");
+            document.getElementById("flexSwitchCheckDefault").addEventListener('change', toggleButtonState);
+            document.querySelectorAll('input[name="metodePembayaran"]').forEach((input) => {
+                input.addEventListener('change', toggleInput);
+            });
 
-            if (checkbox.checked) {
-                inputEwallet.style.display = "block";
-            } else {
-                inputEwallet.style.display = "none";
-            }
-        }
-    </script>                
+            toggleButtonState();
+        });
+    </script>
 </div>
 @endsection
