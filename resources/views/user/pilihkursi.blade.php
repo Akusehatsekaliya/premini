@@ -12,29 +12,19 @@
         <div class="modal-body">
             <form id="submitForm" action="{{ route('tambah_pembayaran') }}" method="post">
                 @csrf
-                <div class="form-group">
-                    <label for="nama" class="form-label" style="width: 100px;">Nama :</label>
+                <div class="form-group" style="margin-bottom: 10px">
+                    <label for="nama" class="form-label" style="width: 100px;">Nama </label>
                     <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama">
                 </div>
-                <br>
-                <div class="form-group">
-                    <label for="noHp" class="form-label" style="width: 100px;">No. HP :</label>
+                <div class="form-group" style="margin-bottom: 10px">
+                    <label for="noHp" class="form-label" style="width: 100px;">No. HP </label>
                     <input type="number" class="form-control" id="noHp" name="noHp" placeholder="Masukkan Nomor HP">
                 </div>
-                <div class="form-group" style="margin-top: 30px">
-                    <p>Total Harga : <span id="totalHarga"></span></p>
-                </div>
                 <div class="form-group">
-                    <label for="total" class="form-label">Total Pesanan</label>
+                    <label for="total" class="form-label" style="width: 100px;">Total Harga </label>
                     <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format(0, 0, ',', '.') }}" disabled>
                 </div>
                 <script>
-                    window.onload = function() {
-                        const totalHarga = localStorage.getItem('totalHarga');
-                        document.getElementById('total').value = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '').replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-                        setupEventListeners();
-                    };
-
                     function setupEventListeners() {
                         const checkboxes = document.querySelectorAll('input[name="metodePembayaran"]');
                         const switchButton = document.getElementById('flexSwitchCheckDefault');
@@ -68,32 +58,6 @@
                         }
 
                         toggleButtonState();
-                    }
-
-                    function toggleButtonState() {
-                        const bankChecked = document.getElementById('radioBRI').checked || document.getElementById('radioBTN').checked;
-                        const ewalletChecked = document.getElementById('gopay').checked;
-                        const switchChecked = document.getElementById('flexSwitchCheckDefault').checked;
-                        const bankInput = document.getElementById('inputBank').querySelector('input').value;
-                        const ewalletInput = document.getElementById('inputEwallet').querySelector('input').value;
-
-                        const isFormFilled = (bankChecked && bankInput) || (ewalletChecked && ewalletInput) || switchChecked;
-
-                        const submitButton = document.getElementById('submitButton');
-                        const saveButton = document.getElementById('saveButton');
-
-                        if (switchChecked) {
-                            saveButton.classList.remove('disabled');
-                            saveButton.classList.remove('d-none');
-                            submitButton.classList.add('d-none');
-                        } else if (isFormFilled) {
-                            submitButton.classList.remove('disabled');
-                            saveButton.classList.add('d-none');
-                        } else {
-                            submitButton.classList.add('disabled');
-                            saveButton.classList.add('disabled');
-                            saveButton.classList.add('d-none');
-                        }
                     }
                 </script>
                 <br>
@@ -180,239 +144,237 @@
     <br>
     <form action="/pesan" method="POST">
         @csrf
+        <!-- Film --> 
         <div class="col-md-6" style="margin-top: 20px; margin-bottom:20px;">
-            <label for="tiket">Pilihan Tiket :</label>
-            <select class="form-control" name="tiket" id="tiket">
-                @foreach ($tikets as $k)
-                    <option value="{{ $k->id }}">{{ $k->tiket }}</option>
-                @endforeach
-            </select>
+            <label for="film" style="display: inline-block; width: 100px;">Film </label>
+            <span>: {{ $film->judul }}</span>
         </div>
-
-        <p>Tanggal : {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY') }}</p>
-        <p>Jam: <span id="selectedTime">{{ $tanggal['jam'] }}</span></p>
-        <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }}</span></p>
-        <p>Nomor Kursi : <span id="nomorKursi"></span></p>
+        <!-- Tiket -->
+        <div class="col-md-4" style="margin-top: 20px; margin-bottom:20px;">
+            <label for="tiket" style="float: left; margin-right: 10px;">Pilihan Tiket :</label>
+            <div style="overflow: hidden;">
+                <select class="form-control" name="tiket" id="tiket" style="float: right;">
+                    @foreach ($tikets as $k)
+                        <option value="{{ $k->id }}">{{ $k->tiket }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <!-- Tanggal -->
+        <label for="film" style="display: inline-block; width: 100px;">Tanggal </label>
+        <span>: {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY') }}</span></p>
+        <!-- jAM -->
+        <p>Jam :</p>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="jam" id="jam_{{ $tanggal->jam }}" value="{{ $tanggal->jam }}">
+                {{ substr($tanggal->jam, 0, -3) }}
+            </label>
+        </div>
+        <!-- jUMLAHTIKET -->
+        <div style="margin-top: 20px; margin-bottom:20px;">
+            <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }}</span></p>
+        </div>
     </form>
     <br>
-            <div class="form-group">
-                <label for="kursi" class="form-label">Pilih Kursi Bioskop :</label>
-                <div class="cinema">
-                    <style>
-                        .cinema {
-                            display: flex;
-                            justify-content: center;
-                            margin-top: 20px;
-                        }
+    <div class="form-group">
+        <label for="kursi" class="form-label">Pilih Kursi Bioskop :</label>
+        <div class="cinema">
+            <style>
+                .cinema {
+                    display: flex;
+                    justify-content: center;
+                    margin-top: 20px;
+                }
 
-                        .cinema .section {
-                            display: grid;
-                            grid-template-columns: repeat(5, 70px);
-                            gap: 10px;
-                            margin: 0 20px;
-                        }
+                .cinema .section {
+                    display: grid;
+                    grid-template-columns: repeat(5, 70px);
+                    gap: 10px;
+                    margin: 0 20px;
+                }
 
-                        .seat {
-                            width: 40px;
-                            height: 40px;
-                            border-radius: 5px;
-                            background-color: gray;
-                            text-align: center;
-                            line-height: 40px;
-                            cursor: pointer;
-                            color: white;
-                        }
+                .seat {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 5px;
+                    background-color: gray;
+                    text-align: center;
+                    line-height: 40px;
+                    cursor: pointer;
+                    color: white;
+                }
 
-                        .seat.booked {
-                            background-color: blue;
-                        }
+                .seat.booked {
+                    background-color: blue;
+                }
 
-                        .status-box {
-                            display: inline-block;
-                            width: 15px; /* Lebar kotak */
-                            height: 15px; /* Tinggi kotak */
-                            margin-right: 5px; /* Jarak antara kotak dan teks */
-                            vertical-align: middle; /* Menyelaraskan kotak ke tengah vertikal dengan teks */
-                        }
+                .status-box {
+                    display: inline-block;
+                    width: 15px; /* Lebar kotak */
+                    height: 15px; /* Tinggi kotak */
+                    margin-right: 5px; /* Jarak antara kotak dan teks */
+                    vertical-align: middle; /* Menyelaraskan kotak ke tengah vertikal dengan teks */
+                }
 
-                        .terisi {
-                            background-color: green; /* Warna untuk status terisi */
-                        }
+                .terisi {
+                    background-color: green; /* Warna untuk status terisi */
+                }
 
-                        .booking {
-                            background-color: red !important; /* Warna untuk status kosong */
-                        }
+                .booking {
+                    background-color: red !important; /* Warna untuk status kosong */
+                }
 
-                        .kosong {
-                            background-color: grey;
-                        }
+                .kosong {
+                    background-color: grey;
+                }
 
-                        .dipilih {
-                            background-color: blue;
-                        }
-                    </style>
-                        <div class="section" id="left-section">
-                            <!-- Kursi kiri -->
-                        </div>
-                        <div class="section" id="right-section">
-                            <!-- Kursi kanan -->
-                        </div>
-                    </div>
-
-                    <script>
-                        // Fungsi untuk memeriksa apakah ada kursi yang dipilih
-                        function checkSelectedSeats() {
-                            const selectedSeats = document.querySelectorAll('.seat.booked');
-                            const pesanTiketButton = document.getElementById('pesanTiketButton');
-                            pesanTiketButton.disabled = true;
-
-                            // Menyimpan nomor kursi yang dipilih
-                            let nomorKursi = [];
-
-                            // Memperbarui nomor kursi yang dipilih
-                            selectedSeats.forEach(function(seat) {
-                                nomorKursi.push(seat.innerText);
-                            });
-
-                            // Menampilkan nomor kursi pada elemen "Nomor Kursi"
-                            document.getElementById('nomorKursi').innerText = nomorKursi.join(', ');
-
-                            // Jika ada kursi yang dipilih, aktifkan tombol Pesan Tiket
-                            if (selectedSeats.length > 0) {
-                                pesanTiketButton.removeAttribute('disabled');
-                                pesanTiketButton.classList.remove('btn-outline-primary');
-                                pesanTiketButton.classList.add('btn-primary');
-                            } else {
-                                // Jika tidak ada kursi yang dipilih, nonaktifkan tombol Pesan Tiket
-                                pesanTiketButton.disabled = true;
-                                pesanTiketButton.setAttribute('disabled', 'disabled');
-                                pesanTiketButton.classList.remove('btn-primary');
-                                pesanTiketButton.classList.add('btn-outline-primary');
-                            }
-                        }
-
-                        // Fungsi untuk mengatur kursi dan jumlah tiket
-                        function createSeats(section, seatCount, label) {
-                            for (let i = 0; i < seatCount; i++) {
-                                const seat = document.createElement('div');
-                                seat.classList.add('seat');
-                                seat.innerText = i + 1 + label;
-
-                                // Tambahkan event listener untuk mengubah warna kursi saat kursi dipesan
-                                seat.addEventListener('click', function() {
-                                    if (!seat.classList.contains('booked')) {
-                                        // Jika kursi belum dipesan, tandai sebagai dipesan (berwarna hijau)
-                                        seat.classList.add('booked');
-                                    } else {
-                                        // Jika kursi sudah dipesan, kembalikan ke warna merah
-                                        seat.classList.remove('booked');
-                                    }
-
-                                    // Perbarui jumlah tiket
-                                    updateJumlahTiket();
-                                    // Perbarui total harga
-                                    updateTotalHarga();
-                                    // Periksa apakah ada kursi yang dipilih
-                                    checkSelectedSeats();
-                                });
-
-                                section.appendChild(seat);
-                            }
-                        }
-
-                        // Fungsi untuk memperbarui tampilan jumlah tiket
-                        function updateJumlahTiket() {
-                            const bookedSeats = document.querySelectorAll('.seat.booked');
-                            const jumlahTiket = bookedSeats.length;
-                            document.getElementById('jumlahTiket').innerText = jumlahTiket > 0 ? jumlahTiket : '0';
-                        }
-
-                        // Fungsi untuk memperbarui tampilan total harga tiket
-                        function updateTotalHarga() {
-                            const bookedSeats = document.querySelectorAll('.seat.booked');
-                            const jumlahTiket = bookedSeats.length;
-
-                            // Ambil harga tiket dari variabel PHP
-                            const hargaTiket = {{ $hargaTiket }};
-
-                            // Hitung total harga tiket
-                            const totalHarga = jumlahTiket * hargaTiket;
-
-                            // Simpan total harga tiket ke local storage
-                            localStorage.setItem('totalHarga', totalHarga);
-
-                            // Tampilkan total harga tiket dengan format mata uang
-                            document.getElementById('totalHarga').innerText = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '');
-                        }
-
-
-                        // Format Jam
-                        document.getElementById('selectedTime').innerText = "{{ $tanggal->jam }}".replace(/:\d{2}$/, '');
-                        // Membuat 30 kursi di kiri dan 30 kursi di kanan
-                        const leftSection = document.getElementById('left-section');
-                        const rightSection = document.getElementById('right-section');
-                        @foreach ($kursi as $k)
-                        createSeats(leftSection, {{ $k->kursi }}, 'a');
-                        createSeats(rightSection, {{ $k->kursi }}, 'b');
-                        @endforeach
-
-                        // Panggil fungsi updateTotalHarga, updateJumlahTiket, dan checkSelectedSeats saat halaman dimuat
-                        updateTotalHarga();
-                        updateJumlahTiket();
-                        checkSelectedSeats();
-                    </script>
-                <!-- Tambahkan screen di bawah kursi -->
-                <div style="text-align: center; margin-top: 50px;">
-                    <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
+                .dipilih {
+                    background-color: blue;
+                }
+            </style>
+                <div class="section" id="left-section">
+                    <!-- Kursi kiri -->
                 </div>
-
-            <br>
-            <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
-
-            <br>
-            <div data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <a href="/pesan/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
-                <button type="button" id="pesanTiketButton" class="btn btn-primary">Konfirmasi Pembayaran</button>
-            </div>
+                <div class="section" id="right-section">
+                    <!-- Kursi kanan -->
+                </div>
             </div>
 
             <script>
-                document.addEventListener('DOMContentLoaded', (event) => {
-                    function toggleInput() {
-                        var inputBank = document.getElementById("inputBank");
-                        var inputEwallet = document.getElementById("inputEwallet");
-                        var bankChecked = document.getElementById("radioBRI").checked || document.getElementById("radioBTN").checked;
-                        var ewalletChecked = document.getElementById("gopay").checked;
+                // Fungsi untuk memeriksa apakah ada kursi yang dipilih
+                function checkSelectedSeats() {
+                    const selectedSeats = document.querySelectorAll('.seat.booked');
+                    const pesanTiketButton = document.getElementById('pesanTiketButton');
+                    pesanTiketButton.disabled = true;
 
-                        inputBank.style.display = bankChecked ? "block" : "none";
-                        inputEwallet.style.display = ewalletChecked ? "block" : "none";
-                        toggleButtonState();
-                    }
+                    // Menyimpan nomor kursi yang dipilih
+                    let nomorKursi = [];
 
-                    function toggleButtonState() {
-                        var switchChecked = document.getElementById("flexSwitchCheckDefault").checked;
-                        var submitButton = document.getElementById("submitButton");
-                        var saveButton = document.getElementById("saveButton");
-
-                        if (switchChecked) {
-                            submitButton.classList.add('d-none');
-                            submitButton.classList.add('disabled');
-                            saveButton.classList.remove('d-none');
-                            saveButton.classList.remove('disabled');
-                        } else {
-                            saveButton.classList.add('d-none');
-                            saveButton.classList.add('disabled');
-                            submitButton.classList.remove('d-none');
-                            submitButton.classList.remove('disabled');
-                        }
-                    }
-
-                    document.getElementById("flexSwitchCheckDefault").addEventListener('change', toggleButtonState);
-                    document.querySelectorAll('input[name="metodePembayaran"]').forEach((input) => {
-                        input.addEventListener('change', toggleInput);
+                    // Memperbarui nomor kursi yang dipilih
+                    selectedSeats.forEach(function(seat) {
+                        nomorKursi.push(seat.innerText);
                     });
 
-                    toggleButtonState();
-                });
+                    // Menampilkan nomor kursi pada elemen "Nomor Kursi"
+                    document.getElementById('nomorKursi').innerText = nomorKursi.join(', ');
+
+                    // Jika ada kursi yang dipilih, aktifkan tombol Pesan Tiket
+                    if (selectedSeats.length > 0) {
+                        pesanTiketButton.removeAttribute('disabled');
+                        pesanTiketButton.classList.remove('btn-outline-primary');
+                        pesanTiketButton.classList.add('btn-primary');
+                    } else {
+                        // Jika tidak ada kursi yang dipilih, nonaktifkan tombol Pesan Tiket
+                        pesanTiketButton.disabled = true;
+                        pesanTiketButton.setAttribute('disabled', 'disabled');
+                        pesanTiketButton.classList.remove('btn-primary');
+                        pesanTiketButton.classList.add('btn-outline-primary');
+                    }
+                }
+
+                // Fungsi untuk mengatur kursi dan jumlah tiket
+                function createSeats(section, seatCount, label) {
+                    for (let i = 0; i < seatCount; i++) {
+                        const seat = document.createElement('div');
+                        seat.classList.add('seat');
+                        seat.innerText = i + 1 + label;
+
+                        // Tambahkan event listener untuk mengubah warna kursi saat kursi dipesan
+                        seat.addEventListener('click', function() {
+                            if (!seat.classList.contains('booked')) {
+                                // Jika kursi belum dipesan, tandai sebagai dipesan (berwarna hijau)
+                                seat.classList.add('booked');
+                            } else {
+                                // Jika kursi sudah dipesan, kembalikan ke warna merah
+                                seat.classList.remove('booked');
+                            }
+
+                            // Perbarui jumlah tiket
+                            updateJumlahTiket();
+                            // Periksa apakah ada kursi yang dipilih
+                            checkSelectedSeats();
+                        });
+
+                        section.appendChild(seat);
+                    }
+                }
+
+                // Fungsi untuk memperbarui tampilan jumlah tiket
+                function updateJumlahTiket() {
+                    const bookedSeats = document.querySelectorAll('.seat.booked');
+                    const jumlahTiket = bookedSeats.length;
+                    document.getElementById('jumlahTiket').innerText = jumlahTiket > 0 ? jumlahTiket : '0';
+                }
+
+
+                // Format Jam
+                document.getElementById('selectedTime').innerText = "{{ $tanggal->jam }}".replace(/:\d{2}$/, '');
+                // Membuat 30 kursi di kiri dan 30 kursi di kanan
+                const leftSection = document.getElementById('left-section');
+                const rightSection = document.getElementById('right-section');
+                @foreach ($kursi as $k)
+                createSeats(leftSection, {{ $k->kursi }}, 'a');
+                createSeats(rightSection, {{ $k->kursi }}, 'b');
+                @endforeach
+
+                // Panggil fungsi updateTotalHarga, updateJumlahTiket, dan checkSelectedSeats saat halaman dimuat
+                updateTotalHarga();
+                updateJumlahTiket();
+                checkSelectedSeats();
             </script>
+        <!-- Tambahkan screen di bawah kursi -->
+        <div style="text-align: center; margin-top: 50px;">
+            <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
+        </div>
+
+    <br>
+    <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
+
+    <br>
+    <div data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <a href="/pesan/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
+        <button type="button" id="pesanTiketButton" class="btn btn-primary">Konfirmasi Pembayaran</button>
+    </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            function toggleInput() {
+                var inputBank = document.getElementById("inputBank");
+                var inputEwallet = document.getElementById("inputEwallet");
+                var bankChecked = document.getElementById("radioBRI").checked || document.getElementById("radioBTN").checked;
+                var ewalletChecked = document.getElementById("gopay").checked;
+
+                inputBank.style.display = bankChecked ? "block" : "none";
+                inputEwallet.style.display = ewalletChecked ? "block" : "none";
+                toggleButtonState();
+            }
+
+            function toggleButtonState() {
+                var switchChecked = document.getElementById("flexSwitchCheckDefault").checked;
+                var submitButton = document.getElementById("submitButton");
+                var saveButton = document.getElementById("saveButton");
+
+                if (switchChecked) {
+                    submitButton.classList.add('d-none');
+                    submitButton.classList.add('disabled');
+                    saveButton.classList.remove('d-none');
+                    saveButton.classList.remove('disabled');
+                } else {
+                    saveButton.classList.add('d-none');
+                    saveButton.classList.add('disabled');
+                    submitButton.classList.remove('d-none');
+                    submitButton.classList.remove('disabled');
+                }
+            }
+
+            document.getElementById("flexSwitchCheckDefault").addEventListener('change', toggleButtonState);
+            document.querySelectorAll('input[name="metodePembayaran"]').forEach((input) => {
+                input.addEventListener('change', toggleInput);
+            });
+
+            toggleButtonState();
+        });
+    </script>
 @endsection

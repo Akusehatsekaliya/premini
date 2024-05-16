@@ -32,7 +32,7 @@
                 <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $film->judul }}</h2>
                 <p class="card-text" style="margin-bottom: 27px;">{{ $film->detail }}</p>
                 <br>
-                <a href="{{ route('pilihkursi') }}" class="btn btn-primary" style="display: inline-block;">Pesan Tiket</a>
+                <a href="{{ route('pilihkursi', ['id' => $film->id]) }}" class="btn btn-primary" style="display: inline-block;">Pesan Tiket</a>
             </div>
         </div>
 @endsection
