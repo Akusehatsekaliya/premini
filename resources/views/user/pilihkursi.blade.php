@@ -161,16 +161,18 @@
             </div>
         </div>
         <!-- Tanggal -->
+        @foreach ($tanggal as $t)
         <label for="film" style="display: inline-block; width: 100px;">Tanggal </label>
-        <span>: {{ \Carbon\Carbon::parse($tanggal->tanggal)->isoFormat('D MMMM YYYY') }}</span></p>
+        <span>: {{ \Carbon\Carbon::parse($t->tanggal)->isoFormat('D MMMM YYYY') }}</span></p>
         <!-- jAM -->
         <p>Jam :</p>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="jam" id="jam_{{ $tanggal->jam }}" value="{{ $tanggal->jam }}">
-                {{ substr($tanggal->jam, 0, -3) }}
-            </label>
-        </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="jam" id="jam_{{ $t->jam }}" value="{{ $t->jam }}">
+                    {{ substr($t->jam, 0, -3) }}
+                </label>
+            </div>
+        @endforeach
         <!-- jUMLAHTIKET -->
         <div style="margin-top: 20px; margin-bottom:20px;">
             <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }}</span></p>
@@ -309,7 +311,7 @@
 
 
                 // Format Jam
-                document.getElementById('selectedTime').innerText = "{{ $tanggal->jam }}".replace(/:\d{2}$/, '');
+                document.getElementById('selectedTime').innerText = "{{ $t->jam }}".replace(/:\d{2}$/, '');
                 // Membuat 30 kursi di kiri dan 30 kursi di kanan
                 const leftSection = document.getElementById('left-section');
                 const rightSection = document.getElementById('right-section');

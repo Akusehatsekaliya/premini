@@ -35,13 +35,13 @@ class OrderController extends Controller
         return view('user.detail', compact('film'));
     }
 
-    public function pilihkursi(Request $request)
+    public function pilihkursi(Request $request, $id)
     {
         $film = Film::first();
         $kursi = Kursi::all();
         $tikets = Tiket::get();
         $tiket = Tiket::first();
-        $tanggal = Tanggal::first();
+        $tanggal = Tanggal::get();
 
         $jumlahTiket = session('jumlahTiket');
         $hargaTiket = $tiket->harga;
