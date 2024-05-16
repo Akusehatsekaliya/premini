@@ -37,7 +37,7 @@ class OrderController extends Controller
 
     public function pilihkursi(Request $request, $id)
     {
-        $film = Film::first();
+        $film = Film::find($id);
         $kursi = Kursi::all();
         $tikets = Tiket::get();
         $tiket = Tiket::first();

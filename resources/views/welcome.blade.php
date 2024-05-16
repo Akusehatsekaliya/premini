@@ -182,18 +182,18 @@
                 <div class="col text-center">Tidak ada data film.</div>
             @endif
             @foreach ($film as $f)
-            <div class="card bg-dark mb-6" style="max-width: 1200px;">
-                <div style="display: flex; align-items: flex-start;">
-                    <img class="card-img-top" src="{{ asset('storage/vidio/'. $f['film']) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
-                    <div style="display: flex; flex-direction: column;">
-                        <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px;">{{ $f['judul'] }}</h2>
-                        <p class="card-text" style="align-self: flex-start; margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
-                        <br>
-                        <a href={{ route('detail',['id'=>$f->id]) }} class="btn btn-primary" style="display: inline-block;">Detail</a>
+                <div class="card bg-dark mb-6 rounded" style="margin-bottom: 20px; max-width: 1200px;">
+                    <div style="display: flex; align-items: flex-start;">
+                        <img class="card-img-top" src="{{ asset('storage/vidio/'. $f['film']) }}" alt="" style="max-width: 400px; max-height:700px; margin-right: 20px;">
+                        <div style="display: flex; flex-direction: column;">
+                            <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px; margin-top: 10px;">{{ $f['judul'] }}</h2>
+                            <p class="card-text" style="align-self: flex-start; margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
+                            <br>
+                            <a href={{ route('detail',['id'=>$f->id]) }} class="btn btn-primary" style="display: inline-block;">Detail</a>
+                        </div>
                     </div>
                 </div>
-                </div>
-                @endforeach
+            @endforeach
             </div>
             </div>
         </div>

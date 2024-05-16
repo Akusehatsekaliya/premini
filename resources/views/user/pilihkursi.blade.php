@@ -147,35 +147,42 @@
         <!-- Film --> 
         <div class="col-md-6" style="margin-top: 20px; margin-bottom:20px;">
             <label for="film" style="display: inline-block; width: 100px;">Film </label>
-            <span>: {{ $film->judul }}</span>
+            <span style="margin-left: 10px">: {{ $film->judul }}</span>
         </div>
         <!-- Tiket -->
-        <div class="col-md-4" style="margin-top: 20px; margin-bottom:20px;">
-            <label for="tiket" style="float: left; margin-right: 10px;">Pilihan Tiket :</label>
+        <div class="col-md-4" style="margin-top: 20px; margin-bottom: 20px;">
+            <label for="tiket" style="float: left; margin-right: 10px; margin-top: 5px;">Pilihan Tiket :</label>
             <div style="overflow: hidden;">
-                <select class="form-control" name="tiket" id="tiket" style="float: right;">
+                <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;">
                     @foreach ($tikets as $k)
-                        <option value="{{ $k->id }}">{{ $k->tiket }}</option>
+                        <option value="{{ $k->film_id }}">{{ $k->tiket }}</option>
                     @endforeach
                 </select>
             </div>
         </div>
-        <!-- Tanggal -->
-        @foreach ($tanggal as $t)
-        <label for="film" style="display: inline-block; width: 100px;">Tanggal </label>
-        <span>: {{ \Carbon\Carbon::parse($t->tanggal)->isoFormat('D MMMM YYYY') }}</span></p>
         <!-- jAM -->
-        <p>Jam :</p>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="jam" id="jam_{{ $t->jam }}" value="{{ $t->jam }}">
-                    {{ substr($t->jam, 0, -3) }}
-                </label>
-            </div>
-        @endforeach
+        @php
+            $sortedJam = $tanggal->sortBy(function ($item) {
+                return (int) substr($item->jam, 0, 2);
+            });
+        @endphp
+
+        <div class="col-md-6" style="margin-top: 20px; margin-bottom:20px;">
+            <label for="film" style="display: inline-block; width: 100px;">Jam </label>
+            <span style="margin-left: 10px">: 
+                @foreach ($sortedJam as $t)
+                    <div class="form-check form-check-inline" style="display: inline-block; margin-right: 10px;">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="jam" id="jam_{{ $t->jam }}" value="{{ $t->jam }}">
+                            {{ substr($t->jam, 0, -3) }}
+                        </label>
+                    </div>
+                @endforeach
+            </span>
+        </div>
         <!-- jUMLAHTIKET -->
         <div style="margin-top: 20px; margin-bottom:20px;">
-            <p>Jumlah Tiket : <span id="jumlahTiket">{{ $jumlahTiket }}</span></p>
+            <p>Jumlah Tiket <span style="margin-left: 10px" id="jumlahTiket">: {{ $jumlahTiket }}</span></p>
         </div>
     </form>
     <br>
