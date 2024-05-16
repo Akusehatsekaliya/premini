@@ -52,7 +52,7 @@ Route::DELETE('/hapus/{id}', [KursiController::class, 'delete_kursi'])->name('de
 // halaman tanggal //
 Route::get('/tanggal', [TanggalController::class, 'tanggal'])->name('tanggal');
 Route::post('/tambahjadwal', [TanggalController::class, 'proses_tanggal'])->name('proses_tanggal');
-Route::post('/update-jadwal/{id}', [TanggalController::class, 'update_tanggal'])->name('update_tanggal');
+Route::post('/update_tanggal/{id}', [TanggalController::class, 'update_tanggal'])->name('update_tanggal');
 Route::DELETE('/hapus tanggal/{id}', [TanggalController::class, 'delete_tanggal'])->name('delete_tanggal');
 // halaman map
 Route::get('/map', [MapController::class, 'map'])->name('map');
