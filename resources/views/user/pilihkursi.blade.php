@@ -145,12 +145,12 @@
     <form action="/pesan" method="POST">
         @csrf
         <!-- Film --> 
-        <div class="col-md-6" style="margin-top: 20px; margin-bottom:20px;">
+        <div class="col-md-6" style="margin-top: 30px; margin-bottom:20px;">
             <label for="film" style="display: inline-block; width: 100px;">Film </label>
             <span style="margin-left: 10px">: {{ $film->judul }}</span>
         </div>
         <!-- Tiket -->
-        <div class="col-md-4" style="margin-top: 20px; margin-bottom: 20px;">
+        <div class="col-md-4" style="margin-top: 30px; margin-bottom: 20px;">
             <label for="tiket" style="float: left; margin-right: 10px; margin-top: 5px;">Pilihan Tiket :</label>
             <div style="overflow: hidden;">
                 <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;">
@@ -167,7 +167,7 @@
             });
         @endphp
 
-        <div class="col-md-6" style="margin-top: 20px; margin-bottom:20px;">
+        <div class="col-md-6" style="margin-top: 30px; margin-bottom:20px;">
             <label for="film" style="display: inline-block; width: 100px;">Jam </label>
             <span style="margin-left: 10px">: 
                 @foreach ($sortedJam as $t)
@@ -181,13 +181,14 @@
             </span>
         </div>
         <!-- jUMLAHTIKET -->
-        <div style="margin-top: 20px; margin-bottom:20px;">
-            <p>Jumlah Tiket <span style="margin-left: 10px" id="jumlahTiket">: {{ $jumlahTiket }}</span></p>
+        <div style="margin-top: 30px; margin-bottom:20px;">
+            <label for="jumlah">Jumlah Tiket :</label>
+            <span style="margin-left: 10px" id="jumlahTiket">{{ $jumlahTiket }}</span> 
         </div>
     </form>
     <br>
     <div class="form-group">
-        <label for="kursi" class="form-label">Pilih Kursi Bioskop :</label>
+        <label for="kursi" class="form-label">Pilih Kursi :</label>
         <div class="cinema">
             <style>
                 .cinema {
@@ -301,6 +302,8 @@
 
                             // Perbarui jumlah tiket
                             updateJumlahTiket();
+                            // Perbarui total harga
+                            updateTotalHarga();
                             // Periksa apakah ada kursi yang dipilih
                             checkSelectedSeats();
                         });
@@ -316,9 +319,25 @@
                     document.getElementById('jumlahTiket').innerText = jumlahTiket > 0 ? jumlahTiket : '0';
                 }
 
+                // Fungsi untuk memperbarui tampilan total harga tiket
+                function updateTotalHarga() {
+                    const bookedSeats = document.querySelectorAll('.seat.booked');
+                    const jumlahTiket = bookedSeats.length;
 
-                // Format Jam
-                document.getElementById('selectedTime').innerText = "{{ $t->jam }}".replace(/:\d{2}$/, '');
+                    // Ambil harga tiket dari variabel PHP
+                    const hargaTiket = {{ $hargaTiket }};
+
+                    // Hitung total harga tiket
+                    const totalHarga = jumlahTiket * hargaTiket;
+
+                    // Simpan total harga tiket ke local storage
+                    localStorage.setItem('totalHarga', totalHarga);
+
+                    // Tampilkan total harga tiket dengan format mata uang
+                    document.getElementById('totalHarga').innerText = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '');
+                }
+
+
                 // Membuat 30 kursi di kiri dan 30 kursi di kanan
                 const leftSection = document.getElementById('left-section');
                 const rightSection = document.getElementById('right-section');
@@ -336,7 +355,6 @@
         <div style="text-align: center; margin-top: 50px;">
             <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
         </div>
-
     <br>
     <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
 
