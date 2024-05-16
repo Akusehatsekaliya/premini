@@ -12,33 +12,35 @@
               <table class="table">
                 <thead class=" text-primary">
                   <th>
-                    Name
+                    Nama
                   </th>
                   <th>
-                    Country
+                    Tiket
                   </th>
                   <th>
-                    City
+                    Status
                   </th>
                   <th class="text-right">
-                    Salary
+                    Uang Masuk
                   </th>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      Jon Porter
-                    </td>
-                    <td>
-                      Portugal
-                    </td>
-                    <td>
-                      Gloucester
-                    </td>
-                    <td class="text-right">
-                      $98,615
-                    </td>
-                  </tr>
+                    @foreach ($pembayaran as $p)
+                    <tr>
+                      <td>
+                        {{ $p->nama }}
+                      </td>
+                      <td>
+                       {{ $p->tiket }}
+                      </td>
+                      <td>
+                        {{ $p->status }}
+                      </td>
+                      <td class="text-right">
+                        {{ $p->uang }}
+                      </td>
+                    </tr>
+                    @endforeach
                 </tbody>
               </table>
             </div>
