@@ -146,7 +146,7 @@
         @csrf
         <!-- Film --> 
         <div class="col-md-6" style="margin-top: 30px; margin-bottom:20px;">
-            <label for="film" style="display: inline-block; width: 100px;">Film </label>
+            <label for="film" style="display: inline-block; width: 100px;">Judul Film </label>
             <span style="margin-left: 10px">: {{ $film->judul }}</span>
         </div>
         <!-- Tiket -->
@@ -173,17 +173,30 @@
                 @foreach ($sortedJam as $t)
                     <div class="form-check form-check-inline" style="display: inline-block; margin-right: 10px;">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" name="jam" id="jam_{{ $t->jam }}" value="{{ $t->jam }}">
+                            <input class="form-check-input" type="checkbox" name="jam" value="{{ $t->jam }}" onclick="handleCheckboxChange(this)">
                             {{ substr($t->jam, 0, -3) }}
                         </label>
                     </div>
                 @endforeach
             </span>
         </div>
+
+        <script>
+            function handleCheckboxChange(checkbox) {
+                const checkboxes = document.getElementsByName('jam');
+
+                // Nonaktifkan semua checkbox kecuali yang saat ini diklik
+                checkboxes.forEach(function(cb) {
+                    if (cb !== checkbox) {
+                        cb.checked = false;
+                    }
+                });
+            }
+        </script>
         <!-- jUMLAHTIKET -->
         <div style="margin-top: 30px; margin-bottom:20px;">
             <label for="jumlah">Jumlah Tiket :</label>
-            <span style="margin-left: 10px" id="jumlahTiket">{{ $jumlahTiket }}</span> 
+            <span style="margin-left: 10px" id="jumlahTiket">* 1 Kursi = 1 Tiket {{ $jumlahTiket }}</span> 
         </div>
     </form>
     <br>
@@ -316,7 +329,7 @@
                 function updateJumlahTiket() {
                     const bookedSeats = document.querySelectorAll('.seat.booked');
                     const jumlahTiket = bookedSeats.length;
-                    document.getElementById('jumlahTiket').innerText = jumlahTiket > 0 ? jumlahTiket : '0';
+                    document.getElementById('jumlahTiket').innerText = jumlahTiket > 0 ? jumlahTiket : '* 1 Kursi = 1 Tiket';
                 }
 
                 // Fungsi untuk memperbarui tampilan total harga tiket
