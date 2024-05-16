@@ -82,8 +82,8 @@
                             saveButton.classList.add('d-none');
                         }
                     }
-                </script>   
-                <br> 
+                </script>
+                <br>
                 <p style="font-weight: bold; text-decoration : underline; padding-bottom: 10px;">Pilih Metode Pembayaran</p>
                 <div class="form-group">
                     <!-- Bank -->
@@ -126,7 +126,7 @@
                         <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan Nomor HP</label>
                         <input type="number" class="form-control" id="namaEwallet" name="namaEwallet" placeholder="Masukkan Nomor">
                     </div>
-                </div> 
+                </div>
                 <div class="form-check form-switch mt-5">
                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                     <label class="form-check-label" for="flexSwitchCheckDefault">Bayar Nanti Saja</label>
@@ -136,11 +136,11 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
                     <button type="button" class="btn btn-primary disabled" id="submitButton" data-bs-toggle="modal" data-bs-target="#pembayaran">Lanjut</button>
                     <button type="button" class="btn btn-primary d-none disabled" id="saveButton">Simpan</button>
-                </div>    
+                </div>
             </form>
       </div>
     </div>
-  </div>          
+  </div>
 <!-- End -->
   <br>
   <br>
@@ -180,7 +180,7 @@
     <a href="/pilihkursi" class="btn btn-transparent">
         <i class="bi bi-arrow-left"></i> Kembali
     </a>
-    
+
     <br>
     <br>
     <h1 style="margin-bottom: 50px;">Pembayaran</h1>
@@ -194,9 +194,9 @@
             <div class="form-group" style="display: flex; align-items: center; margin-bottom: 10px;">
                 <label for="noHp" class="form-label" style="width: 100px;">No. HP :</label>
                 <input type="number" class="form-control" id="noHp" name="noHp" placeholder="Masukkan Nomor HP">
-            </div>              
+            </div>
         </form>
-    </div>    
+    </div>
     <br>
     <!-- Modal Bayar -->
     <div data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -210,7 +210,7 @@
                 var inputEwallet = document.getElementById("inputEwallet");
                 var bankChecked = document.getElementById("radioBRI").checked || document.getElementById("radioBTN").checked;
                 var ewalletChecked = document.getElementById("gopay").checked;
-    
+
                 inputBank.style.display = bankChecked ? "block" : "none";
                 inputEwallet.style.display = ewalletChecked ? "block" : "none";
                 toggleButtonState();

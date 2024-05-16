@@ -70,4 +70,12 @@ class OrderController extends Controller
 
         return view('user.pilihkursi', compact('film','kursi','tiket','tanggal','jumlahTiket','hargaTiket','tikets'));
     }
+
+    public function tambah_pembayaran(Request $request){
+        $request->validate([
+            'nama' => 'required',
+            'noHp' => 'required',
+            ''
+        ]);
+    }
 }

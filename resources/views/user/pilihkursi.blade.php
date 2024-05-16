@@ -10,7 +10,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form id="submitForm">
+            <form id="submitForm" action="{{ route('tambah_pembayaran') }}" method="post">
+                @csrf
                 <div class="form-group">
                     <label for="nama" class="form-label" style="width: 100px;">Nama :</label>
                     <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama">
@@ -19,9 +20,10 @@
                 <div class="form-group">
                     <label for="noHp" class="form-label" style="width: 100px;">No. HP :</label>
                     <input type="number" class="form-control" id="noHp" name="noHp" placeholder="Masukkan Nomor HP">
-                </div> 
-                <div class="form-group" style="margin-top: 30px">
-                    <p>Total Harga : <span id="totalHarga"></span></p>
+                </div>
+                <div class="form-group">
+                    <label for="total" class="form-label">Total Pesanan</label>
+                    <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format(0, 0, ',', '.') }}" disabled>
                 </div>
                 <script>
                     window.onload = function() {
@@ -90,8 +92,8 @@
                             saveButton.classList.add('d-none');
                         }
                     }
-                </script>   
-                <br> 
+                </script>
+                <br>
                 <p style="font-weight: bold; text-decoration : underline; padding-bottom: 10px;">Pilih Metode Pembayaran</p>
                 <div class="form-group">
                     <!-- Bank -->
@@ -134,7 +136,7 @@
                         <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan Nomor HP</label>
                         <input type="number" class="form-control" id="namaEwallet" name="namaEwallet" placeholder="Masukkan Nomor">
                     </div>
-                </div> 
+                </div>
                 <div class="form-check form-switch mt-5">
                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                     <label class="form-check-label" for="flexSwitchCheckDefault">Bayar Nanti Saja</label>
@@ -144,11 +146,11 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
                     <button type="button" class="btn btn-primary disabled" id="submitButton" data-bs-toggle="modal">Bayar</button>
                     <button type="button" class="btn btn-primary d-none disabled" id="saveButton">Simpan</button>
-                </div>    
+                </div>
             </form>
       </div>
     </div>
-  </div>          
+  </div>
 <!-- End -->
 <br>
 <br>
@@ -378,17 +380,17 @@
                         var inputEwallet = document.getElementById("inputEwallet");
                         var bankChecked = document.getElementById("radioBRI").checked || document.getElementById("radioBTN").checked;
                         var ewalletChecked = document.getElementById("gopay").checked;
-            
+
                         inputBank.style.display = bankChecked ? "block" : "none";
                         inputEwallet.style.display = ewalletChecked ? "block" : "none";
                         toggleButtonState();
                     }
-        
+
                     function toggleButtonState() {
                         var switchChecked = document.getElementById("flexSwitchCheckDefault").checked;
                         var submitButton = document.getElementById("submitButton");
                         var saveButton = document.getElementById("saveButton");
-        
+
                         if (switchChecked) {
                             submitButton.classList.add('d-none');
                             submitButton.classList.add('disabled');
@@ -401,12 +403,12 @@
                             submitButton.classList.remove('disabled');
                         }
                     }
-        
+
                     document.getElementById("flexSwitchCheckDefault").addEventListener('change', toggleButtonState);
                     document.querySelectorAll('input[name="metodePembayaran"]').forEach((input) => {
                         input.addEventListener('change', toggleInput);
                     });
-        
+
                     toggleButtonState();
                 });
             </script>
