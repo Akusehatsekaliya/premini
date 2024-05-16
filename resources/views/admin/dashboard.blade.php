@@ -86,13 +86,13 @@
             <div class="row">
               <div class="col-5 col-md-4">
                 <div class="icon-big text-center icon-warning">
-                  <i class="nc-icon nc-compass-05 text-primary"></i>
+                  <i class="nc-icon nc-money-coins text-success"></i>
                 </div>
               </div>
               <div class="col-7 col-md-8">
                 <div class="numbers">
-                  <p class="card-category">Lokasi</p>
-                  <p class="card-title">{{ \App\Models\Map::count() }}<p>
+                  <p class="card-category">Keuangan</p>
+                  <p class="card-title">{{ \App\Models\Keuangan::count() }}<p>
                 </div>
               </div>
             </div>

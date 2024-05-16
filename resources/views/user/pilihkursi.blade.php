@@ -21,6 +21,9 @@
                     <label for="noHp" class="form-label" style="width: 100px;">No. HP :</label>
                     <input type="number" class="form-control" id="noHp" name="noHp" placeholder="Masukkan Nomor HP">
                 </div>
+                <div class="form-group" style="margin-top: 30px">
+                    <p>Total Harga : <span id="totalHarga"></span></p>
+                </div>
                 <div class="form-group">
                     <label for="total" class="form-label">Total Pesanan</label>
                     <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format(0, 0, ',', '.') }}" disabled>
@@ -369,7 +372,7 @@
             <br>
             <div data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <a href="/pesan/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
-                <button type="button" id="pesanTiketButton" class="btn btn-outline-primary">Konfirmasi Pembayaran</button>
+                <button type="button" id="pesanTiketButton" class="btn btn-primary">Konfirmasi Pembayaran</button>
             </div>
             </div>
 
