@@ -25,6 +25,11 @@
                   </th>
                 </thead>
                 <tbody>
+                  @if ($pembayaran->isEmpty())
+                    <tr>
+                      <td colspan="4" style="text-align:center;">Data masih kosong</td>
+                    </tr>
+                  @else
                     @foreach ($pembayaran as $p)
                     <tr>
                       <td>
@@ -41,6 +46,7 @@
                       </td>
                     </tr>
                     @endforeach
+                  @endif
                 </tbody>
               </table>
             </div>
