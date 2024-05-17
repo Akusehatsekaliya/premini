@@ -153,38 +153,43 @@
         <div class="col-md-4" style="margin-top: 30px; margin-bottom: 20px;">
             <label for="tiket" style="float: left; margin-right: 10px; margin-top: 5px;">Pilihan Tiket :</label>
             <div style="overflow: hidden;">
-                <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;">
-                    @foreach ($tikets as $k)
-                        <option value="{{ $k->film_id }}">{{ $k->tiket }}</option>
+                <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="updateTicketPrice()">
+                    @foreach ($tikets as $tiket)
+                        <option value="{{ $tiket->harga }}">{{ $tiket->tiket }}</option>
                     @endforeach
                 </select>
             </div>
         </div>
-        <!-- jAM -->
+        
+        <!-- JAM -->
         @php
             $sortedJam = $tanggal->sortBy(function ($item) {
                 return (int) substr($item->jam, 0, 2);
             });
         @endphp
-
+        
         <div class="col-md-6" style="margin-top: 30px; margin-bottom:20px;">
             <label for="film" style="display: inline-block; width: 100px;">Jam </label>
             <span style="margin-left: 10px">: 
-                @foreach ($sortedJam as $t)
-                    <div class="form-check form-check-inline" style="display: inline-block; margin-right: 10px;">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" name="jam" value="{{ $t->jam }}" onclick="handleCheckboxChange(this)">
-                            {{ substr($t->jam, 0, -3) }}
-                        </label>
-                    </div>
-                @endforeach
+                @if ($sortedJam->isEmpty())
+                    <span>Tidak ada jadwal jam tayang untuk film ini</span>
+                @else
+                    @foreach ($sortedJam as $t)
+                        <div class="form-check form-check-inline" style="display: inline-block; margin-right: 10px;">
+                            <label class="form-check-label">
+                                <input class="form-check-input" type="checkbox" name="jam" value="{{ $t->jam }}" onclick="handleCheckboxChange(this)">
+                                {{ substr($t->jam, 0, -3) }}
+                            </label>
+                        </div>
+                    @endforeach
+                @endif
             </span>
         </div>
-
+        
         <script>
             function handleCheckboxChange(checkbox) {
                 const checkboxes = document.getElementsByName('jam');
-
+        
                 // Nonaktifkan semua checkbox kecuali yang saat ini diklik
                 checkboxes.forEach(function(cb) {
                     if (cb !== checkbox) {
@@ -192,11 +197,22 @@
                     }
                 });
             }
+        
+            function updateTicketPrice() {
+                const ticketPriceElement = document.getElementById('ticketPrice');
+                const selectedTicketPrice = document.getElementById('tiket').value;
+                ticketPriceElement.textContent = `: ${selectedTicketPrice}`;
+            }
         </script>
-        <!-- jUMLAHTIKET -->
+        
+        <!-- JUMLAH TIKET -->
         <div style="margin-top: 30px; margin-bottom:20px;">
             <label for="jumlah">Jumlah Tiket :</label>
-            <span style="margin-left: 10px" id="jumlahTiket">* 1 Kursi = 1 Tiket {{ $jumlahTiket }}</span> 
+            <span style="margin-left: 10px" id="jumlahTiket">* 1 Kursi = 1 Tiket {{ $jumlahTiket }}</span>
+        </div>
+        <div style="margin-top: 30px; margin-bottom:20px;">
+            <label for="jumlah">Harga Tiket </label>
+            <span style="margin-left: 10px" id="ticketPrice">: {{ $tikets[0]->harga }}</span>
         </div>
     </form>
     <br>
