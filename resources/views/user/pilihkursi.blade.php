@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group">
                     <label for="total" class="form-label" style="width: 100px;">Total Harga </label>
-                    <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format(0, 0, ',', '.') }}" disabled>
+                    <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format($hargaTiket, 0, ',', '.') }}" disabled>
                 </div>
                 <script>
                     function setupEventListeners() {
@@ -144,7 +144,7 @@
     <br>
     <form action="/pesan" method="POST">
         @csrf
-        <!-- Film --> 
+        <!-- Film -->
         <div class="col-md-6" style="margin-top: 30px; margin-bottom:20px;">
             <label for="film" style="display: inline-block; width: 100px;">Judul Film </label>
             <span style="margin-left: 10px">: {{ $film->judul }}</span>
@@ -160,17 +160,17 @@
                 </select>
             </div>
         </div>
-        
+
         <!-- JAM -->
         @php
             $sortedJam = $tanggal->sortBy(function ($item) {
                 return (int) substr($item->jam, 0, 2);
             });
         @endphp
-        
+
         <div class="col-md-6" style="margin-top: 30px; margin-bottom:20px;">
             <label for="film" style="display: inline-block; width: 100px;">Jam </label>
-            <span style="margin-left: 10px">: 
+            <span style="margin-left: 10px">:
                 @if ($sortedJam->isEmpty())
                     <span>Tidak ada jadwal jam tayang untuk film ini</span>
                 @else
@@ -185,11 +185,11 @@
                 @endif
             </span>
         </div>
-        
+
         <script>
             function handleCheckboxChange(checkbox) {
                 const checkboxes = document.getElementsByName('jam');
-        
+
                 // Nonaktifkan semua checkbox kecuali yang saat ini diklik
                 checkboxes.forEach(function(cb) {
                     if (cb !== checkbox) {
@@ -197,14 +197,14 @@
                     }
                 });
             }
-        
+
             function updateTicketPrice() {
                 const ticketPriceElement = document.getElementById('ticketPrice');
                 const selectedTicketPrice = document.getElementById('tiket').value;
                 ticketPriceElement.textContent = `: ${selectedTicketPrice}`;
             }
         </script>
-        
+
         <!-- JUMLAH TIKET -->
         <div style="margin-top: 30px; margin-bottom:20px;">
             <label for="jumlah">Jumlah Tiket :</label>
@@ -357,7 +357,7 @@
                     const hargaTiket = {{ $hargaTiket }};
 
                     // Hitung total harga tiket
-                    const totalHarga = jumlahTiket * hargaTiket;
+                    const totalHarga = jumlahTiket + hargaTiket;
 
                     // Simpan total harga tiket ke local storage
                     localStorage.setItem('totalHarga', totalHarga);
@@ -370,10 +370,10 @@
                 // Membuat 30 kursi di kiri dan 30 kursi di kanan
                 const leftSection = document.getElementById('left-section');
                 const rightSection = document.getElementById('right-section');
-                @foreach ($kursi as $k)
-                createSeats(leftSection, {{ $k->kursi }}, 'a');
-                createSeats(rightSection, {{ $k->kursi }}, 'b');
-                @endforeach
+
+                createSeats(leftSection, {{ $kursi->kursi }}, 'a');
+                createSeats(rightSection, {{ $kursi->kursi }}, 'b');
+
 
                 // Panggil fungsi updateTotalHarga, updateJumlahTiket, dan checkSelectedSeats saat halaman dimuat
                 updateTotalHarga();

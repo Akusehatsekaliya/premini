@@ -37,17 +37,15 @@ class OrderController extends Controller
 
     public function pilihkursi(Request $request, $id)
     {
-        $film = Film::find($id);
-        $kursi = Kursi::all();
-        $tikets = Tiket::get();
-        $tiket = Tiket::first();
+        $film = Film::findOrFail($id);
+        $kursi = Kursi::where('id', $id)->select('kursi')->first();
+        $tikets = Tiket::where('film_id', $id)->get();
         $tanggal = Tanggal::get();
 
-        $jumlahTiket = session('jumlahTiket');
-        $hargaTiket = $tiket->harga;
-        // dd($tikets);
+        $jumlahTiket = session('jumlahTiket', 0);
+        $hargaTiket = $tikets->isNotEmpty() ? $tikets->first()->harga + $kursi->kursi: 0;
 
-        return view('user.pilihkursi', compact('film','kursi','tiket','tanggal','jumlahTiket','hargaTiket','tikets'));
+        return view('user.pilihkursi', compact('film', 'kursi', 'tikets', 'tanggal', 'jumlahTiket', 'hargaTiket'));
     }
 
     public function tambah_pembayaran(Request $request){
