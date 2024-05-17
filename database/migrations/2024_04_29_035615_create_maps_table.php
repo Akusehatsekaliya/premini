@@ -8,22 +8,21 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     * 
+     *
      * @return void
      */
     public function up()
     {
         Schema::create('maps', function (Blueprint $table) {
             $table->id();
-            $table->string('link');
-            $table->string('alamat');
+            $table->string('map');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
-     * 
+     *
      * @return void
      */
     public function down()

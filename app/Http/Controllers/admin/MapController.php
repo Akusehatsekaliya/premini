@@ -50,7 +50,7 @@ class MapController extends Controller
         $tiket->delete();
 
         Session::flash('successHapus', 'Data berhasil dihapus!');
-        
+
         return back();
     }
 
