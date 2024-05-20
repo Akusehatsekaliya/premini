@@ -55,8 +55,12 @@ class OrderController extends Controller
             'noHp' => 'required',
             'tiket' => 'required',
             'uang' => 'required'
+        ], [
+            'nama.required'     => 'nama tidak boleh kosong',
+            'noHp.required'     => 'noHp tidak boleh kosong',
+            'tiket.required'     => 'nama tidak boleh kosong',
+            'uang.required'     => 'nama tidak boleh kosong',
         ]);
-        dd($request);
         $kirim = Keuangan::create([
             'nama' => $request->nama,
             'noHp' => $request->noHp,
