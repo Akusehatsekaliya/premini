@@ -10,11 +10,19 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form id="submitForm" action="{{ route('tambah_pembayaran') }}" method="post">
+            <form id="submitForm" action="{{ route('proses_pembayaran') }}" method="post">
                 @csrf
                 <div class="form-group" style="margin-bottom: 10px">
                     <label for="nama" class="form-label" style="width: 100px;">Nama </label>
                     <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama">
+                </div>
+                <div class="form-group" style="margin-bottom: 10px">
+                    <label for="tiket" class="form-label" style="width: 100px;">Tiket</label>
+                    <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="updateTicketPrice()">
+                        @foreach ($tikets as $tiket)
+                            <option value="{{ $tiket->harga }}">{{ $tiket->tiket }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="form-group" style="margin-bottom: 10px">
                     <label for="noHp" class="form-label" style="width: 100px;">No. HP </label>
@@ -22,7 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label for="total" class="form-label" style="width: 100px;">Total Harga </label>
-                    <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format($hargaTiket, 0, ',', '.') }}" disabled>
+                    <input type="text" class="form-control" id="total" name="uang" value="Rp. {{ number_format($hargaTiket, 0, ',', '.') }}" disabled>
                 </div>
                 <script>
                     function setupEventListeners() {
@@ -96,12 +104,12 @@
                     <!-- inputbank -->
                     <div id="inputBank" style="display: none;">
                         <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan Nomor Rekening Bank</label>
-                        <input type="number" class="form-control" id="namaBank" name="namaBank" placeholder="Masukkan Nomor">
+                        <input type="number" class="form-control" id="namaBank" placeholder="Masukkan Nomor">
                     </div>
                     <!-- inputewallet -->
                     <div id="inputEwallet" style="display: none;">
-                        <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan Nomor HP</label>
-                        <input type="number" class="form-control" id="namaEwallet" name="namaEwallet" placeholder="Masukkan Nomor">
+                        <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan</label>
+                        <input type="number" class="form-control" id="namaEwallet" placeholder="Masukkan Nomor">
                     </div>
                 </div>
                 <div class="form-check form-switch mt-5">
@@ -111,7 +119,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                    <button type="button" class="btn btn-primary disabled" id="submitButton" data-bs-toggle="modal">Bayar</button>
+                    <button type="submit" class="btn btn-primary disabled" id="submitButton" data-bs-toggle="modal">Bayar</button>
                     <button type="button" class="btn btn-primary d-none disabled" id="saveButton">Simpan</button>
                 </div>
             </form>

@@ -89,6 +89,7 @@ Route::get('/detail/{id}', [OrderController::class, 'detail'])->name('detail');
 Route::get('/pesan/{id}', [OrderController::class, 'pesan'])->name('pesan');
 Route::get('/pilihkursi/{id}', [OrderController::class, 'pilihkursi'])->name('pilihkursi');
 Route::get('/tambah_pembayaran', [OrderController::class, 'tambah_pembayaran'])->name('tambah_pembayaran');
+Route::post('/proses_pembayaran', [OrderController::class, 'proses_pembayaran'])->name('proses_pembayaran');
 Route::get('/order/{id}', [OrderController::class, 'index'])->name('order');
 /* History */
 Route::get('/history', [HistoryController::class, 'index'])->name('history');

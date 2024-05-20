@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\user;
 
 use App\Models\Film;
+use App\Models\Keuangan;
 use App\Models\Kursi;
 use App\Models\Order;
 use App\Models\Tiket;
@@ -48,11 +49,21 @@ class OrderController extends Controller
         return view('user.pilihkursi', compact('film', 'kursi', 'tikets', 'tanggal', 'jumlahTiket', 'hargaTiket'));
     }
 
-    public function tambah_pembayaran(Request $request){
+    public function proses_pembayaran(Request $request){
         $request->validate([
             'nama' => 'required',
             'noHp' => 'required',
-            ''
+            'tiket' => 'required',
+            'uang' => 'required'
         ]);
+        dd($request);
+        $kirim = Keuangan::create([
+            'nama' => $request->nama,
+            'noHp' => $request->noHp,
+            'tiket' => $request->tiket,
+            'uang'  => $request->uang,
+        ]);
+
+        return redirect()->route('welcome');
     }
 }

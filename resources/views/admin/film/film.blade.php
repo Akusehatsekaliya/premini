@@ -3,7 +3,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    
+
     <script>
         @if(session('successTambah'))
             Swal.fire({
@@ -136,14 +136,14 @@
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16l-1.58 14.22A2 2 0 0 1 16.432 22H7.568a2 2 0 0 1-1.988-1.78zm3.345-2.853A2 2 0 0 1 9.154 2h5.692a2 2 0 0 1 1.81 1.147L18 6H6zM2 6h20m-12 5v5m4-5v5"/></svg>
                                                 </a>
                                             </div>
-                                        </td>                                        
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif
                         </tbody>
                     </table>
-                  </div>   
-                  </div>             
+                  </div>
+                  </div>
 
                 {{-- modal edit --}}
                 <div class="modal fade" id="ModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -154,13 +154,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            @foreach ($film as $f )
                             <form action="{{ route('adminupdate_film',['id'=>$f->id]) }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-froup">
                                     <label for="judul"> Judul </label>
                                     <input type="text" class="form-control" id="judul" name="judul" value="{{ $f->judul }}">
                                     @error('name')
-                                        <small class="text-danger">{{ $message }}</small>
+                                    <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
                                 <div class="form-froup">
@@ -170,6 +171,7 @@
                                     {{ $message }}
                                     @enderror
                                 </div>
+                                @endforeach
                                 <div class="form-group">
                                     <label for="kursi_id" class="form-label"> Kursi </label><br>
                                     <select class="form-control" name="kursi_id" id="kursi_id">
@@ -178,6 +180,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                @foreach ($film as $f)
                                 <div class="form-group">
                                     <label class="form-label" for="deskripsi">Deskripsi</label>
                                     <textarea class="form-control" name="deskripsi" id="deskripsi">{{ $f ? $f->deskripsi : '' }}</textarea>
@@ -185,6 +188,7 @@
                                     {{ $message }}
                                     @enderror
                                 </div>
+                                @endforeach
                             </div>
                             <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -206,11 +210,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            @foreach ($film as $f)
+
                             <table class="table">
                                 <tr>
                                     <td>
                                         <img src="{{ asset('storage/vidio/' . $f->film) }}" alt="Gambar Film" style="max-width: 300px; max-height: 300px;">
-                                    </td>   
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Judul Film</td>
@@ -237,17 +243,17 @@
                 {{-- modal hapus --}}
                 <div class="modal fade" id="modal-hapus{{ $f->id}}">
                     <div class="modal-dialog">
-                    <div class="modal-content">
+                        <div class="modal-content">
                         <div class="modal-header">
                         <h4 class="modal-title">Konfirmasi Hapus Data</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        </div>
-                        <div class="modal-body">
+                    </div>
+                    <div class="modal-body">
                         <p>Apakah kamu yakin ingin menghapus data admin <b>{{ $f->judul}}</b></p>
-                        </div>
-                        <div class="modal-footer justify-content-between">
+                    </div>
+                    <div class="modal-footer justify-content-between">
                         <form action="{{ route('admindelete_film',['id' => $f->id]) }}" method="POST">
                             @csrf
                             @method('DELETE')
@@ -256,8 +262,9 @@
                         </form>
                     </div>
                     </div>
+                    @endforeach
                     <!-- end modal hapus-->
-                    </div>
+                </div>
                 </div>
                 </div>
                 </div>

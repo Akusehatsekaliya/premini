@@ -15,10 +15,10 @@
                     Nama
                   </th>
                   <th>
-                    Tiket
+                    No Hp
                   </th>
                   <th>
-                    Status
+                    Tiket
                   </th>
                   <th class="text-right">
                     Uang Masuk
@@ -36,10 +36,10 @@
                         {{ $p->nama }}
                       </td>
                       <td>
-                       {{ $p->tiket }}
+                        {{ $p->noHp }}
                       </td>
                       <td>
-                        {{ $p->status }}
+                       {{ $p->tiket }}
                       </td>
                       <td class="text-right">
                         {{ $p->uang }}

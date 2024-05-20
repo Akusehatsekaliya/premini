@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Keuangan extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'nama',
+        'noHp',
+        'tiket',
+        'uang',
+    ];
 }
