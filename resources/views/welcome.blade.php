@@ -93,6 +93,9 @@
                     <li class="nav-item @if(!Auth::check()) d-none @endif">
                         <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
                     </li>
+                    <script>
+                        
+                    </script>
                     <!-- Bagian navbar -->
                     @if (Route::has('login'))
                         <div class="sm:fixed sm:right-0 text-right ms-5">
@@ -177,6 +180,20 @@
     <section id="listFilm">
         <div class="container py-5 text-center">
             <h1 class="title-section">LIST FILM</h1>
+            <form action="{{ route('search') }}" method="GET" class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Cari film..." aria-label="Search" name="keyword">
+                <button class="btn btn-outline-light" type="submit">Cari</button>
+            </form>            
+            <script>
+                function toggleSearchForm() {
+                    const searchForm = document.getElementById('searchForm');
+                    if (searchForm.classList.contains('d-none')) {
+                        searchForm.classList.remove('d-none');
+                    } else {
+                        searchForm.classList.add('d-none');
+                    }
+                }
+            </script>                        
             <br>
             @if ($film->isEmpty())
                 <div class="col text-center">Tidak ada data film.</div>
@@ -197,10 +214,6 @@
             </div>
             </div>
         </div>
-
-        <!-- Pagination -->
-        {{ $film->links() }}
-        <!-- End Pagination -->
     </section>
 
  <!-- Maps -->

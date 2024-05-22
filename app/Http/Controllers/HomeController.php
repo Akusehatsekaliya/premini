@@ -13,7 +13,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         if(auth()->check()) {
             if(auth()->user()->email == 'admin@gmail.com') {
@@ -26,5 +26,21 @@ class HomeController extends Controller
             $film = Film::paginate(10); // Ambil data film jika pengguna tidak terautentikasi
             return view('welcome', compact('film'));
         }
+    }
+
+    public function search(Request $request)
+    {
+        // Lakukan pencarian berdasarkan judul film
+        $keyword = $request->input('keyword');
+        $films = Film::where('judul', 'like', "%$keyword%")->get();
+
+        // Jika tidak ada film yang ditemukan, kembalikan daftar film yang sudah ada
+        if ($films->isEmpty()) {
+            $films = Film::paginate(5); // Ambil daftar film dengan paginasi
+            return view('welcome')->with('film', $films);
+        }
+
+        // Jika film ditemukan, tampilkan hasil pencarian
+        return view('welcome')->with('film', $films);
     }
 }

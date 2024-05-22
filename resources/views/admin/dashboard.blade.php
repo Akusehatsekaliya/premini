@@ -75,7 +75,7 @@
             <hr>
             <div class="stats">
               <i class="fa fa-clock-o"></i>
-              In the last hour
+              Update Now
             </div>
           </div>
         </div>

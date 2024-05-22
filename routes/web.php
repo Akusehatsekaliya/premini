@@ -29,7 +29,7 @@ Route::get('/', function () {
 });
 
 Route::resource('admin.dashboard', FilmController::class);
-
+Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin'], function () {
     // halaman dasboard //

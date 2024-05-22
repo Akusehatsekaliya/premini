@@ -25,49 +25,13 @@
                     </select>
                 </div>
                 <div class="form-group" style="margin-bottom: 10px">
-                    <label for="noHp" class="form-label" style="width: 100px;">No. HP </label>
+                    <label for="noHp" class="form-label" style="width: 100px; margin-top: 10px;">No. HP </label>
                     <input type="number" class="form-control" id="noHp" name="noHp" placeholder="Masukkan Nomor HP">
                 </div>
                 <div class="form-group">
                     <label for="total" class="form-label" style="width: 100px;">Total Harga </label>
                     <input type="text" class="form-control" id="total" name="uang" value="Rp. {{ number_format($hargaTiket, 0, ',', '.') }}" disabled>
                 </div>
-                <script>
-                    function setupEventListeners() {
-                        const checkboxes = document.querySelectorAll('input[name="metodePembayaran"]');
-                        const switchButton = document.getElementById('flexSwitchCheckDefault');
-                        const bankInput = document.getElementById('inputBank').querySelector('input');
-                        const ewalletInput = document.getElementById('inputEwallet').querySelector('input');
-
-                        checkboxes.forEach(checkbox => {
-                            checkbox.addEventListener('change', toggleInput);
-                        });
-
-                        switchButton.addEventListener('change', toggleButtonState);
-                        bankInput.addEventListener('input', toggleButtonState);
-                        ewalletInput.addEventListener('input', toggleButtonState);
-                    }
-
-                    function toggleInput() {
-                        const bankChecked = document.getElementById('radioBRI').checked || document.getElementById('radioBTN').checked;
-                        const ewalletChecked = document.getElementById('gopay').checked;
-                        const bankInputDiv = document.getElementById('inputBank');
-                        const ewalletInputDiv = document.getElementById('inputEwallet');
-
-                        if (bankChecked) {
-                            bankInputDiv.style.display = 'block';
-                            ewalletInputDiv.style.display = 'none';
-                        } else if (ewalletChecked) {
-                            bankInputDiv.style.display = 'none';
-                            ewalletInputDiv.style.display = 'block';
-                        } else {
-                            bankInputDiv.style.display = 'none';
-                            ewalletInputDiv.style.display = 'none';
-                        }
-
-                        toggleButtonState();
-                    }
-                </script>
                 <br>
                 <p style="font-weight: bold; text-decoration : underline; padding-bottom: 10px;">Pilih Metode Pembayaran</p>
                 <div class="form-group">
@@ -108,7 +72,7 @@
                     </div>
                     <!-- inputewallet -->
                     <div id="inputEwallet" style="display: none;">
-                        <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan</label>
+                        <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan No Hp</label>
                         <input type="number" class="form-control" id="namaEwallet" placeholder="Masukkan Nomor">
                     </div>
                 </div>
@@ -119,8 +83,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-primary disabled" id="submitButton" data-bs-toggle="modal">Bayar</button>
-                    <button type="button" class="btn btn-primary d-none disabled" id="saveButton">Simpan</button>
+                    <button type="submit" class="btn btn-primary" id="submitButton">Bayar</button>
+
                 </div>
             </form>
       </div>
@@ -193,7 +157,7 @@
                 @endif
             </span>
         </div>
-
+        <!-- JavaScript Jam -->
         <script>
             function handleCheckboxChange(checkbox) {
                 const checkboxes = document.getElementsByName('jam');
@@ -212,7 +176,7 @@
                 ticketPriceElement.textContent = `: ${selectedTicketPrice}`;
             }
         </script>
-
+        <!-- End -->
         <!-- JUMLAH TIKET -->
         <div style="margin-top: 30px; margin-bottom:20px;">
             <label for="jumlah">Jumlah Tiket :</label>

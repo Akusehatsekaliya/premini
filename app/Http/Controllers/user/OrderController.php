@@ -16,6 +16,13 @@ class OrderController extends Controller
 {
     public function index()
     {
+        $cari = $request->input('cari');
+        $query = \App\Models\Film::query();
+
+        if ($cari) {
+            $query->where('nama', 'LIKE', '%' . $cari . '%');
+        }
+
         $film = Film::get();
         $tiket = Tiket::get();
         $tanggal = Tanggal::get();
@@ -52,14 +59,14 @@ class OrderController extends Controller
     public function proses_pembayaran(Request $request){
         $request->validate([
             'nama' => 'required',
-            'noHp' => 'required',
+            'noHp' => 'required|regex:/^0\d{9,12}$/',
             'tiket' => 'required',
             'uang' => 'required'
         ], [
             'nama.required'     => 'nama tidak boleh kosong',
             'noHp.required'     => 'noHp tidak boleh kosong',
-            'tiket.required'     => 'nama tidak boleh kosong',
-            'uang.required'     => 'nama tidak boleh kosong',
+            'tiket.required'    => 'tiket tidak boleh kosong',
+            'uang.required'     => 'uang tidak boleh kosong',
         ]);
         $kirim = Keuangan::create([
             'nama' => $request->nama,
@@ -68,6 +75,6 @@ class OrderController extends Controller
             'uang'  => $request->uang,
         ]);
 
-        return redirect()->route('welcome');
+        return redirect()->route('history');
     }
 }
