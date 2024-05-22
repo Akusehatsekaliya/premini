@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Tiket;
 use App\Models\Tanggal;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
@@ -54,24 +55,28 @@ class OrderController extends Controller
     }
 
 
-
-    public function pembayaran(Request $request){
+    public function store(Request $request)
+    {
+        // Validasi data
         $request->validate([
-            'film'=>'required',
-            'tiket'=>'required',
-            'jam'=>'required',
-            'jumlahTiket'=>'required',
-            'total'=>'required',
-        ]);
-        dd($request);
-        $kirim = Keuangan::create([
-            'film'=>$request->film,
-            'tiket'=>$request->tiket,
-            'jam'=>$request->jam,
-            'jumlahTiket'=>$request->jumlahTiket,
-            'total'=>$request->total,
+            'judul' => 'required|string',
+            'tiket' => 'required|string',
+            'jam' => 'required',
+            'jumlahTiket' => 'required|integer',
+            'nomorKursi' => 'required|string',
+            'total_harga' => 'required|string',
         ]);
 
-        return redirect()->route('/');
+        // Simpan data ke tabel pembayaran
+        Pembayaran::create([
+            'judul' => $request->judul,
+            'tiket' => $request->tiket,
+            'jam' => $request->jam,
+            'jumlah_tiket' => $request->jumlahTiket,
+            'nomor_kursi' => $request->nomorKursi,
+            'total_harga' => $request->total_harga,
+        ]);
+
+        return redirect()->route('/')->with('success', 'Pembayaran berhasil disimpan.');
     }
 }

@@ -7,18 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pembayaran extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'judul',
+        'tiket',
+        'tanggal',
+        'jam',
+        'jumlah_tiket',
+        'nomor_kursi',
+        'total_harga'
+    ];
 
-    // Atribut pembayaran
-    public const E_WALLET = 'e-wallet';
-    public const BANK = 'bank';
-
-    // Metode untuk mendapatkan opsi pembayaran
-    public static function getOptions()
-    {
-        return [
-            self::E_WALLET => 'E-Wallet',
-            self::BANK => 'Bank',
-        ];
+    public function Kursi(){
+        return $this->belongsTo(Kursi::class);
+    }
+    public function Tiket(){
+        return $this->belongsTo(Tiket::class);
+    }
+    public function Tanggal(){
+        return $this->belongsTo(Tanggal::class);
     }
 }
