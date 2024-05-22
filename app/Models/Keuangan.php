@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Keuangan extends Model
 {
     protected $fillable = [
-        'nama',
-        'noHp',
+        'film',
         'tiket',
-        'uang',
+        'jam',
+        'jumlahTiket',
+        'harga'
     ];
 }

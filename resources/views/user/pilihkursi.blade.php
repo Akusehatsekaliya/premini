@@ -2,95 +2,6 @@
 
 @section('content')
 <!-- Modal Pembayaran 1 -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="color: black">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Metode Pembayaran</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <form id="submitForm" action="{{ route('proses_pembayaran') }}" method="post">
-                @csrf
-                <div class="form-group" style="margin-bottom: 10px">
-                    <label for="nama" class="form-label" style="width: 100px;">Nama </label>
-                    <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama">
-                </div>
-                <div class="form-group" style="margin-bottom: 10px">
-                    <label for="tiket" class="form-label" style="width: 100px;">Tiket</label>
-                    <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="updateTicketPrice()">
-                        @foreach ($tikets as $tiket)
-                            <option value="{{ $tiket->harga }}">{{ $tiket->tiket }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group" style="margin-bottom: 10px">
-                    <label for="noHp" class="form-label" style="width: 100px; margin-top: 10px;">No. HP </label>
-                    <input type="number" class="form-control" id="noHp" name="noHp" placeholder="Masukkan Nomor HP">
-                </div>
-                <div class="form-group">
-                    <label for="total" class="form-label" style="width: 100px;">Total Harga </label>
-                    <input type="text" class="form-control" id="total" name="uang" value="Rp. {{ number_format($hargaTiket, 0, ',', '.') }}" disabled>
-                </div>
-                <br>
-                <p style="font-weight: bold; text-decoration : underline; padding-bottom: 10px;">Pilih Metode Pembayaran</p>
-                <div class="form-group">
-                    <!-- Bank -->
-                    <p style="font-weight:bold">BANK</p>
-                    <table>
-                        <tr>
-                            <td style="padding: 10px">
-                                <input class="form-check-input" type="checkbox" id="radioBRI" name="metodePembayaran" value="BRI">
-                                <label for="radioBRI">
-                                    <img src="{{ asset('assets/img/bri.jpg') }}" alt="" height="70px" width="90px">
-                                </label>
-                            </td>
-                            <td style="padding: 10px">
-                                <input class="form-check-input" type="checkbox" id="radioBTN" name="metodePembayaran" value="BTN">
-                                <label for="radioBTN">
-                                    <img src="{{ asset('assets/img/b.png') }}" alt="" height="70px" width="90px">
-                                </label>
-                            </td>
-                        </tr>
-                    </table>
-                    <!-- ewallet -->
-                    <p style="font-weight:bold">E-WALLET</p>
-                    <table>
-                        <tr>
-                            <td style="padding: 10px">
-                                <input class="form-check-input" type="checkbox" id="gopay" name="metodePembayaran" value="gopay">
-                                <label for="gopay">
-                                    <img src="{{ asset('assets/img/gopay.png') }}" alt="" height="70px" width="70px">
-                                </label>
-                            </td>
-                        </tr>
-                    </table>
-                    <!-- inputbank -->
-                    <div id="inputBank" style="display: none;">
-                        <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan Nomor Rekening Bank</label>
-                        <input type="number" class="form-control" id="namaBank" placeholder="Masukkan Nomor">
-                    </div>
-                    <!-- inputewallet -->
-                    <div id="inputEwallet" style="display: none;">
-                        <label for="" style="margin-top: 10px; margin-bottom: 10px">Masukkan No Hp</label>
-                        <input type="number" class="form-control" id="namaEwallet" placeholder="Masukkan Nomor">
-                    </div>
-                </div>
-                <div class="form-check form-switch mt-5">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Bayar Nanti Saja</label>
-                </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kembali</button>
-                    <button type="submit" class="btn btn-primary" id="submitButton">Bayar</button>
-
-                </div>
-            </form>
-      </div>
-    </div>
-  </div>
-<!-- End -->
 <br>
 <br>
 <div class="container">
@@ -114,18 +25,18 @@
 
     <br>
     <br>
-    <form action="/pesan" method="POST">
+    <form action="{{ route('pembayaran') }}" method="POST">
         @csrf
         <!-- Film -->
         <div class="col-md-6" style="margin-top: 30px; margin-bottom:20px;">
-            <label for="film" style="display: inline-block; width: 100px;">Judul Film </label>
-            <span style="margin-left: 10px">: {{ $film->judul }}</span>
+            <label for="film"  class="form-label">Judul Film </label>
+            <input type="text" class="form-control" name="film" value=" {{ $film->judul }}" disabled>
         </div>
         <!-- Tiket -->
         <div class="col-md-4" style="margin-top: 30px; margin-bottom: 20px;">
-            <label for="tiket" style="float: left; margin-right: 10px; margin-top: 5px;">Pilihan Tiket :</label>
+            <label for="tiket" class="form-label">Pilihan Tiket :</label>
             <div style="overflow: hidden;">
-                <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="updateTicketPrice()">
+                <select class="form-control " name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="updateTicketPrice()">
                     @foreach ($tikets as $tiket)
                         <option value="{{ $tiket->harga }}">{{ $tiket->tiket }}</option>
                     @endforeach
@@ -179,17 +90,16 @@
         <!-- End -->
         <!-- JUMLAH TIKET -->
         <div style="margin-top: 30px; margin-bottom:20px;">
-            <label for="jumlah">Jumlah Tiket :</label>
-            <span style="margin-left: 10px" id="jumlahTiket">* 1 Kursi = 1 Tiket {{ $jumlahTiket }}</span>
+            <label for="jumlah" class="form-label">Jumlah Tiket :</label>
+            <input type="text" class="form-control" id="jumlahTiket" name="jumlahTiket" value="{{ $jumlahTiket }}" disabled>
         </div>
         <div style="margin-top: 30px; margin-bottom:20px;">
-            <label for="jumlah">Harga Tiket </label>
-            <span style="margin-left: 10px" id="ticketPrice">: {{ $tikets[0]->harga }}</span>
+            <label for="total" class="form-label" style="width: 100px;">Total Harga </label>
+            <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format($hargaTiket, 0, ',', '.') }}" disabled>
         </div>
-    </form>
-    <br>
-    <div class="form-group">
-        <label for="kursi" class="form-label">Pilih Kursi :</label>
+        <br>
+        <div class="form-group">
+            <label for="kursi" class="form-label">Pilih Kursi :</label>
         <div class="cinema">
             <style>
                 .cinema {
@@ -244,8 +154,8 @@
                     background-color: blue;
                 }
             </style>
-                <div class="section" id="left-section">
-                    <!-- Kursi kiri -->
+            <div class="section" id="left-section">
+                <!-- Kursi kiri -->
                 </div>
                 <div class="section" id="right-section">
                     <!-- Kursi kanan -->
@@ -352,19 +262,19 @@
                 updateJumlahTiket();
                 checkSelectedSeats();
             </script>
-        <!-- Tambahkan screen di bawah kursi -->
-        <div style="text-align: center; margin-top: 50px;">
-            <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
-        </div>
+            <!-- Tambahkan screen di bawah kursi -->
+            <div style="text-align: center; margin-top: 50px;">
+                <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
+            </div>
     <br>
     <p>Keterangan :   <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
 
     <br>
     <div data-bs-toggle="modal" data-bs-target="#exampleModal">
         <a href="/pesan/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
-        <button type="button" id="pesanTiketButton" class="btn btn-primary">Konfirmasi Pembayaran</button>
+        <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
     </div>
-    </div>
+</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
@@ -405,4 +315,5 @@
             toggleButtonState();
         });
     </script>
+</form>
 @endsection

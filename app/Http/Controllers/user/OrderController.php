@@ -56,25 +56,24 @@ class OrderController extends Controller
         return view('user.pilihkursi', compact('film', 'kursi', 'tikets', 'tanggal', 'jumlahTiket', 'hargaTiket'));
     }
 
-    public function proses_pembayaran(Request $request){
+
+    public function pembayaran(Request $request){
         $request->validate([
-            'nama' => 'required',
-            'noHp' => 'required|regex:/^0\d{9,12}$/',
-            'tiket' => 'required',
-            'uang' => 'required'
-        ], [
-            'nama.required'     => 'nama tidak boleh kosong',
-            'noHp.required'     => 'noHp tidak boleh kosong',
-            'tiket.required'    => 'tiket tidak boleh kosong',
-            'uang.required'     => 'uang tidak boleh kosong',
+            'film'=>'required',
+            'tiket'=>'required',
+            'jam'=>'required',
+            'jumlahTiket'=>'required',
+            'total'=>'required',
         ]);
+        dd($request);
         $kirim = Keuangan::create([
-            'nama' => $request->nama,
-            'noHp' => $request->noHp,
-            'tiket' => $request->tiket,
-            'uang'  => $request->uang,
+            'film'=>$request->film,
+            'tiket'=>$request->tiket,
+            'jam'=>$request->jam,
+            'jumlahTiket'=>$request->jumlahTiket,
+            'total'=>$request->total,
         ]);
 
-        return redirect()->route('history');
+        return redirect()->route('/');
     }
 }
