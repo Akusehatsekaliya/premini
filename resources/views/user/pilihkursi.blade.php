@@ -27,20 +27,28 @@
     <br>
     <form action="{{ route('pembayaran') }}" method="POST">
         @csrf
-        <!-- Film -->
-        <div class="col-md-6" style="margin-top: 30px; margin-bottom:20px;">
-            <label for="film"  class="form-label">Judul Film </label>
-            <input type="text" class="form-control" name="film" value=" {{ $film->judul }}" disabled>
-        </div>
-        <!-- Tiket -->
-        <div class="col-md-4" style="margin-top: 30px; margin-bottom: 20px;">
-            <label for="tiket" class="form-label">Pilihan Tiket :</label>
-            <div style="overflow: hidden;">
-                <select class="form-control " name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="updateTicketPrice()">
-                    @foreach ($tikets as $tiket)
-                        <option value="{{ $tiket->harga }}">{{ $tiket->tiket }}</option>
-                    @endforeach
-                </select>
+        <div class="row">
+            <!-- Film -->
+            <div class="col-md-4" style="margin-top: 30px; margin-bottom:20px;">
+                <label for="film"  class="form-label">Judul Film :</label>
+                <input type="text" class="form-control" name="film" value=" {{ $film->judul }}" disabled>
+            </div>
+            <!-- Tiket -->
+            <div class="col-md-4" style="margin-top: 30px; margin-bottom: 20px;">
+                <label for="tiket" class="form-label">Tiket :</label>
+                <div style="overflow: hidden;">
+                    <select class="form-control " name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="updateTicketPrice()">
+                        <option value="0" selected>-- Pilih Tiket --</option>
+                        @foreach ($tikets as $tiket)
+                            <option value="{{ $tiket->harga }}">{{ $tiket->tiket }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <!-- JUMLAH TIKET -->
+            <div class="col-md-4" style="margin-top: 30px; margin-bottom:20px;">
+                <label for="jumlah" class="form-label">Jumlah Tiket :</label>
+                <input type="text" class="form-control" id="jumlahTiket" name="jumlahTiket" value="{{ $jumlahTiket }}" disabled>
             </div>
         </div>
 
@@ -53,20 +61,18 @@
 
         <div class="col-md-6" style="margin-top: 30px; margin-bottom:20px;">
             <label for="film" style="display: inline-block; width: 100px;">Jam </label>
-            <span style="margin-left: 10px">:
-                @if ($sortedJam->isEmpty())
-                    <span>Tidak ada jadwal jam tayang untuk film ini</span>
-                @else
-                    @foreach ($sortedJam as $t)
-                        <div class="form-check form-check-inline" style="display: inline-block; margin-right: 10px;">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" name="jam" value="{{ $t->jam }}" onclick="handleCheckboxChange(this)">
-                                {{ substr($t->jam, 0, -3) }}
-                            </label>
-                        </div>
-                    @endforeach
-                @endif
-            </span>
+            @if ($sortedJam->isEmpty())
+                <span>Tidak ada jadwal jam tayang untuk film ini</span>
+            @else
+                @foreach ($sortedJam as $t)
+                    <div class="form-check form-check-inline" style="display: inline-block; margin-right: 10px;">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="jam" value="{{ $t->jam }}" onclick="handleCheckboxChange(this)">
+                            {{ substr($t->jam, 0, -3) }}
+                        </label>
+                    </div>
+                @endforeach
+            @endif
         </div>
         <!-- JavaScript Jam -->
         <script>
@@ -82,20 +88,17 @@
             }
 
             function updateTicketPrice() {
-                const ticketPriceElement = document.getElementById('ticketPrice');
-                const selectedTicketPrice = document.getElementById('tiket').value;
-                ticketPriceElement.textContent = `: ${selectedTicketPrice}`;
+                // Ambil nilai harga tiket yang dipilih
+                var selectedTicketPrice = document.getElementById('tiket').value;
+
+                // Set nilai total harga sesuai dengan harga tiket yang dipilih
+                document.getElementById('total').value = "Rp. " + selectedTicketPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             }
         </script>
         <!-- End -->
-        <!-- JUMLAH TIKET -->
-        <div style="margin-top: 30px; margin-bottom:20px;">
-            <label for="jumlah" class="form-label">Jumlah Tiket :</label>
-            <input type="text" class="form-control" id="jumlahTiket" name="jumlahTiket" value="{{ $jumlahTiket }}" disabled>
-        </div>
-        <div style="margin-top: 30px; margin-bottom:20px;">
+        <div class="col-md-4" style="margin-top: 30px; margin-bottom:20px;">
             <label for="total" class="form-label" style="width: 100px;">Total Harga </label>
-            <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format($hargaTiket, 0, ',', '.') }}" disabled>
+            <input type="text" class="form-control" id="total" name="total" value="Rp. {{ number_format($totalHarga,0, ',', '.') }}" disabled>
         </div>
         <br>
         <div class="form-group">
@@ -227,7 +230,9 @@
                 function updateJumlahTiket() {
                     const bookedSeats = document.querySelectorAll('.seat.booked');
                     const jumlahTiket = bookedSeats.length;
-                    document.getElementById('jumlahTiket').innerText = jumlahTiket > 0 ? jumlahTiket : '* 1 Kursi = 1 Tiket';
+
+                    // Set nilai input jumlah tiket dengan jumlah kursi yang dipilih
+                    document.getElementById('jumlahTiket').value = jumlahTiket > 0 ? jumlahTiket : '0';
                 }
 
                 // Fungsi untuk memperbarui tampilan total harga tiket
@@ -245,7 +250,7 @@
                     localStorage.setItem('totalHarga', totalHarga);
 
                     // Tampilkan total harga tiket dengan format mata uang
-                    document.getElementById('totalHarga').innerText = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '');
+                    document.getElementById('totalHarga').value = "Rp " + totalHarga.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 2 }).replace(/\.00$/, '');
                 }
 
 
@@ -275,45 +280,5 @@
         <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
     </div>
 </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            function toggleInput() {
-                var inputBank = document.getElementById("inputBank");
-                var inputEwallet = document.getElementById("inputEwallet");
-                var bankChecked = document.getElementById("radioBRI").checked || document.getElementById("radioBTN").checked;
-                var ewalletChecked = document.getElementById("gopay").checked;
-
-                inputBank.style.display = bankChecked ? "block" : "none";
-                inputEwallet.style.display = ewalletChecked ? "block" : "none";
-                toggleButtonState();
-            }
-
-            function toggleButtonState() {
-                var switchChecked = document.getElementById("flexSwitchCheckDefault").checked;
-                var submitButton = document.getElementById("submitButton");
-                var saveButton = document.getElementById("saveButton");
-
-                if (switchChecked) {
-                    submitButton.classList.add('d-none');
-                    submitButton.classList.add('disabled');
-                    saveButton.classList.remove('d-none');
-                    saveButton.classList.remove('disabled');
-                } else {
-                    saveButton.classList.add('d-none');
-                    saveButton.classList.add('disabled');
-                    submitButton.classList.remove('d-none');
-                    submitButton.classList.remove('disabled');
-                }
-            }
-
-            document.getElementById("flexSwitchCheckDefault").addEventListener('change', toggleButtonState);
-            document.querySelectorAll('input[name="metodePembayaran"]').forEach((input) => {
-                input.addEventListener('change', toggleInput);
-            });
-
-            toggleButtonState();
-        });
-    </script>
 </form>
 @endsection

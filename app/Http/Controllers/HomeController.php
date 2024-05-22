@@ -30,17 +30,9 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        // Lakukan pencarian berdasarkan judul film
         $keyword = $request->input('keyword');
-        $films = Film::where('judul', 'like', "%$keyword%")->get();
+        $film = Film::where('judul', 'like', '%' . $keyword . '%')->get();
 
-        // Jika tidak ada film yang ditemukan, kembalikan daftar film yang sudah ada
-        if ($films->isEmpty()) {
-            $films = Film::paginate(5); // Ambil daftar film dengan paginasi
-            return view('welcome')->with('film', $films);
-        }
-
-        // Jika film ditemukan, tampilkan hasil pencarian
-        return view('welcome')->with('film', $films);
+        return view('welcome', compact('film'));
     }
 }

@@ -30,24 +30,20 @@
         <br>
         <form action="/editprofile" method="POST">
             @csrf
-            <div class="form-group row">
-                <label for="name" class="col-sm-2 col-form-label">Nama  : </label>
-                <div class="input-group">
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="name" class="col-sm-2 col-form-label">Nama </label>
                     <input type="text" class="form-control" id="name" value="{{ old('name', isset($user) ? $user->name : '') }}">
                 </div>
-            </div>
-
-            <br>
-            <div class="form-group row">
-                <label for="email" class="col-sm-2 col-form-label">Email  : </label>
-                <div class="input-group">
+                <div class="form-group col-md-6">
+                    <label for="email" class="col-sm-2 col-form-label">Email </label>
                     <input type="email" class="form-control" id="email" value="{{ old('email', isset($user) ? $user->email : '') }}">
                 </div>
             </div>
 
             <br>
-            <div class="form-group row">
-                <label for="password" class="col-sm-2 col-form-label">Password  : </label>
+            <div class="form-group col-md-6">
+                <label for="password" class="col-sm-2 col-form-label">Password </label>
                 <div class="input-group">
                     <input type="password" class="form-control" id="password" value="{{ old('password', isset($user) ? $user->password : '') }}">     
                     <span class="input-group-btn">

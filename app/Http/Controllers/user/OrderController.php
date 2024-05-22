@@ -16,13 +16,6 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $cari = $request->input('cari');
-        $query = \App\Models\Film::query();
-
-        if ($cari) {
-            $query->where('nama', 'LIKE', '%' . $cari . '%');
-        }
-
         $film = Film::get();
         $tiket = Tiket::get();
         $tanggal = Tanggal::get();
@@ -48,13 +41,18 @@ class OrderController extends Controller
         $film = Film::findOrFail($id);
         $kursi = Kursi::where('id', $id)->select('kursi')->first();
         $tikets = Tiket::where('film_id', $id)->get();
-        $tanggal = Tanggal::get();
+        $tanggal = Tanggal::where('film_id', $id)->get();
 
         $jumlahTiket = session('jumlahTiket', 0);
-        $hargaTiket = $tikets->isNotEmpty() ? $tikets->first()->harga + $kursi->kursi: 0;
+        $selectedTicketId = $request->input('tiket');
+        $selectedTicket = $selectedTicketId ? Tiket::find($selectedTicketId) : null;
+        $hargaTiket = $selectedTicket ? $selectedTicket->harga : 0;
 
-        return view('user.pilihkursi', compact('film', 'kursi', 'tikets', 'tanggal', 'jumlahTiket', 'hargaTiket'));
+        $totalHarga = $hargaTiket * $selectedTicketId;
+
+        return view('user.pilihkursi', compact('film', 'kursi', 'tikets', 'tanggal', 'jumlahTiket', 'hargaTiket','totalHarga'));
     }
+
 
 
     public function pembayaran(Request $request){

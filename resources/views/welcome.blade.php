@@ -70,6 +70,24 @@
             justify-content: center;
             align-items: center;
         }
+
+        .form-control {
+            color: white !important; /* Warna teks input */
+            background-color: transparent !important; /* Warna latar belakang transparan */
+            border: 1px solid white; /* Border putih */
+        }
+
+        .form-control::placeholder {
+            color: white; /* Warna placeholder */
+            opacity: 0.7; /* Sesuaikan opacity sesuai kebutuhan */
+        }
+
+        .form-control:focus {
+            color: white !important; /* Warna teks saat fokus */
+            background-color: transparent !important; /* Latar belakang tetap transparan saat fokus */
+            border-color: white; /* Border putih saat fokus */
+            box-shadow: none; /* Hilangkan shadow saat fokus */
+        }
     </style>
 </head>
 
@@ -179,22 +197,13 @@
 
     <section id="listFilm">
         <div class="container py-5 text-center">
-            <h1 class="title-section">LIST FILM</h1>
-            <form action="{{ route('search') }}" method="GET" class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Cari film..." aria-label="Search" name="keyword">
+            <h1 class="title-section" style="margin-bottom: 50px">LIST FILM</h1>
+            <form action="{{ route('search') }}" method="GET" class="d-flex" style="margin-bottom: 50px" onsubmit="return validateSearch()">
+                <input class="form-control me-2" type="search" style="background-color: transparent" placeholder="Cari Film..." aria-label="Search" name="keyword" value="{{ request('keyword') }}">
                 <button class="btn btn-outline-light" type="submit">Cari</button>
-            </form>            
-            <script>
-                function toggleSearchForm() {
-                    const searchForm = document.getElementById('searchForm');
-                    if (searchForm.classList.contains('d-none')) {
-                        searchForm.classList.remove('d-none');
-                    } else {
-                        searchForm.classList.add('d-none');
-                    }
-                }
-            </script>                        
-            <br>
+                <a href="/" class="btn btn-outline-info ms-2">Clear</a>
+            </form>             
+
             @if ($film->isEmpty())
                 <div class="col text-center">Tidak ada data film.</div>
             @endif
@@ -225,7 +234,7 @@
      function setActiveMenuItem() {
          // Dapatkan URL saat ini
          const currentUrl = window.location.pathname;
-
+         
          // Dapatkan semua item menu
          const menuItems = document.querySelectorAll('.navbar-nav .nav-item');
 
@@ -242,11 +251,29 @@
          });
      }
 
+     function validateSearch() 
+     {
+        // Ambil nilai dari input pencarian
+        const searchInput = document.querySelector('.form-control').value;
+
+        // Jika input kosong, tampilkan pesan error menggunakan SweetAlert dan hentikan pengiriman form
+        if (!searchInput.trim()) {
+            // Tampilkan SweetAlert
+            swal({
+                title: "Error",
+                text: "Masukkan kata kunci pencarian.",
+                icon: "error",
+                button: "OK",
+            });
+            return false; // Hentikan pengiriman form
+        }
+
+        // Lanjutkan pengiriman form jika input tidak kosong
+        return true;
+     }
      // Panggil fungsi saat halaman dimuat
      document.addEventListener('DOMContentLoaded', setActiveMenuItem);
- </script>
 
- <script>
      var prevScrollPos = window.pageYOffset;
      window.onscroll = function() {
          var currentScrollPos = window.pageYOffset;
