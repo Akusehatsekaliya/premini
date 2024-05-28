@@ -17,4 +17,8 @@ class Tiket extends Model
     public function Film(){
         return $this->belongsTo(Film::class);
     }
+
+    public function Pembayaran(){
+        return $this->belongsTo(Pembayaran::class);
+    }
 }

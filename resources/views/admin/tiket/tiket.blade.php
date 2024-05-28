@@ -47,8 +47,8 @@
                 <div class="form-group">
                     <label for="film_id" class="form-label"> Nama Film </label><br>
                     <select class="form-control" name="film_id" id="film_id">
+                      <option value="" selected>Pilih Film</option>
                         @foreach ($film as $f)
-                            <option value="" selected>Pilih Film</option>
                             <option value="{{ $f->id }}">{{ $f->judul }}</option>
                         @endforeach
                     </select>

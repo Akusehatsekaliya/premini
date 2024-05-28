@@ -5,6 +5,7 @@ namespace App\Http\Controllers\user;
 use App\Models\Film;
 use App\Models\Keuangan;
 use App\Models\Kursi;
+use App\Models\Map;
 use App\Models\Order;
 use App\Models\Tiket;
 use App\Models\Tanggal;
@@ -44,16 +45,17 @@ class OrderController extends Controller
         $tikets = Tiket::where('film_id', $id)->get();
         $tanggal = Tanggal::where('film_id', $id)->get();
 
-        $jumlahTiket = session('jumlahTiket', 0);
+        // Inisialisasi nilai jumlah tiket dan harga tiket
+        $jumlahTiket = $request->session()->get('jumlahTiket', 0);
         $selectedTicketId = $request->input('tiket');
         $selectedTicket = $selectedTicketId ? Tiket::find($selectedTicketId) : null;
         $hargaTiket = $selectedTicket ? $selectedTicket->harga : 0;
 
-        $totalHarga = $hargaTiket * $selectedTicketId;
+        // Perhitungan total harga
+        $totalHarga = $hargaTiket * $jumlahTiket;
 
-        return view('user.pilihkursi', compact('film', 'kursi', 'tikets', 'tanggal', 'jumlahTiket', 'hargaTiket','totalHarga'));
+        return view('user.pilihkursi', compact('film', 'kursi', 'tikets', 'tanggal', 'jumlahTiket', 'hargaTiket', 'totalHarga'));
     }
-
 
     public function store(Request $request)
     {
@@ -66,7 +68,7 @@ class OrderController extends Controller
             'nomorKursi' => 'required|string',
             'total_harga' => 'required|string',
         ]);
-
+        dd($request->all());
         // Simpan data ke tabel pembayaran
         Pembayaran::create([
             'judul' => $request->judul,
@@ -74,9 +76,9 @@ class OrderController extends Controller
             'jam' => $request->jam,
             'jumlah_tiket' => $request->jumlahTiket,
             'nomor_kursi' => $request->nomorKursi,
-            'total_harga' => $request->total_harga,
+            'total_harga' => $request->totalHarga,
         ]);
 
-        return redirect()->route('/')->with('success', 'Pembayaran berhasil disimpan.');
+        return redirect()->route('history')->with('success', 'Pembayaran berhasil disimpan.');
     }
 }

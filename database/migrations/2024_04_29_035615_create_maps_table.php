@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('maps', function (Blueprint $table) {
             $table->id();
+            $table->string('nama_lokasi');
             $table->string('map');
             $table->timestamps();
         });

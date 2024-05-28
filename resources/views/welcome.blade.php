@@ -225,9 +225,52 @@
         </div>
     </section>
 
- <!-- Maps -->
-
- <!-- END maps -->
+ <!-- Footer -->
+ <footer id="footer" class="color color-primary m-none" style="margin-top: 40px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" style="margin-top: 40px">
+                <h4>Lokasi Bioskop</h4>
+                <div class="text-justify">
+                    <br/>
+                    <!-- Google Maps iframe -->
+                    @if ($maps->isEmpty())
+                        <p>Data masih kosong</p>
+                    @else
+                        @foreach ($maps as $map)
+                            <h4> {{ $map->nama_lokasi }}</h4>
+                            <iframe 
+                                src="{{ $map->map }}" 
+                                width="120%" 
+                                height="200" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy">
+                            </iframe>
+                            <br/>
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-1 col-sm-6">
+            <!--<h4>Tautan</h4>-->
+            </div>
+            <div class="col-md-3 col-md-offset-1" style="margin-top: 40px">
+                <h4>Kontak Kami</h4>
+                <address class="margin-bottom-40">
+                    <i class="fa fa-phone"></i>
+                    0813-3326-8652<br>
+                    <i class="fa fa-envelope"></i>
+                    <a href="mailto:slamet.tumpang@malangkab.go.id">bioskop.online</a>
+                    <br>
+                    <br/>
+                    <ul class="list-unstyled list-inline"></ul>
+                </address>
+            </div>
+        </div>
+    </div>
+</footer>
+ <!-- END Footer -->
 
  <!-- Nav Active -->
  <script>

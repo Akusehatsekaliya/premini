@@ -25,4 +25,7 @@ class Film extends Model
     public function Tanggal(){
         return $this->belongsTo(Tanggal::class);
     }
+    public function Pembayaran(){
+        return $this->belongsTo(Pembayaran::class);
+    }
 }
