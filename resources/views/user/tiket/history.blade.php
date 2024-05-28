@@ -23,6 +23,7 @@
             .table th,
             .table td {
                 color: white;
+                text-align: center;
             }
         </style>
         <a href="/" class="btn btn-transparent">
@@ -36,11 +37,12 @@
                 <p class="center-text">History pesanan Anda akan muncul di sini.</p>
             </div>
         @else
-        <div class="table-responsive" style="margin-top: 30px">
+        <div class="table table-hover" style="margin-top: 30px">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Judul</th>
+                        <th>No.</th>
+                        <th>Film</th>
                         <th>Tiket</th>
                         <th>Jam</th>
                         <th>Jumlah Tiket</th>
@@ -49,8 +51,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($pembayaran as $p)
+                    @foreach ($pembayaran as $key => $p)
                     <tr>
+                        <td>{{ $key + 1 }}</td>
                         <td>{{ $p->judul }}</td>
                         <td>{{ $p->tiket }}</td>
                         <td>
@@ -61,7 +64,12 @@
                         </td>
                         <td>{{ $p->jumlah_tiket }}</td>
                         <td>{{ $p->nomor_kursi }}</td>
-                        <td>{{ $p->total_harga }}</td>
+                        <td>
+                            <?php
+                            $formatted_price = 'Rp ' . number_format($p->total_harga, 0, ',', '.');
+                            ?>
+                            {{ $formatted_price }}
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

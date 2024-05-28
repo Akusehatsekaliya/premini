@@ -10,7 +10,10 @@ use App\Models\Order;
 use App\Models\Tiket;
 use App\Models\Tanggal;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
@@ -60,25 +63,40 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         // Validasi data
-        $request->validate([
+        $validatedData = $request->validate([
             'judul' => 'required|string',
             'tiket' => 'required|string',
             'jam' => 'required',
             'jumlahTiket' => 'required|integer',
-            'nomorKursi' => 'required|string',
+            'nomor_kursi' => 'required|string',
             'total_harga' => 'required|string',
         ]);
-        dd($request->all());
+
+        $user = Auth::user();
+        $totalHarga = $request->total_harga;
+
+        // Periksa apakah saldo cukup
+        if ($user->saldo < $totalHarga) {
+            return redirect()->back()->with('error', 'Saldo anda tidak mencukupi');
+        }
+
+        // Lakukan pengurangan saldo
+        $user->saldo -= $totalHarga;
+        $user->save();
+        // dd($validatedData);
+
         // Simpan data ke tabel pembayaran
         Pembayaran::create([
-            'judul' => $request->judul,
-            'tiket' => $request->tiket,
-            'jam' => $request->jam,
-            'jumlah_tiket' => $request->jumlahTiket,
-            'nomor_kursi' => $request->nomorKursi,
-            'total_harga' => $request->totalHarga,
+            'judul' => $validatedData['judul'],
+            'tiket' => $validatedData['tiket'],
+            'jam' => $validatedData['jam'],
+            'jumlah_tiket' => $validatedData['jumlahTiket'],
+            'nomor_kursi' => $validatedData['nomor_kursi'],
+            'total_harga' => $validatedData['total_harga'],
         ]);
 
-        return redirect()->route('history')->with('success', 'Pembayaran berhasil disimpan.');
+        Session::flash('success', 'Anda Berhasil memesan tiket!');
+
+        return redirect()->route('welcome');
     }
 }

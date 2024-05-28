@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->string('tiket');
-            $table->integer('jam');
+            $table->time('jam');
             $table->integer('jumlah_tiket');
             $table->string('nomor_kursi');
             $table->integer('total_harga');

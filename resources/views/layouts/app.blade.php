@@ -86,8 +86,10 @@
                             <a class="nav-link @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
                         </li>
                         <li class="nav-item @if(!Auth::check()) d-none @endif">
-                            <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
-                        </li>
+                            <a class="nav-link @if(Request::is('history/*')) active-menu @endif" href="{{ route('history', ['id' => Auth::id()]) }}">
+                                <i class="bi bi-clock-history"></i> History
+                            </a>
+                        </li>                        
                         @if (Route::has('login'))
                             <div class="sm:fixed sm:right-0 text-right ms-5">
                                 @auth

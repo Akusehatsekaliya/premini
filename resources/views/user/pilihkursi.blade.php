@@ -1,7 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-<!-- Modal Pembayaran 1 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: '{{ session('success') }}',
+        });
+    @endif
+
+    @if(session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Maaf!',
+            text: '{{ session('error') }}',
+        });
+    @endif
+</script>
 <br>
 <br>
 <div class="container">
@@ -50,16 +68,17 @@
                     <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="updateTotalHarga()">
                         <option value="0" selected>-- Pilih Tiket --</option>
                         @foreach ($tikets as $tiket)
-                            <option value="{{ $tiket->harga }}">{{ $tiket->tiket }}</option>
+                            <option value="{{ $tiket->harga }}" data-tiket="{{ $tiket->tiket }}">{{ $tiket->tiket }}</option>
                         @endforeach 
+                        <input type="hidden" name="tiket" id="hiddenTiket" value="">
                     </select>
                 </div>
             </div>
             <!-- JUMLAH TIKET -->
             <div class="col-md-4" style="margin-top: 30px; margin-bottom:20px;">
                 <label for="jumlahTiket" class="form-label">Jumlah Tiket :</label>
-                <input type="text" class="form-control" id="jumlahTiket" value="{{ $jumlahTiket }}" disabled>
-                <input type="hidden" name="jumlahTiket" id="hiddenJumlahTiket" value="{{ $jumlahTiket }}">
+                <input type="text" class="form-control" id="jumlahTiket" value="0" disabled>
+                <input type="hidden" name="jumlahTiket" id="hiddenJumlahTiket" value="0">
             </div>
         </div>
 
@@ -90,8 +109,8 @@
         <div class="row">
             <div class="col-md-4" style="margin-top: 30px; margin-bottom:20px;">
                 <label for="total" class="form-label" style="width: 100px;">Total Harga </label>
-                <input type="text" class="form-control" id="total" value="Rp. {{ number_format($totalHarga,0, ',', '.') }}" disabled>
-                <input type="hidden" name="total_harga" id="hiddenTotalHarga" value="{{ $totalHarga }}">
+                <input type="text" class="form-control" id="total" value="Rp. 0" disabled>
+                <input type="hidden" name="total_harga" id="hiddenTotalHarga" value="0">
             </div>
         </div>
         <br>
@@ -139,10 +158,6 @@
                         background-color: green; /* Warna untuk status terisi */
                     }
 
-                    .booking {
-                        background-color: red !important; /* Warna untuk status kosong */
-                    }
-
                     .kosong {
                         background-color: grey;
                     }
@@ -150,7 +165,7 @@
                     .dipilih {
                         background-color: blue;
                     }
-                    </style>
+                </style>
                 <div class="section" id="left-section">
                     <!-- Kursi kiri -->
                 </div>
@@ -164,7 +179,7 @@
                 <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
             </div>
             <br>
-            <p>Keterangan : <span class="status-box terisi"></span> Terisi | <span class="status-box booking"></span> Booking | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
+            <p>Keterangan : <span class="status-box terisi"></span> Terisi | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
             <br>
             <div class="row">
                 <div class="form-group col-md-4" style="margin-bottom: 30px">
@@ -177,6 +192,19 @@
             <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
         </div>
         <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const tiketDropdown = document.getElementById('tiket');
+                const hiddenTiket = document.getElementById('hiddenTiket');
+
+                tiketDropdown.addEventListener('change', function() {
+                    const selectedOption = tiketDropdown.options[tiketDropdown.selectedIndex];
+                    const tiketName = selectedOption.getAttribute('data-tiket');
+                    const tiketPrice = selectedOption.value;
+                    hiddenTiket.value = tiketName;
+                    updateTotalHarga();
+                });
+            });
+            
             function handleCheckboxChange(checkbox) {
                 const checkboxes = document.getElementsByName('jam');
 
@@ -207,7 +235,7 @@
                     seat.classList.add('seat');
                     const nomorKursi = i + 1;
                     seat.innerText = nomorKursi + label;
-                    seat.setAttribute('data-nomor-kursi', nomorKursi); // Tambahkan nomor kursi ke atribut data
+                    seat.setAttribute('data-nomor-kursi', nomorKursi + label); // Tambahkan nomor kursi ke atribut data
 
                     seat.addEventListener('click', function() {
                         if (!seat.classList.contains('booked')) {
@@ -230,10 +258,8 @@
                 const nomorKursiArray = [];
 
                 selectedSeats.forEach(function(seat) {
-                    const nomorKursi = seat.getAttribute('data-nomor-kursi'); 
-                    const label = seat.innerText.slice(-1); 
-                    const nomorKursiWithLabel = nomorKursi + label; 
-                    nomorKursiArray.push(nomorKursiWithLabel); 
+                    const nomorKursi = seat.getAttribute('data-nomor-kursi');
+                    nomorKursiArray.push(nomorKursi);
                 });
 
                 document.getElementById('nomorKursi').value = nomorKursiArray.join(', '); // Simpan nomor kursi dalam format string dipisahkan koma

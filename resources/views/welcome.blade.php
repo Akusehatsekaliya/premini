@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" href="assets/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="assets/slick/slick-theme.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <style>
         body {
@@ -90,7 +91,26 @@
         }
     </style>
 </head>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                showCancelButton: true,
+                confirmButtonText: 'OK',
+                cancelButtonText: 'Lihat Pesanan Saya!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Tindakan jika tombol OK ditekan
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = '{{ route('history', ['id' => Auth::id()]) }}';
+                }
+            });
+        @endif
+    });
+</script>
 <body>
     <!-- NAVBAR -->
     <nav id="navbar" class="navbar fixed-top navbar-expand-lg navbar-dark border-bottom" style="background-color: #0E46A3;">
@@ -109,8 +129,10 @@
                         <a class="nav-link @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
                     </li>
                     <li class="nav-item @if(!Auth::check()) d-none @endif">
-                        <a class="nav-link @if(Request::is('history')) active-menu @endif" href="/history"><i class="bi bi-clock-history"></i> History</a>
-                    </li>
+                        <a class="nav-link @if(Request::is('history/*')) active-menu @endif" href="{{ route('history', ['id' => Auth::id()]) }}">
+                            <i class="bi bi-clock-history"></i> History
+                        </a>
+                    </li>                    
                     <script>
                         
                     </script>
@@ -123,7 +145,11 @@
                                         {{ Auth::user()->name }}
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="userDropdown" style="transform: translateY(-10px); left: 0;">
-                                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                                        <li>
+                                            <a class="dropdown-item" href="/profile">
+                                                <i class="fas fa-user mr-2"></i> Profile
+                                            </a>
+                                        </li>
                                         <li class="border-t border-white-light dark:border-white-light/10">
                                             <form id="logoutForm" action="{{ route('logout') }}" method="POST">
                                                 @csrf
@@ -254,18 +280,6 @@
             </div>
             <div class="col-md-3 col-md-offset-1 col-sm-6">
             <!--<h4>Tautan</h4>-->
-            </div>
-            <div class="col-md-3 col-md-offset-1" style="margin-top: 40px">
-                <h4>Kontak Kami</h4>
-                <address class="margin-bottom-40">
-                    <i class="fa fa-phone"></i>
-                    0813-3326-8652<br>
-                    <i class="fa fa-envelope"></i>
-                    <a href="mailto:slamet.tumpang@malangkab.go.id">bioskop.online</a>
-                    <br>
-                    <br/>
-                    <ul class="list-unstyled list-inline"></ul>
-                </address>
             </div>
         </div>
     </div>
