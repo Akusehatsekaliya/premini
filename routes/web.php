@@ -62,9 +62,7 @@ Route::post('/update-map/{id}', [MapController::class, 'update_map'])->name('upd
 Route::DELETE('delete-map/{id}', [MapController::class, 'delete_map'])->name('delete_map');
 // halaman keuangan
 Route::get('/keuangan', [KeuanganController::class, 'keuangan'])->name('keuangan');
-Route::post('/tambahkeuangan', [KeuanganController::class, 'proses_keuangan'])->name('proses_keuangan');
-Route::post('/update-jadwal/{id}', [KeuanganController::class, 'update_keuangan'])->name('update_keuangan');
-Route::DELETE('/hapus keuangan/{id}', [KeuanganController::class, 'delete_keuangan'])->name('delete_keuangan');
+Route::post('/admin/keuangan/verifikasi/{id}', [KeuanganController::class, 'verifikasi'])->name('admin.verifikasi');
 
 });
 
@@ -91,4 +89,4 @@ Route::get('/detail/{id}', [OrderController::class, 'detail'])->name('detail');
 Route::get('/pilihkursi/{id}', [OrderController::class, 'pilihkursi'])->name('pilihkursi');
 Route::post('/pembayaran', [OrderController::class, 'store'])->name('pembayaran.store');
 /* History */
-Route::get('/history/{id}', [HistoryController::class, 'index'])->name('history');
+Route::get('/history/{user_id}', [HistoryController::class, 'index'])->name('history');

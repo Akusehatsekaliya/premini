@@ -48,42 +48,46 @@
         </div>
 
         <br>
-        <div class="form-group col-md-6">
-            <label for="password" class="col-sm-2 col-form-label">Password </label>
-            <div class="input-group">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Kosongkan jika tidak ingin mengubah">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" id="see_pass"><i class="fa fa-eye"></i></button>
-                </span>
-            </div>
-            <script>
-                document.getElementById('see_pass').addEventListener('click', function() {
-                    var passwordInput = document.getElementById('password');
-                    var icon = this.querySelector('i');
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="password" class="col-sm-2 col-form-label">Password </label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" value="{{ old('password', isset($user) ? $user->password : '') }}">     
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="see_pass"><i class="fa fa-eye"></i></button>
+                    </span>
+                </div>
+                <script>
+                    document.getElementById('see_pass').addEventListener('click', function() {
+                        var passwordInput = document.getElementById('password');
+                        var icon = this.querySelector('i');
 
-                    if (passwordInput.type === 'password') {
-                        passwordInput.type = 'text';
-                        icon.classList.remove('fa-eye');
-                        icon.classList.add('fa-eye-slash');
-                    } else {
-                        passwordInput.type = 'password';
-                        icon.classList.remove('fa-eye-slash');
-                        icon.classList.add('fa-eye');
-                    }
-                });
-            </script>
+                        if (passwordInput.type === 'password') {
+                            passwordInput.type = 'text';
+                            icon.classList.remove('fa-eye');
+                            icon.classList.add('fa-eye-slash');
+                        } else {
+                            passwordInput.type = 'password';
+                            icon.classList.remove('fa-eye-slash');
+                            icon.classList.add('fa-eye');
+                        }
+                    });
+                </script>
+            </div>
         </div>
 
         <br>
-        <div class="form-group col-md-6">
-            <label for="saldo" class="col-sm-2 col-form-label">Saldo </label>
-            <div class="input-group">
-                <span class="input-group-text">Rp.</span>
-                @php
-                    $formatted_saldo = number_format(Auth::user()->saldo, 0, ',', '.');
-                @endphp
-
-                <input type="number" class="form-control" id="saldo" name="saldo" value="{{ old('saldo', $formatted_saldo) }}">
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="saldo" class="col-sm-2 col-form-label">Saldo </label>
+                <div class="input-group">
+                    <span class="input-group-text">Rp.</span>
+                    @php
+                        $formatted_saldo = number_format(Auth::user()->saldo, 0, '.', '.');
+                    @endphp
+    
+                    <input type="number" class="form-control" id="saldo" name="saldo" value="{{ old('saldo', $formatted_saldo) }}">
+                </div>
             </div>
         </div>
 

@@ -14,7 +14,7 @@ use Illuminate\Routing\Controller;
 class FilmController extends Controller
 {
     public function film(){
-        $film = Film::get();
+        $film = Film::with('tiket')->get();
         $kursi = Kursi::get();
         $tiket = Tiket::get();
         $tanggal = Tanggal::get();

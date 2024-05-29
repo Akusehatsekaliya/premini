@@ -48,6 +48,8 @@
                         <th>Jumlah Tiket</th>
                         <th>Nomor Kursi</th>
                         <th>Total Harga</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,6 +71,12 @@
                             $formatted_price = 'Rp ' . number_format($p->total_harga, 0, ',', '.');
                             ?>
                             {{ $formatted_price }}
+                        </td>
+                        <td><button type="button" class="btn btn-success btn-sm" readonly>{{ $p->status }}</button></td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                                Detail
+                            </button>
                         </td>
                     </tr>
                     @endforeach

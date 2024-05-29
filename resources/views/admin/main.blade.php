@@ -81,7 +81,7 @@
           <li class="active">
             <a href="{{ route('adminkeuangan') }}">
               <i class="nc-icon nc-money-coins"></i>
-              <p>Keuangan</p>
+              <p>Bukti Pembayaran</p>
             </a>
           </li>
         </ul>

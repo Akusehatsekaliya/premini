@@ -12,6 +12,7 @@ use App\Models\Tanggal;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use App\Models\Pembayaran;
@@ -70,33 +71,40 @@ class OrderController extends Controller
             'jumlahTiket' => 'required|integer',
             'nomor_kursi' => 'required|string',
             'total_harga' => 'required|string',
+            'bukti' => 'required|file|image|mimes:jpg,jpeg,png',
         ]);
 
         $user = Auth::user();
-        $totalHarga = $request->total_harga;
-
-        // Periksa apakah saldo cukup
-        if ($user->saldo < $totalHarga) {
-            return redirect()->back()->with('error', 'Saldo anda tidak mencukupi');
-        }
-
-        // Lakukan pengurangan saldo
-        $user->saldo -= $totalHarga;
-        $user->save();
-        // dd($validatedData);
-
+        
+        $bukti = $request->file('bukti');
+        
+        $filename = uniqid() . '.' . $bukti->getClientOriginalExtension();
+        
+        // Simpan file ke dalam direktori penyimpanan
+        $path = $bukti->storeAs('public/bukti', $filename);
+        
+        // Mengurangi stok tiket
+        $tiket = Tiket::where('tiket', $validatedData['tiket'])->first();
+        $tiket->stok -= $validatedData['jumlahTiket'];
+        $tiket->save();
+        
         // Simpan data ke tabel pembayaran
-        Pembayaran::create([
+        $pembayaran = new Pembayaran([
             'judul' => $validatedData['judul'],
             'tiket' => $validatedData['tiket'],
             'jam' => $validatedData['jam'],
             'jumlah_tiket' => $validatedData['jumlahTiket'],
             'nomor_kursi' => $validatedData['nomor_kursi'],
             'total_harga' => $validatedData['total_harga'],
+            'bukti'       => $filename,
         ]);
+        // Memasukkan user_id ke dalam pembayaran
+        $pembayaran->user_id = $user->id;
+
+        $pembayaran->save();
 
         Session::flash('success', 'Anda Berhasil memesan tiket!');
-
+        
         return redirect()->route('welcome');
     }
 }

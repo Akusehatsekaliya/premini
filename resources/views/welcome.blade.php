@@ -100,12 +100,12 @@
                 text: '{{ session('success') }}',
                 showCancelButton: true,
                 confirmButtonText: 'OK',
-                cancelButtonText: 'Lihat Pesanan Saya!'
+                cancelButtonText: 'Lihat Status Pesanan!'
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Tindakan jika tombol OK ditekan
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    window.location.href = '{{ route('history', ['id' => Auth::id()]) }}';
+                    window.location.href = '{{ route('history', ['user_id' => Auth::id()]) }}';
                 }
             });
         @endif
@@ -129,13 +129,12 @@
                         <a class="nav-link @if(Request::is('/daftarfilm')) active-menu @endif" href="#listFilm"><i class="bi bi-card-checklist"></i> List Film</a>
                     </li>
                     <li class="nav-item @if(!Auth::check()) d-none @endif">
-                        <a class="nav-link @if(Request::is('history/*')) active-menu @endif" href="{{ route('history', ['id' => Auth::id()]) }}">
-                            <i class="bi bi-clock-history"></i> History
-                        </a>
-                    </li>                    
-                    <script>
-                        
-                    </script>
+                        @auth
+                            <a class="nav-link @if(Request::is('history/*')) active-menu @endif" href="{{ route('history', ['user_id' => Auth::id()]) }}">
+                                <i class="bi bi-clock-history"></i> History
+                            </a>
+                        @endauth
+                    </li>
                     <!-- Bagian navbar -->
                     @if (Route::has('login'))
                         <div class="sm:fixed sm:right-0 text-right ms-5">

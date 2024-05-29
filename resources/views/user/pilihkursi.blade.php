@@ -43,7 +43,7 @@
 
     <br>
     <br>
-    <form action="{{ route('pembayaran.store') }}" method="POST">
+    <form action="{{ route('pembayaran.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -188,6 +188,16 @@
                     <input type="hidden" id="hiddenNomorKursi" name="nomor_kursi" value="">
                 </div>
             </div>
+
+            <div class="row">
+                <div class="form-group col-md-4" style="margin-bottom: 30px">
+                    <label for="bukti" class="form-label">Bukti Pembayaran :</label>
+                    <input type="file" class="form-control" id="bukti" name="bukti">
+                    @error('bukti')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+            </div>            
             <a href="/detail/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
             <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
         </div>

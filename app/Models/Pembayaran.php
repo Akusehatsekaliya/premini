@@ -13,9 +13,15 @@ class Pembayaran extends Model
         "jam",
         "jumlah_tiket",
         "nomor_kursi",
-        "total_harga"
+        "total_harga",
+        "user_id"
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
     public function Film()
     {
         return $this->belongsTo(Film::class);
