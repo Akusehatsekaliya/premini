@@ -26,10 +26,17 @@
                                     <td>{{ $p->user->name }}</td>
                                     <td>{{ $p->judul }}</td>
                                     <td>{{ $p->tiket }}</td>
-                                    <td>{{ $p->total_harga }}</td>
+                                    <td>
+                                        <?php
+                                        $formatted_price = 'Rp ' . number_format($p->total_harga, 0, ',', '.');
+                                        ?>
+                                        {{ $formatted_price }}
+                                    </td>
                                     <td>
                                         @if($p->bukti)
-                                        <img src="{{ asset('storage/bukti/' . $p->bukti) }}" alt="Bukti Pembayaran" style="max-width: 100px;">
+                                        <a href="{{ asset('storage/bukti/' . $p->bukti) }}" data-lightbox="image-{{ $p->id }}" data-title="Bukti Pembayaran">
+                                            <img src="{{ asset('storage/bukti/' . $p->bukti) }}" alt="Bukti Pembayaran" style="max-width: 100px;">
+                                        </a>
                                         @else
                                         N/A
                                         @endif
@@ -44,13 +51,13 @@
                                         @elseif($p->status === 'Diterima')
                                             <button type="button" class="btn btn-success" readonly>Diterima</button>
                                         @elseif($p->status === 'Ditolak')
-                                            <button type="button" class="btn btn-danger" readonly>Di tolak </button>
+                                            <button type="button" class="btn btn-danger" readonly>Ditolak</button>
                                         @endif
                                     </td>
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="6" style="text-align:center;">Data masih kosong</td>
+                                    <td colspan="7" style="text-align:center;">Data masih kosong</td>
                                 </tr>
                                 @endforelse
                             </tbody>

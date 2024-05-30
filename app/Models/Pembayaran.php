@@ -14,6 +14,7 @@ class Pembayaran extends Model
         "jumlah_tiket",
         "nomor_kursi",
         "total_harga",
+        "bukti",
         "user_id"
     ];
 

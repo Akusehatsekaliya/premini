@@ -3,18 +3,13 @@
 namespace App\Http\Controllers\user;
 
 use App\Models\Film;
-use App\Models\Keuangan;
 use App\Models\Kursi;
-use App\Models\Map;
-use App\Models\Order;
 use App\Models\Tiket;
 use App\Models\Tanggal;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 
@@ -58,7 +53,17 @@ class OrderController extends Controller
         // Perhitungan total harga
         $totalHarga = $hargaTiket * $jumlahTiket;
 
-        return view('user.pilihkursi', compact('film', 'kursi', 'tikets', 'tanggal', 'jumlahTiket', 'hargaTiket', 'totalHarga'));
+        // Ambil data nomor kursi yang telah diterima dari tabel pembayaran
+        $kursiDiterima = Pembayaran::where('status', 'Diterima')
+        ->pluck('nomor_kursi')
+        ->flatMap(function ($item) {
+            return explode(', ', $item);
+        })
+        ->toArray();
+
+        // dd($kursiDiterima);
+
+        return view('user.pilihkursi', compact('film', 'kursi', 'tikets', 'tanggal', 'jumlahTiket', 'hargaTiket', 'totalHarga', 'kursiDiterima'));
     }
 
     public function store(Request $request)
@@ -76,18 +81,16 @@ class OrderController extends Controller
 
         $user = Auth::user();
         
+        // Simpan file gambar ke storage
         $bukti = $request->file('bukti');
-        
         $filename = uniqid() . '.' . $bukti->getClientOriginalExtension();
-        
-        // Simpan file ke dalam direktori penyimpanan
         $path = $bukti->storeAs('public/bukti', $filename);
-        
+
         // Mengurangi stok tiket
         $tiket = Tiket::where('tiket', $validatedData['tiket'])->first();
         $tiket->stok -= $validatedData['jumlahTiket'];
         $tiket->save();
-        
+
         // Simpan data ke tabel pembayaran
         $pembayaran = new Pembayaran([
             'judul' => $validatedData['judul'],
@@ -96,11 +99,13 @@ class OrderController extends Controller
             'jumlah_tiket' => $validatedData['jumlahTiket'],
             'nomor_kursi' => $validatedData['nomor_kursi'],
             'total_harga' => $validatedData['total_harga'],
-            'bukti'       => $filename,
+            'bukti' => $filename, // Simpan nama file gambar
         ]);
+
         // Memasukkan user_id ke dalam pembayaran
         $pembayaran->user_id = $user->id;
 
+        // Menyimpan data pembayaran ke database
         $pembayaran->save();
 
         Session::flash('success', 'Anda Berhasil memesan tiket!');

@@ -239,8 +239,7 @@
                         <div style="display: flex; flex-direction: column;">
                             <h2 class="card-title" style="align-self: flex-start; margin-bottom: 50px; margin-top: 10px;">{{ $f['judul'] }}</h2>
                             <p class="card-text" style="align-self: flex-start; margin-bottom: 27px;">{{ $f['deskripsi'] }}</p>
-                            <br>
-                            <a href={{ route('detail',['id'=>$f->id]) }} class="btn btn-primary" style="display: inline-block;">Detail</a>
+                            <a href={{ route('detail',['id'=>$f->id]) }} class="btn btn-primary" style="display: inline-block; margin-top: 10px;">Detail</a>
                         </div>
                     </div>
                 </div>

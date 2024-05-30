@@ -199,7 +199,7 @@
                 </div>
             </div>            
             <a href="/detail/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
-            <button type="submit" class="btn btn-primary">Konfirmasi Pembayaran</button>
+            <button type="submit" class="btn btn-primary">Pesan Tiket</button>
         </div>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -240,23 +240,33 @@
             }
 
             function createSeats(section, seatCount, label) {
+                const kursiDiterima = {!! json_encode($kursiDiterima) !!};
+
                 for (let i = 0; i < seatCount; i++) {
                     const seat = document.createElement('div');
                     seat.classList.add('seat');
                     const nomorKursi = i + 1;
-                    seat.innerText = nomorKursi + label;
-                    seat.setAttribute('data-nomor-kursi', nomorKursi + label); // Tambahkan nomor kursi ke atribut data
+                    const kursiLabel = nomorKursi + label;
+                    seat.innerText = kursiLabel;
+                    seat.setAttribute('data-nomor-kursi', kursiLabel);
+
+                    if (kursiDiterima.includes(kursiLabel)) {
+                        seat.classList.add('terisi');
+                        seat.setAttribute('disabled', 'disabled');
+                    }
 
                     seat.addEventListener('click', function() {
-                        if (!seat.classList.contains('booked')) {
-                            seat.classList.add('booked');
-                        } else {
-                            seat.classList.remove('booked');
-                        }
+                        if (!seat.classList.contains('terisi')) {
+                            if (!seat.classList.contains('booked')) {
+                                seat.classList.add('booked');
+                            } else {
+                                seat.classList.remove('booked');
+                            }
 
-                        updateJumlahTiket();
-                        updateTotalHarga();
-                        updateNomorKursi(); // Panggil fungsi untuk mengupdate nomor kursi yang dipilih
+                            updateJumlahTiket();
+                            updateTotalHarga();
+                            updateNomorKursi();
+                        }
                     });
 
                     section.appendChild(seat);
