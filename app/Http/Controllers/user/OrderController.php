@@ -81,13 +81,21 @@ class OrderController extends Controller
 
         $user = Auth::user();
         
+        // Mendapatkan tiket yang dipilih
+        $tiket = Tiket::where('tiket', $validatedData['tiket'])->first();
+        
+        // Cek stok tiket
+        if ($tiket->stok < $validatedData['jumlahTiket']) {
+            // Mengembalikan pesan error jika stok tidak mencukupi
+            return back()->withErrors(['tiket' => 'Stok tiket tidak mencukupi'])->withInput();
+        }
+
         // Simpan file gambar ke storage
         $bukti = $request->file('bukti');
         $filename = uniqid() . '.' . $bukti->getClientOriginalExtension();
         $path = $bukti->storeAs('public/bukti', $filename);
 
         // Mengurangi stok tiket
-        $tiket = Tiket::where('tiket', $validatedData['tiket'])->first();
         $tiket->stok -= $validatedData['jumlahTiket'];
         $tiket->save();
 

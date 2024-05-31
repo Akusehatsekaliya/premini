@@ -77,22 +77,7 @@
         </div>
 
         <br>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label for="saldo" class="col-sm-2 col-form-label">Saldo </label>
-                <div class="input-group">
-                    <span class="input-group-text">Rp.</span>
-                    @php
-                        $formatted_saldo = number_format(Auth::user()->saldo, 0, '.', '.');
-                    @endphp
-    
-                    <input type="number" class="form-control" id="saldo" name="saldo" value="{{ old('saldo', $formatted_saldo) }}">
-                </div>
-            </div>
-        </div>
-
-        <br>
-        <div class="form-group row">
+        <div class="form-group row" style="margin-top: 20px">
             <div class="col-sm-10">
                 <button type="submit" class="btn btn-primary">Simpan Profile</button>
             </div>

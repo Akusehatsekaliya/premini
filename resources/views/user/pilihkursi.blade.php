@@ -65,7 +65,7 @@
             <div class="col-md-4" style="margin-top: 30px; margin-bottom: 20px;">
                 <label for="tiket" class="form-label">Tiket :</label>
                 <div style="overflow: hidden;">
-                    <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="updateTotalHarga()">
+                    <select class="form-control" name="tiket" id="tiket" style="float: right; margin-left: 10px;" onchange="handleTiketChange()">
                         <option value="0" selected>-- Pilih Tiket --</option>
                         @foreach ($tikets as $tiket)
                             <option value="{{ $tiket->harga }}" data-tiket="{{ $tiket->tiket }}">{{ $tiket->tiket }}</option>
@@ -114,111 +114,121 @@
             </div>
         </div>
         <br>
-        <div class="form-group">
-            <label for="kursi" class="form-label">Pilih Kursi :</label>
-            <div class="cinema">
-                <style>
-                    .cinema {
-                        display: flex;
-                        justify-content: center;
-                        margin-top: 20px;
-                    }
-                    
-                    .cinema .section {
-                        display: grid;
-                        grid-template-columns: repeat(5, 70px);
-                        gap: 10px;
-                        margin: 0 20px;
-                    }
-                    
-                    .seat {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 5px;
-                        background-color: gray;
-                        text-align: center;
-                        line-height: 40px;
-                        cursor: pointer;
-                        color: white;
-                    }
+        <div id="seatSelection" style="display: none;">
+            <div class="form-group">
+                <label for="kursi" class="form-label">Pilih Kursi :</label>
+                <div class="cinema">
+                    <style>
+                        .cinema {
+                            display: flex;
+                            justify-content: center;
+                            margin-top: 20px;
+                        }
+                        
+                        .cinema .section {
+                            display: grid;
+                            grid-template-columns: repeat(5, 70px);
+                            gap: 10px;
+                            margin: 0 20px;
+                        }
+                        
+                        .seat {
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 5px;
+                            background-color: gray;
+                            text-align: center;
+                            line-height: 40px;
+                            cursor: pointer;
+                            color: white;
+                        }
 
-                    .seat.booked {
-                        background-color: blue;
-                    }
+                        .seat.booked {
+                            background-color: blue;
+                        }
 
-                    .status-box {
-                        display: inline-block;
-                        width: 15px; /* Lebar kotak */
-                        height: 15px; /* Tinggi kotak */
-                        margin-right: 5px; /* Jarak antara kotak dan teks */
-                        vertical-align: middle; /* Menyelaraskan kotak ke tengah vertikal dengan teks */
-                    }
+                        .status-box {
+                            display: inline-block;
+                            width: 15px; /* Lebar kotak */
+                            height: 15px; /* Tinggi kotak */
+                            margin-right: 5px; /* Jarak antara kotak dan teks */
+                            vertical-align: middle; /* Menyelaraskan kotak ke tengah vertikal dengan teks */
+                        }
 
-                    .terisi {
-                        background-color: green; /* Warna untuk status terisi */
-                    }
+                        .terisi {
+                            background-color: green; /* Warna untuk status terisi */
+                        }
 
-                    .kosong {
-                        background-color: grey;
-                    }
+                        .kosong {
+                            background-color: grey;
+                        }
 
-                    .dipilih {
-                        background-color: blue;
-                    }
-                </style>
-                <div class="section" id="left-section">
-                    <!-- Kursi kiri -->
+                        .dipilih {
+                            background-color: blue;
+                        }
+                    </style>
+                    <div class="section" id="left-section">
+                        <!-- Kursi kiri -->
+                    </div>
+                    <div class="section" id="right-section">
+                        <!-- Kursi kanan -->
+                    </div>
                 </div>
-                <div class="section" id="right-section">
-                    <!-- Kursi kanan -->
+
+                <!-- Tambahkan screen di bawah kursi -->
+                <div style="text-align: center; margin-top: 50px;">
+                    <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
+                </div>
+                <br>
+                <p>Keterangan : <span class="status-box terisi"></span> Terisi | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
+                <br>
+                <div class="row">
+                    <div class="form-group col-md-4" style="margin-bottom: 30px">
+                        <label for="nomorKursi" class="form-label">Nomor Kursi :</label>
+                        <input type="text" class="form-control" id="nomorKursi" readonly>
+                        <input type="hidden" id="hiddenNomorKursi" name="nomor_kursi" value="">
+                    </div>
                 </div>
             </div>
-
-            <!-- Tambahkan screen di bawah kursi -->
-            <div style="text-align: center; margin-top: 50px;">
-                <div style="background-color: black; color: white; padding: 10px 20px;">LAYAR BIOSKOP</div>
-            </div>
-            <br>
-            <p>Keterangan : <span class="status-box terisi"></span> Terisi | <span class="status-box kosong"></span> Kosong | <span class="status-box dipilih"></span> Dipilih </p>
-            <br>
-            <div class="row">
-                <div class="form-group col-md-4" style="margin-bottom: 30px">
-                    <label for="nomorKursi" class="form-label">Nomor Kursi :</label>
-                    <input type="text" class="form-control" id="nomorKursi" readonly>
-                    <input type="hidden" id="hiddenNomorKursi" name="nomor_kursi" value="">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-4" style="margin-bottom: 30px">
-                    <label for="bukti" class="form-label">Bukti Pembayaran :</label>
-                    <input type="file" class="form-control" id="bukti" name="bukti">
-                    @error('bukti')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>            
-            <a href="/detail/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
-            <button type="submit" class="btn btn-primary">Pesan Tiket</button>
         </div>
+
+        <div class="row">
+            <div class="form-group col-md-4" style="margin-bottom: 30px">
+                <label for="bukti" class="form-label">Bukti Pembayaran :</label>
+                <input type="file" class="form-control" id="bukti" name="bukti">
+                @error('bukti')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>            
+        <a href="/detail/{{ $film['id'] }}" type="button" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-primary">Pesan Tiket</button>
+
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const tiketDropdown = document.getElementById('tiket');
                 const hiddenTiket = document.getElementById('hiddenTiket');
+                const seatSelection = document.getElementById('seatSelection');
 
                 tiketDropdown.addEventListener('change', function() {
                     const selectedOption = tiketDropdown.options[tiketDropdown.selectedIndex];
                     const tiketName = selectedOption.getAttribute('data-tiket');
                     const tiketPrice = selectedOption.value;
                     hiddenTiket.value = tiketName;
+
+                    if (tiketPrice > 0) {
+                        seatSelection.style.display = 'block';
+                    } else {
+                        seatSelection.style.display = 'none';
+                    }
+
                     updateTotalHarga();
                 });
             });
-            
+
             function handleCheckboxChange(checkbox) {
                 const checkboxes = document.getElementsByName('jam');
 
-                // Nonaktifkan semua checkbox kecuali yang saat ini diklik
                 checkboxes.forEach(function(cb) {
                     if (cb !== checkbox) {
                         cb.checked = false;
@@ -282,8 +292,8 @@
                     nomorKursiArray.push(nomorKursi);
                 });
 
-                document.getElementById('nomorKursi').value = nomorKursiArray.join(', '); // Simpan nomor kursi dalam format string dipisahkan koma
-                document.getElementById('hiddenNomorKursi').value = nomorKursiArray.join(', '); // Simpan nomor kursi dalam format string dipisahkan koma
+                document.getElementById('nomorKursi').value = nomorKursiArray.join(', ');
+                document.getElementById('hiddenNomorKursi').value = nomorKursiArray.join(', ');
             }
 
             function updateJumlahTiket() {
